@@ -1,0 +1,162 @@
+﻿# A5:ER FORMAT:16
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright © 2007 m.matsubara
+# A5:SQL Mk-2 Version 2.17.1 Copyright © 1997 - 2022 m.matsubara
+#  https://a5m2.mmatsubara.com
+
+[Manager]
+ProjectName=portfolio
+Author=Kota Chihogi
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",2,"A3Landscape",$FFFFFF
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=2
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=Tahoma
+FontSize=6
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=5
+RDBMSTypeName=MySQL
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+UpperCaseKeyword=0
+ShowTag=1
+ShowCommonAttributes=0
+BugFixEntityWidth=1
+
+[Entity]
+PName=Profile
+LName=プロフィール
+Comment=
+TableOption=
+Page=MAIN
+Left=550
+Top=350
+Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="タイトル","title","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="サブタイトル","subtitle","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="名","first_name","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="氏","last_name","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="職業","job","CHAR(100)",,,"","",$FFFFFFFF,""
+Field="自己紹介","introduction","CHAR(300)",,,"","",$FFFFFFFF,""
+Field="顔写真","face_photo","CHAR(1024)",,,"","",$FFFFFFFF,""
+Field="サブ写真","sub_photo","CHAR(1024)",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220322232659
+Position="MAIN",550,350,502,347
+ZOrder=1
+
+[Entity]
+PName=SNS
+LName=Social_Network_Service
+Comment=
+TableOption=
+Page=MAIN
+Left=1400
+Top=200
+Field="Profile ID","Profile_id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="ID","id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="名前","name","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="URL","url","CHAR(1024)","NOT NULL",,"","",$FFFFFFFF,""
+Field="Icon Master ID","Icon_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220322233436
+Position="MAIN",1400,200,529,326
+ZOrder=2
+
+[Relation]
+Entity1=Profile
+Entity2=SNS
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=Profile_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,1015,9060,1982,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20220322233136
+LineMode=0
+Bar1=102
+Bar2=906
+Bar3=198
+TermPos1=R
+TermPos2=R
+ZOrder=3
+
+[Entity]
+PName=アイコンマスター
+LName=Icon_Mater
+Comment=
+TableOption=
+Page=Main
+Left=2300
+Top=200
+Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="icon","icon","CHAR(1024)","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$C0DCC0
+ModifiedDateTime=20220322234007
+Position="Main",2300,200,392,61
+ZOrder=4
+
+[Relation]
+Entity1=SNS
+Entity2=アイコンマスター
+RelationType1=1
+RelationType2=3
+Fields1=Icon_id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,1137,8751,7224,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220322233914
+LineMode=0
+Bar1=114
+Bar2=875
+Bar3=722
+TermPos1=R
+TermPos2=R
+ZOrder=6
+
+[Comment]
+Comment=https://euphoric-arts.com/art-2/portfolio/#%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=Main
+Left=2269
+Top=459
+ZOrder=7
+Width=762
+Height=489
