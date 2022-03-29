@@ -64,8 +64,8 @@ Position="MAIN",550,350,502,347
 ZOrder=1
 
 [Entity]
-PName=SNS
-LName=Social_Network_Service
+PName=Social_Network_Service
+LName=SNS
 Comment=
 TableOption=
 Page=MAIN
@@ -79,13 +79,13 @@ Field="Icon Master ID","Icon_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220322233436
+ModifiedDateTime=20220329124622
 Position="MAIN",1400,200,529,326
 ZOrder=2
 
 [Relation]
 Entity1=Profile
-Entity2=SNS
+Entity2=Social_Network_Service
 RelationType1=1
 RelationType2=3
 Fields1=id
@@ -106,11 +106,11 @@ TermPos2=R
 ZOrder=3
 
 [Entity]
-PName=アイコンマスター
-LName=Icon_Mater
+PName=Icon_Mater
+LName=アイコンマスター
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=2300
 Top=200
 Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
@@ -118,13 +118,13 @@ Field="icon","icon","CHAR(1024)","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$C0DCC0
-ModifiedDateTime=20220322234007
-Position="Main",2300,200,392,61
+ModifiedDateTime=20220329121818
+Position="MAIN",2300,200,392,61
 ZOrder=4
 
 [Relation]
-Entity1=SNS
-Entity2=アイコンマスター
+Entity1=Social_Network_Service
+Entity2=Icon_Mater
 RelationType1=1
 RelationType2=3
 Fields1=Icon_id
@@ -160,3 +160,121 @@ Top=459
 ZOrder=7
 Width=762
 Height=489
+
+[Entity]
+PName=Works
+LName=作品
+Comment=
+TableOption=
+Page=Main
+Left=550
+Top=1000
+Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="タイトル","title","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メインビジュアル","image","CHAR(1024)","NOT NULL",,"","",$FFFFFFFF,""
+Field="概要","description","CHAR(300)","NOT NULL",,"","",$FFFFFFFF,""
+Field="URL","url","CHAR(1024)",,,"","",$FFFFFFFF,""
+Field="リポジトリURL","repository_url","CHAR(1024)",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220329123924
+Position="Main",550,1000,561,209
+ZOrder=8
+
+[Entity]
+PName=Works_Detail
+LName=作品詳細
+Comment=
+TableOption=
+Page=Main
+Left=1300
+Top=1000
+Field="Work ID","Work_id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="サブタイトル","sub_titile","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="制作開始","start_date","DATE","NOT NULL",,"","",$FFFFFFFF,""
+Field="制作終了","end_date","DATE",,,"","",$FFFFFFFF,""
+Field="担当工程","processes","CHAR(300)",,,"","複数工程はカンマ区切り",$FFFFFFFF,""
+Field="詳細","detail_description","TEXT",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220329123929
+Position="Main",1300,1000,683,299
+ZOrder=9
+
+[Relation]
+Entity1=Works
+Entity2=Works_Detail
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=Work_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,3982,6018,4389,R,R,""
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=398
+Bar2=602
+Bar3=439
+TermPos1=R
+TermPos2=R
+ZOrder=10
+
+[Entity]
+PName=Skills
+LName=技術
+Comment=
+TableOption=
+Page=Main
+Left=1300
+Top=1400
+Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="Type Master ID","Type_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220329124634
+Position="Main",1300,1400,542,307
+ZOrder=11
+
+[Entity]
+PName=Skills_Type_Mater
+LName=技術種別マスター
+Comment=
+TableOption=
+Page=Main
+Left=2100
+Top=1400
+Field="ID","id","BIGINT",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$C0DCC0
+ModifiedDateTime=20220329124502
+Position="Main",2100,1400,627,262
+ZOrder=12
+
+[Relation]
+Entity1=Skills
+Entity2=Skills_Type_Mater
+RelationType1=1
+RelationType2=3
+Fields1=Type_id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,5479,4521,5560,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220329124646
+LineMode=0
+Bar1=548
+Bar2=452
+Bar3=556
+TermPos1=R
+TermPos2=R
+ZOrder=13
