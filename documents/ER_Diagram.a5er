@@ -144,29 +144,12 @@ TermPos1=R
 TermPos2=R
 ZOrder=6
 
-[Comment]
-Comment=https://euphoric-arts.com/art-2/portfolio/#%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9
-FontName=Tahoma
-FontBold=0
-FontItalic=0
-FontUnderline=0
-FontSize=9
-FontColor=$000000
-LineColor=$000000
-BkColor=$FFFFFF
-Page=Main
-Left=2269
-Top=459
-ZOrder=7
-Width=762
-Height=489
-
 [Entity]
 PName=Works
 LName=作品
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=550
 Top=1000
 Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
@@ -175,11 +158,13 @@ Field="メインビジュアル","image","CHAR(1024)","NOT NULL",,"","",$FFFFFFF
 Field="概要","description","CHAR(300)","NOT NULL",,"","",$FFFFFFFF,""
 Field="URL","url","CHAR(1024)",,,"","",$FFFFFFFF,""
 Field="リポジトリURL","repository_url","CHAR(1024)",,,"","",$FFFFFFFF,""
+Field="順序","sort","INT","NOT NULL",,"","",$FFFFFFFF,""
+Index=sort_index=0,sort 
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220329123924
-Position="Main",550,1000,561,209
+ModifiedDateTime=20220330125714
+Position="MAIN",550,1000,561,209
 ZOrder=8
 
 [Entity]
@@ -187,9 +172,9 @@ PName=Works_Detail
 LName=作品詳細
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=1300
-Top=1000
+Top=800
 Field="Work ID","Work_id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
 Field="サブタイトル","sub_titile","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
 Field="制作開始","start_date","DATE","NOT NULL",,"","",$FFFFFFFF,""
@@ -200,7 +185,7 @@ EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20220329123929
-Position="Main",1300,1000,683,299
+Position="MAIN",1300,800,683,299
 ZOrder=9
 
 [Relation]
@@ -225,56 +210,254 @@ TermPos2=R
 ZOrder=10
 
 [Entity]
-PName=Skills
-LName=技術
+PName=Language_Skills
+LName=言語技術
 Comment=
 TableOption=
-Page=Main
-Left=1300
-Top=1400
+Page=MAIN
+Left=100
+Top=1700
 Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
-Field="Type Master ID","Type_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="名前","name","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="成熟度","maturity ","INT",,,"","5段階評価",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220329124634
-Position="Main",1300,1400,542,307
+ModifiedDateTime=20220330124924
+Position="MAIN",100,1700,542,101
 ZOrder=11
 
 [Entity]
-PName=Skills_Type_Mater
-LName=技術種別マスター
+PName=Library_Skills
+LName=ライブラリ・フレームワーク技術
 Comment=
 TableOption=
-Page=Main
-Left=2100
-Top=1400
-Field="ID","id","BIGINT",,,"","",$FFFFFFFF,""
+Page=MAIN
+Left=800
+Top=1700
+Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="名前","name","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="成熟度","maturity ","INT",,,"","5段階評価",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
-BkColor=$C0DCC0
-ModifiedDateTime=20220329124502
-Position="Main",2100,1400,627,262
-ZOrder=12
+BkColor=$FFFFFF
+ModifiedDateTime=20220330124936
+Position="MAIN",800,1700,537,101
+ZOrder=14
+
+[Entity]
+PName=DevOps_Skills
+LName=DevOps技術
+Comment=
+TableOption=
+Page=MAIN
+Left=1500
+Top=1700
+Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="名前","name","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="成熟度","maturity ","INT",,,"","5段階評価",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220330124944
+Position="MAIN",1500,1700,553,95
+ZOrder=15
+
+[Entity]
+PName=Work_Language_Skills_RelationShip
+LName=作品言語技術関係
+Comment=
+TableOption=
+Page=MAIN
+Left=350
+Top=1500
+Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="言語技術ID","Language_Skills_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$F0CAA6
+ModifiedDateTime=20220330124349
+Position="MAIN",350,1500,318,58
+ZOrder=19
 
 [Relation]
-Entity1=Skills
-Entity2=Skills_Type_Mater
+Entity1=Works
+Entity2=Work_Language_Skills_RelationShip
 RelationType1=1
 RelationType2=3
-Fields1=Type_id
-Fields2=id
+Fields1=id
+Fields2=Work_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,5479,4521,5560,R,R,""
+Position="MAIN",0,2605,4996,5717,R,R,""
 Dependence=0
 Caption=
 PName=
-ModifiedDateTime=20220329124646
+ModifiedDateTime=20220330122441
 LineMode=0
-Bar1=548
-Bar2=452
-Bar3=556
+Bar1=260
+Bar2=500
+Bar3=572
 TermPos1=R
 TermPos2=R
-ZOrder=13
+ZOrder=20
+
+[Entity]
+PName=Work_Library_Skills_Relationship
+LName=作品ラブライブ・フレームワーク技術関係
+Comment=
+TableOption=
+Page=MAIN
+Left=850
+Top=1500
+Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="ライブラリ・フレームワーク技術ID","Library_Skill_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$F0CAA6
+ModifiedDateTime=20220330124354
+Position="MAIN",850,1500
+ZOrder=22
+
+[Entity]
+PName=Work_DevOps_Skills_Relationship
+LName=作品DevOps術関係
+Comment=
+TableOption=
+Page=MAIN
+Left=1600
+Top=1500
+Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="DevOps技術ID","DevOps_Skill_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$F0CAA6
+ModifiedDateTime=20220330124359
+Position="MAIN",1600,1500
+ZOrder=23
+
+[Relation]
+Entity1=Language_Skills
+Entity2=Work_Language_Skills_RelationShip
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=Language_Skills_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4935,5277,3138,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220330124327
+LineMode=0
+Bar1=494
+Bar2=528
+Bar3=314
+TermPos1=R
+TermPos2=R
+ZOrder=24
+
+[Relation]
+Entity1=Works
+Entity2=Work_Library_Skills_Relationship
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=Work_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4392,4996,4363,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220330123523
+LineMode=0
+Bar1=439
+Bar2=500
+Bar3=436
+TermPos1=R
+TermPos2=R
+ZOrder=25
+
+[Relation]
+Entity1=Library_Skills
+Entity2=Work_Library_Skills_Relationship
+RelationType1=1
+RelationType2=3
+Fields1=\Qmaturity \Q
+Fields2=Library_Skill_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,5459,4541,7066,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220330123548
+LineMode=0
+Bar1=546
+Bar2=454
+Bar3=707
+TermPos1=R
+TermPos2=R
+ZOrder=26
+
+[Relation]
+Entity1=Works
+Entity2=Work_DevOps_Skills_Relationship
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=Work_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,10000,5957,4724,R,R,""
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=1000
+Bar2=596
+Bar3=472
+TermPos1=R
+TermPos2=R
+ZOrder=27
+
+[Relation]
+Entity1=DevOps_Skills
+Entity2=Work_DevOps_Skills_Relationship
+RelationType1=1
+RelationType2=3
+Fields1=\Qmaturity \Q
+Fields2=DevOps_Skill_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,5996,3826,7098,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220330124144
+LineMode=0
+Bar1=600
+Bar2=383
+Bar3=710
+TermPos1=R
+TermPos2=R
+ZOrder=28
+
+[Entity]
+PName=Acknowledgments
+LName=謝辞
+Comment=
+TableOption=
+Page=Main
+Left=2300
+Top=400
+Field="コメント","comments","TEXT",,,"","",$FFFFFFFF,""
+Field="有効","enable","INT",,,"","0:無効 1:有効 それ以外:有効",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20220330125334
+Position="Main",2300,400,320,114
+ZOrder=29
