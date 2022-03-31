@@ -155,15 +155,16 @@ Top=1000
 Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
 Field="タイトル","title","CHAR(100)","NOT NULL",,"","",$FFFFFFFF,""
 Field="メインビジュアル","image","CHAR(1024)","NOT NULL",,"","",$FFFFFFFF,""
+Field="プライベート作品","private","INT","NOT NULL",,"0","0:業務で作成, 1:プライベートで作成, それ以外:プライベートで作成",$FFFFFFFF,""
 Field="概要","description","CHAR(300)","NOT NULL",,"","",$FFFFFFFF,""
 Field="URL","url","CHAR(1024)",,,"","",$FFFFFFFF,""
 Field="リポジトリURL","repository_url","CHAR(1024)",,,"","",$FFFFFFFF,""
 Field="順序","sort","INT","NOT NULL",,"","",$FFFFFFFF,""
-Index=sort_index=0,sort 
+Index=sort_index=0,sort
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220330125714
+ModifiedDateTime=20220331124217
 Position="MAIN",550,1000,561,209
 ZOrder=8
 
@@ -450,7 +451,7 @@ PName=Acknowledgments
 LName=謝辞
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=2300
 Top=400
 Field="コメント","comments","TEXT",,,"","",$FFFFFFFF,""
@@ -459,5 +460,5 @@ EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20220330125334
-Position="Main",2300,400,320,114
+Position="MAIN",2300,400,320,114
 ZOrder=29
