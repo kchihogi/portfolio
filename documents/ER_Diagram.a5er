@@ -274,11 +274,13 @@ Left=350
 Top=1500
 Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
 Field="言語技術ID","Language_Skills_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="順序","sort","INT","NOT NULL",,"0","",$FFFFFFFF,""
+Index=sort_index=0,sort 
 EffectMode=None
 Color=$000000
 BkColor=$F0CAA6
-ModifiedDateTime=20220330124349
-Position="MAIN",350,1500,318,58
+ModifiedDateTime=20220405125046
+Position="MAIN",350,1500,318,85
 ZOrder=19
 
 [Relation]
@@ -313,11 +315,13 @@ Left=850
 Top=1500
 Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
 Field="ライブラリ・フレームワーク技術ID","Library_Skill_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="順序","sort","INT","NOT NULL",,"1","",$FFFFFFFF,""
+Index=sort_index=0,sort 
 EffectMode=None
 Color=$000000
 BkColor=$F0CAA6
-ModifiedDateTime=20220330124354
-Position="MAIN",850,1500
+ModifiedDateTime=20220405125146
+Position="MAIN",850,1500,344,82
 ZOrder=22
 
 [Entity]
@@ -330,11 +334,13 @@ Left=1600
 Top=1500
 Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
 Field="DevOps技術ID","DevOps_Skill_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="順序","sort","INT","NOT NULL",,"0","",$FFFFFFFF,""
+Index=sort_index=0,sort 
 EffectMode=None
 Color=$000000
 BkColor=$F0CAA6
-ModifiedDateTime=20220330124359
-Position="MAIN",1600,1500
+ModifiedDateTime=20220405125230
+Position="MAIN",1600,1500,208,98
 ZOrder=23
 
 [Relation]
@@ -390,7 +396,7 @@ Fields1=\Qmaturity \Q
 Fields2=Library_Skill_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,5459,4541,7066,R,R,""
+Position="MAIN",0,5459,4541,7068,R,R,""
 Dependence=0
 Caption=
 PName=
