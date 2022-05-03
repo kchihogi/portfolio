@@ -4,7 +4,7 @@
 ## URL
 //TBD
 
-[Click to access the portfolio WEB page.](https://pages.github.com/)
+[Click to access the portfolio WEB page.](http://abehiroshi.la.coocan.jp/)
 
 ## Features
 //TBD
