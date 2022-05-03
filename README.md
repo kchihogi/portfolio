@@ -31,4 +31,4 @@
 ## Installation for DEMO
 下記のリポジトリ内のファイルを参照してください。
 
-\documents\README_FOR_Usage.md
+[\documents\README_FOR_Usage.md](https://github.com/kchihogi/portfolio/blob/main/documents/README_FOR_Usage.md)
