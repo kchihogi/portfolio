@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  web:
+    build: 
+      context: web 
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspace:cached
+    environment:
+      TZ: "Asia/Tokyo"
+    command: sleep infinity
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - portfolio_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: portfolio_db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+
+volumes:
+    portfolio_data:
