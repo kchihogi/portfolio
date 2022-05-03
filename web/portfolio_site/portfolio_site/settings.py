@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'portfolio_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_sample',
+        'NAME': 'portfolio_db',
         'USER': 'root',
         'PASSWORD': 'password',
         'HOST': 'db',
