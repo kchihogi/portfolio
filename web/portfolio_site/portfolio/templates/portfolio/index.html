@@ -18,7 +18,7 @@
             <th>{{work.description}}</th>
             <th>{{work.private}}</th>
             <th>{{work.sort}}</th>
-            <th>{{work.image}}</th>
+            <th><img src="{% if work.image %}{{work.image.url}}{% endif %}"/></th>
             <th>{{work.url}}</th>
             <th>{{work.repository_url}}</th>
         </tr>
@@ -46,7 +46,7 @@
             <th>{{work.description}}</th>
             <th>{{work.private}}</th>
             <th>{{work.sort}}</th>
-            <th>{{work.image}}</th>
+            <th><img src="{% if work.image %}{{work.image.url}}{% endif %}"/></th>
             <th>{{work.url}}</th>
             <th>{{work.repository_url}}</th>
         </tr>
