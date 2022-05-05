@@ -12,6 +12,7 @@ class ProfileAdmin(admin.ModelAdmin):
         ('Photos', {'fields': ['face_photo', 'sub_photo'], 'classes': ['collapse']}),
     ]
     inlines = [SNSInline]
+    list_display = ('title', 'last_name', 'first_name')
 
 class Work_DetailInline(admin.TabularInline):
     model = Work_Detail
