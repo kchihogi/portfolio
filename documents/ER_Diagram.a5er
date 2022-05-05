@@ -79,7 +79,7 @@ Field="Icon Master ID","Icon_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220329124622
+ModifiedDateTime=20220505182551
 Position="MAIN",1400,200,529,326
 ZOrder=2
 
@@ -114,38 +114,17 @@ Page=MAIN
 Left=2300
 Top=200
 Field="ID","id","BIGINT","NOT NULL",0,"","",$FFFFFFFF,""
+Field="名前","name","char(100)","NOT NULL",,"","",$FFFFFFFF,""
 Field="icon","icon","CHAR(1024)","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$C0DCC0
-ModifiedDateTime=20220329121818
-Position="MAIN",2300,200,392,61
+ModifiedDateTime=20220505185241
+Position="MAIN",2300,200,392,104
 ZOrder=4
 
-[Relation]
-Entity1=Social_Network_Service
-Entity2=Icon_Mater
-RelationType1=1
-RelationType2=3
-Fields1=Icon_id
-Fields2=id
-Cardinarity1=
-Cardinarity2=
-Position="MAIN",0,1137,8751,7224,R,R,""
-Dependence=0
-Caption=
-PName=
-ModifiedDateTime=20220322233914
-LineMode=0
-Bar1=114
-Bar2=875
-Bar3=722
-TermPos1=R
-TermPos2=R
-ZOrder=6
-
 [Entity]
-PName=Works
+PName=Work
 LName=作品
 Comment=
 TableOption=
@@ -164,12 +143,12 @@ Index=sort_index=0,sort
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220331124217
+ModifiedDateTime=20220505181321
 Position="MAIN",550,1000,561,209
 ZOrder=8
 
 [Entity]
-PName=Works_Detail
+PName=Work_Detail
 LName=作品詳細
 Comment=
 TableOption=
@@ -185,13 +164,13 @@ Field="詳細","detail_description","TEXT",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220329123929
+ModifiedDateTime=20220505181329
 Position="MAIN",1300,800,683,299
 ZOrder=9
 
 [Relation]
-Entity1=Works
-Entity2=Works_Detail
+Entity1=Work
+Entity2=Work_Detail
 RelationType1=1
 RelationType2=3
 Fields1=id
@@ -211,7 +190,7 @@ TermPos2=R
 ZOrder=10
 
 [Entity]
-PName=Language_Skills
+PName=Language_Skill
 LName=言語技術
 Comment=
 TableOption=
@@ -224,12 +203,12 @@ Field="成熟度","maturity ","INT",,,"","5段階評価",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220330124924
+ModifiedDateTime=20220505181351
 Position="MAIN",100,1700,542,101
 ZOrder=11
 
 [Entity]
-PName=Library_Skills
+PName=Library_Skill
 LName=ライブラリ・フレームワーク技術
 Comment=
 TableOption=
@@ -242,12 +221,12 @@ Field="成熟度","maturity ","INT",,,"","5段階評価",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220330124936
+ModifiedDateTime=20220505181354
 Position="MAIN",800,1700,537,101
 ZOrder=14
 
 [Entity]
-PName=DevOps_Skills
+PName=DevOps_Skill
 LName=DevOps技術
 Comment=
 TableOption=
@@ -260,12 +239,12 @@ Field="成熟度","maturity ","INT",,,"","5段階評価",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220330124944
+ModifiedDateTime=20220505181357
 Position="MAIN",1500,1700,553,95
 ZOrder=15
 
 [Entity]
-PName=Work_Language_Skills_RelationShip
+PName=Work_Language_Skill_RelationShip
 LName=作品言語技術関係
 Comment=
 TableOption=
@@ -273,19 +252,19 @@ Page=MAIN
 Left=350
 Top=1500
 Field="作品ID","Work_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
-Field="言語技術ID","Language_Skills_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
+Field="言語技術ID","Language_Skill_id","BIGINT","NOT NULL",,"","",$FFFFFFFF,""
 Field="順序","sort","INT","NOT NULL",,"0","",$FFFFFFFF,""
-Index=sort_index=0,sort 
+Index=sort_index=0,sort
 EffectMode=None
 Color=$000000
 BkColor=$F0CAA6
-ModifiedDateTime=20220405125046
+ModifiedDateTime=20220505181418
 Position="MAIN",350,1500,318,85
 ZOrder=19
 
 [Relation]
-Entity1=Works
-Entity2=Work_Language_Skills_RelationShip
+Entity1=Work
+Entity2=Work_Language_Skill_RelationShip
 RelationType1=1
 RelationType2=3
 Fields1=id
@@ -306,7 +285,7 @@ TermPos2=R
 ZOrder=20
 
 [Entity]
-PName=Work_Library_Skills_Relationship
+PName=Work_Library_Skill_Relationship
 LName=作品ラブライブ・フレームワーク技術関係
 Comment=
 TableOption=
@@ -320,12 +299,12 @@ Index=sort_index=0,sort
 EffectMode=None
 Color=$000000
 BkColor=$F0CAA6
-ModifiedDateTime=20220405125146
+ModifiedDateTime=20220505181343
 Position="MAIN",850,1500,344,82
 ZOrder=22
 
 [Entity]
-PName=Work_DevOps_Skills_Relationship
+PName=Work_DevOps_Skill_Relationship
 LName=作品DevOps術関係
 Comment=
 TableOption=
@@ -339,17 +318,17 @@ Index=sort_index=0,sort
 EffectMode=None
 Color=$000000
 BkColor=$F0CAA6
-ModifiedDateTime=20220405125230
+ModifiedDateTime=20220505181347
 Position="MAIN",1600,1500,208,98
 ZOrder=23
 
 [Relation]
-Entity1=Language_Skills
-Entity2=Work_Language_Skills_RelationShip
+Entity1=Language_Skill
+Entity2=Work_Language_Skill_RelationShip
 RelationType1=1
 RelationType2=3
 Fields1=id
-Fields2=Language_Skills_id
+Fields2=Language_Skill_id
 Cardinarity1=
 Cardinarity2=
 Position="MAIN",0,4935,5277,3138,R,R,""
@@ -366,8 +345,8 @@ TermPos2=R
 ZOrder=24
 
 [Relation]
-Entity1=Works
-Entity2=Work_Library_Skills_Relationship
+Entity1=Work
+Entity2=Work_Library_Skill_Relationship
 RelationType1=2
 RelationType2=3
 Fields1=id
@@ -388,8 +367,8 @@ TermPos2=R
 ZOrder=25
 
 [Relation]
-Entity1=Library_Skills
-Entity2=Work_Library_Skills_Relationship
+Entity1=Library_Skill
+Entity2=Work_Library_Skill_Relationship
 RelationType1=1
 RelationType2=3
 Fields1=\Qmaturity \Q
@@ -410,8 +389,8 @@ TermPos2=R
 ZOrder=26
 
 [Relation]
-Entity1=Works
-Entity2=Work_DevOps_Skills_Relationship
+Entity1=Work
+Entity2=Work_DevOps_Skill_Relationship
 RelationType1=2
 RelationType2=3
 Fields1=id
@@ -431,8 +410,8 @@ TermPos2=R
 ZOrder=27
 
 [Relation]
-Entity1=DevOps_Skills
-Entity2=Work_DevOps_Skills_Relationship
+Entity1=DevOps_Skill
+Entity2=Work_DevOps_Skill_Relationship
 RelationType1=1
 RelationType2=3
 Fields1=\Qmaturity \Q
@@ -453,7 +432,7 @@ TermPos2=R
 ZOrder=28
 
 [Entity]
-PName=Acknowledgments
+PName=Acknowledgment
 LName=謝辞
 Comment=
 TableOption=
@@ -465,6 +444,28 @@ Field="有効","enable","INT",,,"","0:無効 1:有効 それ以外:有効",$FFFF
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20220330125334
+ModifiedDateTime=20220505181316
 Position="MAIN",2300,400,320,114
 ZOrder=29
+
+[Relation]
+Entity1=Icon_Mater
+Entity2=Social_Network_Service
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=Icon_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,1299,8701,5422,R,R,""
+Dependence=0
+Caption=
+PName=
+ModifiedDateTime=20220505182543
+LineMode=0
+Bar1=130
+Bar2=870
+Bar3=542
+TermPos1=R
+TermPos2=R
+ZOrder=31

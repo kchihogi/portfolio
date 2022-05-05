@@ -19,6 +19,7 @@
 ## Requirements
 - Django 4.0.3
 - mysqlclient 2.1.0
+- Pillow 9.1.0
 
 ## DevOps Tools
 - Docker
