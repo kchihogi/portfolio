@@ -1,8 +1,12 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
+
 <p>{{profile.title}}</p>
 
 <p>Works</p>
 {% if works %}
-    <table border="1">
+    <table>
         <tr>
         <th>タイトル</th>
         <th>概要</th>
@@ -30,7 +34,7 @@
 
 <p>Private Works</p>
 {% if private_works %}
-    <table border="1">
+    <table>
         <tr>
         <th>タイトル</th>
         <th>概要</th>
