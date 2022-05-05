@@ -38,7 +38,7 @@ class WorkAdmin(admin.ModelAdmin):
         (None,               {'fields': ['title', 'description']}),
         ('URL information', {'fields': ['url' ,'repository_url']}),
         ('Image', {'fields': ['image']}),
-        ('private', {'fields': ['private']}),
+        ('other', {'fields': ['private', 'sort']}),
     ]
     inlines = [Work_DetailInline, Work_Language_Skill_RelationShipInline, Work_Library_Skill_RelationshipInline, Work_DevOps_Skill_RelationshipInline]
     list_display = ('title', 'private')

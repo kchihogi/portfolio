@@ -1,0 +1,28 @@
+<p>{{profile.title}}</p>
+
+{% if works %}
+    <table border="1">
+        <tr>
+        <th>タイトル</th>
+        <th>概要</th>
+        <th>プライベート作品</th>
+        <th>順序</th>
+        <th>メインビジュアル</th>
+        <th>URL</th>
+        <th>リポジトリURL</th>
+        </tr>
+        {% for work in works %}
+        <tr>
+            <th>{{work.title}}</th>
+            <th>{{work.description}}</th>
+            <th>{{work.private}}</th>
+            <th>{{work.sort}}</th>
+            <th>{{work.image}}</th>
+            <th>{{work.url}}</th>
+            <th>{{work.repository_url}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No works are available.</p>
+{% endif %}
