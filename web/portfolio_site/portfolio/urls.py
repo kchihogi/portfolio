@@ -4,5 +4,6 @@ from . import views
 
 app_name = 'portfolio'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.IndexView.index, name='index'),
+    path('work/<int:pk>/', views.WorkView.get_work, name='work'),
 ]

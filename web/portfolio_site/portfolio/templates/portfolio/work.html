@@ -15,7 +15,7 @@
         <!----- ヘッダー ----->
         <header>
             <!-- <p class="dummy"></p> -->
-            <a class="top" href=""><h1>{{profile.title}}</h1></a>
+            <a class="top" href="{% url 'portfolio:index' %}"><h1>{{profile.title}}</h1></a>
             <ul class="navi">
               <li><a href="">Works</a></li>
               <li><a href="">About</a></li>
@@ -26,22 +26,11 @@
         
         <!----- メインコンテンツ ----->
         <article>
-            {% if works %}
-                {% for work in works %}
-                <a class="work" href="{% url 'portfolio:work' work.id %}">
-                    <h1>{{work.title}}</h1>
-                    <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
-                    <p>概要: {{work.description}}</p>
-                    <div class="language">
-                        {% for detail in work.details|slice:":3" %}
-                            <p>{{detail.Language_Skill.name}}</p>
-                        {% endfor %}
-                    </div>
-                </a>
-                {% endfor %}
-            {% else %}
-                <p>No works are available.</p>
-            {% endif %}
+            <dev class="work">
+                <h1>{{work.title}}</h1>
+                <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+                <p>概要: {{work.description}}</p>
+            </dev>
         </article>
         <!----- メインコンテンツ END ----->
 
