@@ -21,10 +21,10 @@ class Icon_Mater(models.Model):
         return self.name
 
 class Social_Network_Service(models.Model):
-    Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    Profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Profiles')
     name = models.CharField('名前', max_length=100, null=False)
     url = models.CharField('URL', max_length=1024, null=False)
-    Icon_Mater = models.ForeignKey(Icon_Mater, on_delete=models.CASCADE)
+    Icon_Mater = models.ForeignKey(Icon_Mater, on_delete=models.CASCADE, related_name='Icon_Maters')
 
     def __str__(self):
         return self.name
@@ -49,7 +49,7 @@ class Work(models.Model):
         return self.title
 
 class Work_Detail(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE)
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Work_Details')
     sub_titile = models.CharField('サブタイトル', max_length=100, null=False)
     start_date = models.DateTimeField('制作開始', null=False)
     end_date = models.DateTimeField('制作終了', null=True)
@@ -81,16 +81,16 @@ class DevOps_Skill(models.Model):
         return self.name
 
 class Work_Language_Skill_RelationShip(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE)
-    Language_Skill = models.ForeignKey(Language_Skill, on_delete=models.CASCADE)
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Lang_Works')
+    Language_Skill = models.ForeignKey(Language_Skill, on_delete=models.CASCADE, related_name='Language_Skills')
     sort = models.IntegerField('順序', null=False, default=0)
 
 class Work_Library_Skill_Relationship(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE)
-    Library_Skill = models.ForeignKey(Library_Skill, on_delete=models.CASCADE)
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Lib_Works')
+    Library_Skill = models.ForeignKey(Library_Skill, on_delete=models.CASCADE, related_name='Library_Skills')
     sort = models.IntegerField('順序', null=False, default=0)
 
 class Work_DevOps_Skill_Relationship(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE)
-    DevOps_Skill = models.ForeignKey(DevOps_Skill, on_delete=models.CASCADE)
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Dev_Works')
+    DevOps_Skill = models.ForeignKey(DevOps_Skill, on_delete=models.CASCADE, related_name='DevOps_Skills')
     sort = models.IntegerField('順序', null=False, default=0)

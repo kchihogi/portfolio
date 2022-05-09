@@ -1,61 +1,64 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>{{profile.title}}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    </head>
 
-<link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
+    <body>
+        <!----- ヘッダー ----->
+        <header>ヘッダーMAX={{MAX_WORK}}</header>
+        <nav>ナビ</nav>
+        <!----- ヘッダー END ----->
+        
+        <!----- メインコンテンツ ----->
+        <article>
+            <p>{{profile.title}}</p>
 
-<p>{{profile.title}}</p>
-
-<p>Works</p>
-{% if works %}
-    <table>
-        <tr>
-        <th>タイトル</th>
-        <th>概要</th>
-        <th>プライベート作品</th>
-        <th>順序</th>
-        <th>メインビジュアル</th>
-        <th>URL</th>
-        <th>リポジトリURL</th>
-        </tr>
-        {% for work in works %}
-        <tr>
-            <th>{{work.title}}</th>
-            <th>{{work.description}}</th>
-            <th>{{work.private}}</th>
-            <th>{{work.sort}}</th>
-            <th><img src="{% if work.image %}{{work.image.url}}{% endif %}"/></th>
-            <th>{{work.url}}</th>
-            <th>{{work.repository_url}}</th>
-        </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No works are available.</p>
-{% endif %}
-
-<p>Private Works</p>
-{% if private_works %}
-    <table>
-        <tr>
-        <th>タイトル</th>
-        <th>概要</th>
-        <th>プライベート作品</th>
-        <th>順序</th>
-        <th>メインビジュアル</th>
-        <th>URL</th>
-        <th>リポジトリURL</th>
-        </tr>
-        {% for work in private_works %}
-        <tr>
-            <th>{{work.title}}</th>
-            <th>{{work.description}}</th>
-            <th>{{work.private}}</th>
-            <th>{{work.sort}}</th>
-            <th><img src="{% if work.image %}{{work.image.url}}{% endif %}"/></th>
-            <th>{{work.url}}</th>
-            <th>{{work.repository_url}}</th>
-        </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No private works are available.</p>
-{% endif %}
+            <p>Works</p>
+            {% if works %}
+                <table>
+                    <tr>
+                    <th>タイトル</th>
+                    <th>概要</th>
+                    <th>プライベート作品</th>
+                    <th>順序</th>
+                    <th>メインビジュアル</th>
+                    <th>URL</th>
+                    <th>リポジトリURL</th>
+                    <th>言語1</th>
+                    <th>言語2</th>
+                    <th>言語3</th>
+                    </tr>
+                    {% for work in works %}
+                    <tr>
+                        <th>{{work.title}}</th>
+                        <th>{{work.description}}</th>
+                        <th>{{work.private}}</th>
+                        <th>{{work.sort}}</th>
+                        <th><img src="{% if work.image %}{{work.image.url}}{% endif %}"/></th>
+                        <th>{{work.url}}</th>
+                        <th>{{work.repository_url}}</th>
+                        {% for detail in work.details|slice:":3" %}
+                            <th>{{detail.Language_Skill.name}}</th>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No works are available.</p>
+            {% endif %}
+        </article>
+        <!----- メインコンテンツ END ----->
+        
+        <!----- フッター ----->
+        <footer>フッター</footer>
+        <!----- フッター END ----->
+    </body>
+</html>
