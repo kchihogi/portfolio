@@ -13,52 +13,40 @@
 
     <body>
         <!----- ヘッダー ----->
-        <header>ヘッダーMAX={{MAX_WORK}}</header>
-        <nav>ナビ</nav>
+        <header>
+            <p class="dummy"></p>
+            <h1>{{profile.title}}</h1>
+            <ul class="navi">
+              <li><a href="">Works</a></li>
+              <li><a href="">About</a></li>
+              <li><a href="">Contact</a></li>
+            </ul>
+        </header>
         <!----- ヘッダー END ----->
         
         <!----- メインコンテンツ ----->
         <article>
-            <p>{{profile.title}}</p>
-
-            <p>Works</p>
             {% if works %}
-                <table>
-                    <tr>
-                    <th>タイトル</th>
-                    <th>概要</th>
-                    <th>プライベート作品</th>
-                    <th>順序</th>
-                    <th>メインビジュアル</th>
-                    <th>URL</th>
-                    <th>リポジトリURL</th>
-                    <th>言語1</th>
-                    <th>言語2</th>
-                    <th>言語3</th>
-                    </tr>
-                    {% for work in works %}
-                    <tr>
-                        <th>{{work.title}}</th>
-                        <th>{{work.description}}</th>
-                        <th>{{work.private}}</th>
-                        <th>{{work.sort}}</th>
-                        <th><img src="{% if work.image %}{{work.image.url}}{% endif %}"/></th>
-                        <th>{{work.url}}</th>
-                        <th>{{work.repository_url}}</th>
+                {% for work in works %}
+                <a class="work" href="">
+                    <h1>{{work.title}}</h1>
+                    <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+                    <p>概要:{{work.description}}</p>
+                    <div class="language">
                         {% for detail in work.details|slice:":3" %}
-                            <th>{{detail.Language_Skill.name}}</th>
+                            <p>{{detail.Language_Skill.name}}</p>
                         {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </table>
+                    </div>
+                </a>
+                {% endfor %}
             {% else %}
                 <p>No works are available.</p>
             {% endif %}
         </article>
         <!----- メインコンテンツ END ----->
-        
+
         <!----- フッター ----->
-        <footer>フッター</footer>
+        <!-- <footer>フッター</footer> -->
         <!----- フッター END ----->
     </body>
 </html>
