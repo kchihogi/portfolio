@@ -14,12 +14,13 @@
     <body>
         <!----- ヘッダー ----->
         <header>
-            <!-- <p class="dummy"></p> -->
-            <a class="top" href=""><h1>{{profile.title}}</h1></a>
+            <a class="no-underline-link no-color-link" href="{% url 'portfolio:index' %}">
+                <h1 class="title">{{profile.title}}</h1>
+            </a>
             <ul class="navi">
-              <li><a href="">Works</a></li>
-              <li><a href="">About</a></li>
-              <li><a href="">Contact</a></li>
+              <li><a class="no-underline-link" href="">Works</a></li>
+              <li><a class="no-underline-link" href="">About</a></li>
+              <li><a class="no-underline-link" href="">Contact</a></li>
             </ul>
         </header>
         <!----- ヘッダー END ----->
@@ -28,9 +29,9 @@
         <article>
             {% if works %}
                 {% for work in works %}
-                <a class="work" href="{% url 'portfolio:work' work.id %}">
-                    <h1>{{work.title}}</h1>
+                <a class="card" href="{% url 'portfolio:work' work.id %}">
                     <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+                    <h1>{{work.title}}</h1>
                     <p>概要: {{work.description}}</p>
                     <div class="language">
                         {% for detail in work.details|slice:":3" %}

@@ -1,6 +1,7 @@
 html {
   height: 100%;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -8,8 +9,11 @@ body {
   background-color: #f8f8ff;
 }
 
-.top {
+.no-underline-link {
   text-decoration: none;
+}
+
+.no-color-link {
   color : inherit;
 }
 
@@ -17,14 +21,25 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #1f1762;
-  box-shadow:#7a7a7a0f 0px 0px 6px 3px;
-  -webkit-box-shadow:#7a7a7a0f 0px 0px 6px 3px;
-  -moz-box-shadow:#7a7a7a0f 0px 0px 6px 3px;
-  background: transparent;
+  position: relative;
+  background-color: #f8f8ff;
+  position: sticky;
+  top: 0;
 }
 
-header>h1{
+header::after{
+   content:"";
+   display:block;
+   width: calc(100% - 30px);
+   height:1px;
+   background-color:#333;
+   position:absolute;
+   bottom:0;
+   left:15px;
+   opacity: 0.3;
+}
+
+.title {
   color: #1f1762;
 }
 
@@ -59,41 +74,50 @@ header>h1{
   content: none;
 }
 
-.navi>li>a{
-  text-decoration: none;
-}
-
-.dummy{
-  content: none;
-}
-
 article{
   display: flex;
   flex-wrap: wrap;
 }
 
-.work {
-  width: calc(33.3% - 32px);
+.card {
+  width: calc(33.3% - 38px);
   margin: 15px;
   text-align: center;
-  border: 1px solid #1f1762;
+  border: 2px solid #333;
   text-decoration: none;
-  color: inherit;
   color: #1f1762;
   background: #ffffff;
-  border-top: solid 5px #1f1762;
-  box-shadow: 0 3px 5px #00000038;
+  border-radius: 15px;
+  box-shadow: -3px 5px 5px 0px #333;
 }
 
-.work:hover {
+.card:hover {
   background-color:#87cefa;
+  box-shadow: -5px 7px 5px 0px #333;
 }
 
-.work>img {
+.card>img {
   width: calc(50% - 10px);
 }
 
-.work>p {
+.card>h1 {
+  position: relative;
+  margin: 10px;
+}
+
+.card>h1::before {
+  content:"";
+  display:block;
+  width: calc(100% - 30px);
+  height:1px;
+  background-color:#333;
+  position:absolute;
+  top:-10px;
+  left:15px;
+  opacity: 0.3;
+}
+
+.card>p {
   width: calc(100% - 20px);
   text-align: left;
   color: #1f1762;
@@ -101,12 +125,12 @@ article{
   word-wrap: break-word;
 }
 
-.language{
+.card>.language{
   display: flex;
   align-items: center;
 }
 
-.language>p{
+.card>.language>p{
   margin: 10px;
   width: calc(33.3% - 10px);
   background-color: #e13239;
