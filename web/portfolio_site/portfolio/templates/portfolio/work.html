@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <title>{{profile.title}}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
+        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Noto+Sans">
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -14,21 +15,22 @@
     <body>
         <!----- ヘッダー ----->
         <header>
-            <!-- <p class="dummy"></p> -->
-            <a class="top" href="{% url 'portfolio:index' %}"><h1>{{profile.title}}</h1></a>
+            <a class="no-underline-link no-color-link" href="{% url 'portfolio:index' %}">
+                <h1 class="title">{{profile.title}}</h1>
+            </a>
             <ul class="navi">
-              <li><a href="">Works</a></li>
-              <li><a href="">About</a></li>
-              <li><a href="">Contact</a></li>
+              <li><a class="no-underline-link" href="">Works</a></li>
+              <li><a class="no-underline-link" href="">About</a></li>
+              <li><a class="no-underline-link" href="">Contact</a></li>
             </ul>
         </header>
         <!----- ヘッダー END ----->
         
         <!----- メインコンテンツ ----->
         <article>
-            <dev class="work">
-                <h1>{{work.title}}</h1>
+            <dev class="card one-card">
                 <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+                <h1>{{work.title}}</h1>
                 <p>概要: {{work.description}}</p>
             </dev>
         </article>
