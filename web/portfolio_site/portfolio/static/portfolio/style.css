@@ -41,6 +41,7 @@ header::after{
 
 .title {
   color: #1f1762;
+  margin:  0px 40px;
 }
 
 .navi{
@@ -55,6 +56,10 @@ header::after{
   margin: 0;
   list-style: none;
   text-align: center;
+}
+
+.navi li a:hover {
+  text-decoration: underline;
 }
 
 .navi>li::before{
