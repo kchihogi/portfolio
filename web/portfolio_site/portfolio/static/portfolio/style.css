@@ -125,19 +125,34 @@ article{
   word-wrap: break-word;
 }
 
-.card>.language{
+.card>.skill{
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.card>.language>p{
+.card>.skill>p{
   margin: 10px;
-  width: calc(33.3% - 10px);
-  background-color: #e13239;
+  width: calc(33.3% - 38px);
   border-radius: 30px;
-  color: #f8f8ff;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.card>.language>p{
+  background-color: #e13239;
+  color: #f8f8ff;
+}
+
+.card>.library>p{
+  background-color: #e0dd22;
+  color: #f8f8ff;
+  width: calc(50% - 38px);
+}
+
+.card>.devops>p{
+  background-color: #0b92e0;
+  color: #f8f8ff;
 }
