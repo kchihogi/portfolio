@@ -153,3 +153,6 @@ dmypy.json
 # Ignore code-workspaces
 *.code-workspace
 .vscode/launch.json
+
+# DB migration script
+web/portfolio_site/portfolio/migrations/*.py
