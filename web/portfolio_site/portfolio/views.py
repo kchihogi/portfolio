@@ -1,6 +1,6 @@
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, get_list_or_404,render
-from django.views import View, generic
+from django.views import View
 import math
 
 from .models import Profile, Work, Work_Language_Skill_RelationShip, Work_Library_Skill_Relationship, Work_DevOps_Skill_Relationship, Work_Detail
