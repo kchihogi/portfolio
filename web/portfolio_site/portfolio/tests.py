@@ -78,67 +78,234 @@ class IndexViewTest(TestCase):
         """
         The index page shows three no private works.
         """
-        pass
+        _cretetProfile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c],
+        )
+
 
     def test_six_no_private_works(self):
         """
         The index page shows six no private works.
         """
-        pass
+        _cretetProfile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
+
 
     def test_seven_no_private_works(self):
         """
         The index page shows only six no private works, not seven works.
         """
-        pass
+        _cretetProfile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=private_work, start=start, end=end,sort=0)
+        _createWork(work_name='WorkG', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
+
 
     def test_three_private_works(self):
         """
         The index page shows three private works.
         """
-        pass
+        _cretetProfile()
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c],
+        )
+
 
     def test_six_private_works(self):
         """
         The index page shows six private works.
         """
-        pass
+        _cretetProfile()
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
+
 
     def test_seven_private_works(self):
         """
         The index page shows only six private works, not seven works.
         """
-        pass
+        _cretetProfile()
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=private_work, start=start, end=end,sort=0)
+        _createWork(work_name='WorkG', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
+
 
     def test_three_private_and_three_non_works(self):
         """
         The index page shows three no private works and three private works.
         """
-        pass
+        _cretetProfile()
+        non_private_work = 0
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=non_private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=non_private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=non_private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
 
     def test_two_private_and_two_non_works(self):
         """
         The index page shows two no private works and two private works.
         """
-        pass
+        _cretetProfile()
+        non_private_work = 0
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=non_private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=non_private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d],
+        )
+
 
     def test_two_private_and_five_non_works(self):
         """
         The index page shows four non private works and two private works.
         """
-        pass
+        _cretetProfile()
+        non_private_work = 0
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=non_private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=non_private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=non_private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=non_private_work, start=start, end=end,sort=0)
+        _createWork(work_name='WorkG', private_work=non_private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
+
 
     def test_five_private_and_two_non_works(self):
         """
         The index page shows two non private works and four private works.
         """
-        pass
+        _cretetProfile()
+        non_private_work = 0
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        _createWork(work_name='WorkE', private_work=private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=non_private_work, start=start, end=end,sort=0)
+        work_g = _createWork(work_name='WorkG', private_work=non_private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_f, work_g],
+        )
+
 
     def test_four_private_and_four_non_works(self):
         """
         The index page shows three non private works and three private works.
         """
-        pass
+        _cretetProfile()
+        non_private_work = 0
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        work_a = _createWork(work_name='WorkA', private_work=private_work, start=start, end=end,sort=0)
+        work_b = _createWork(work_name='WorkB', private_work=private_work, start=start, end=end,sort=0)
+        work_c = _createWork(work_name='WorkC', private_work=private_work, start=start, end=end,sort=0)
+        work_d = _createWork(work_name='WorkD', private_work=private_work, start=start, end=end,sort=0)
+        work_e = _createWork(work_name='WorkE', private_work=non_private_work, start=start, end=end,sort=0)
+        work_f = _createWork(work_name='WorkF', private_work=non_private_work, start=start, end=end,sort=0)
+        work_g = _createWork(work_name='WorkG', private_work=non_private_work, start=start, end=end,sort=0)
+        work_h = _createWork(work_name='WorkH', private_work=non_private_work, start=start, end=end,sort=0)
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_e, work_f, work_g],
+        )
+
 
     def test_works_sorted(self):
         """
@@ -161,37 +328,48 @@ class IndexViewTest(TestCase):
 # Models Tests
 
 class ProfileModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Icon_MaterModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Social_Network_ServiceModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class AcknowledgmentsModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class WorksModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Works_DetailModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Language_SkillsModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Library_SkillsModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class DevOps_SkillsModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Work_Language_Skills_RelationShipModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Work_Library_Skills_RelationshipModelTests(TestCase):
-    pass
+    _cretetProfile()
+
 
 class Work_DevOps_Skills_RelationshipModelTests(TestCase):
-    pass
+    _cretetProfile()
