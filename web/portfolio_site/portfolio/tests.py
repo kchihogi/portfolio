@@ -1,13 +1,21 @@
-from django.test import TestCase
-from django.urls import reverse
-from portfolio.models import *
+"""UT Test module for portfolio application."""
 import datetime
+
+from django.test import TestCase
 from django.utils import timezone
+from django.urls import reverse
+
+from .models import Profile, Work, Work_Detail
+from .models import Language_Skill, Work_Language_Skill_RelationShip
+from .models import Library_Skill, Work_Library_Skill_Relationship
+from .models import DevOps_Skill, Work_DevOps_Skill_Relationship
 
 # private methods
 def _cretet_profile():
-    """
-    This cretes fixed profile.
+    """This cretes fixed profile.
+
+    Returns:
+        Profile: the model of Profile created.
     """
     prof = Profile(title = 'タイトル', subtitle = 'サブタイトル', first_name = 'ミカド', last_name = '赤城')
     prof.job = 'システムエンジニア'
@@ -20,9 +28,18 @@ def _cretet_profile():
     prof.save()
     return prof
 
-def _create_work(work_name, private_work, start, end, sort=0):
-    """
-    This cretes work with foreign relations.
+def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, sort:int=0):
+    """This cretes work with foreign relations.
+
+    Args:
+        work_name (str): a name of work
+        private_work (int): 0 for no private work. 1 for private work.
+        start (datetime): start datetime when a project started.
+        end (datetime): end datetime when a project ended.
+        sort (int, optional): sort number to displaye the web page. Defaults to 0.
+
+    Returns:
+        Work: the model of Work created.
     """
     desc = ''
     for i in range(300):
@@ -50,9 +67,12 @@ def _create_work(work_name, private_work, start, end, sort=0):
     work_detail.save()
     return work
 
-def _add_language_skills(work, languages):
-    """
-    This cretes relationship with work and language skills.
+def _add_language_skills(work:Work, languages:list[str]):
+    """This cretes relationship with work and language skills.
+
+    Args:
+        work (Work): the model of work.
+        languages (list[str]): a list of language name.
     """
     if languages is not None:
         for record in Language_Skill.objects.all():
@@ -64,9 +84,12 @@ def _add_language_skills(work, languages):
                     relation.sort=0
                     relation.save()
 
-def _add_lib_skills(work, libs):
-    """
-    This cretes relationship with work and libs skills.
+def _add_lib_skills(work:Work, libs:list[str]):
+    """This cretes relationship with work and libs skills.
+
+    Args:
+        work (Work): the model of work.
+        libs (list[str]): a list of library name.
     """
     if libs is not None:
         for record in Library_Skill.objects.all():
@@ -78,9 +101,12 @@ def _add_lib_skills(work, libs):
                     relation.sort=0
                     relation.save()
 
-def _add_dev_ops_skills(work, dev_ops):
-    """
-    This cretes relationship with work and dev_ops skills.
+def _add_dev_ops_skills(work:Work, dev_ops:list[str]):
+    """This cretes relationship with work and dev_ops skills.
+
+    Args:
+        work (Work): the model of work.
+        dev_ops (list[str]): a list of dev_ops skill name.
     """
     if dev_ops is not None:
         for record in DevOps_Skill.objects.all():
@@ -95,19 +121,16 @@ def _add_dev_ops_skills(work, dev_ops):
 # Views Tests
 
 class IndexViewTest(TestCase):
-    """
-    This class is an object to test the IndexView.
-    """
+    """This class is an object to test the IndexView."""
+
     def test_no_profile(self):
-        """
-        If no profile resistered, the index page returns 404.
+        """If no profile resistered, the index page returns 404.
         """
         response = self.client.get(reverse('portfolio:index'))
         self.assertEqual(response.status_code, 404)
 
     def test_no_work(self):
-        """
-        If no works, the index page contains "No works are available.".
+        """If no works, the index page contains "No works are available.
         """
         profile = _cretet_profile()
         response = self.client.get(reverse('portfolio:index'))
@@ -119,8 +142,7 @@ class IndexViewTest(TestCase):
         )
 
     def test_three_no_private_works(self):
-        """
-        The index page shows three no private works.
+        """The index page shows three no private works.
         """
         _cretet_profile()
         private_work = 0
@@ -134,11 +156,9 @@ class IndexViewTest(TestCase):
             response.context['works'],
             [work_a, work_b, work_c],
         )
-
 
     def test_six_no_private_works(self):
-        """
-        The index page shows six no private works.
+        """The index page shows six no private works.
         """
         _cretet_profile()
         private_work = 0
@@ -156,10 +176,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d, work_e, work_f],
         )
 
-
     def test_seven_no_private_works(self):
-        """
-        The index page shows only six no private works, not seven works.
+        """The index page shows only six no private works, not seven works.
         """
         _cretet_profile()
         private_work = 0
@@ -178,10 +196,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d, work_e, work_f],
         )
 
-
     def test_three_private_works(self):
-        """
-        The index page shows three private works.
+        """The index page shows three private works.
         """
         _cretet_profile()
         private_work = 1
@@ -196,10 +212,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c],
         )
 
-
     def test_six_private_works(self):
-        """
-        The index page shows six private works.
+        """The index page shows six private works.
         """
         _cretet_profile()
         private_work = 1
@@ -217,10 +231,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d, work_e, work_f],
         )
 
-
     def test_seven_private_works(self):
-        """
-        The index page shows only six private works, not seven works.
+        """The index page shows only six private works, not seven works.
         """
         _cretet_profile()
         private_work = 1
@@ -239,10 +251,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d, work_e, work_f],
         )
 
-
     def test_three_private_and_three_non_works(self):
-        """
-        The index page shows three no private works and three private works.
+        """The index page shows three no private works and three private works.
         """
         _cretet_profile()
         non_private_work = 0
@@ -262,8 +272,7 @@ class IndexViewTest(TestCase):
         )
 
     def test_two_private_and_two_non_works(self):
-        """
-        The index page shows two no private works and two private works.
+        """The index page shows two no private works and two private works.
         """
         _cretet_profile()
         non_private_work = 0
@@ -280,10 +289,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d],
         )
 
-
     def test_two_private_and_five_non_works(self):
-        """
-        The index page shows four non private works and two private works.
+        """The index page shows four non private works and two private works.
         """
         _cretet_profile()
         non_private_work = 0
@@ -303,10 +310,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d, work_e, work_f],
         )
 
-
     def test_five_private_and_two_non_works(self):
-        """
-        The index page shows two non private works and four private works.
+        """The index page shows two non private works and four private works.
         """
         _cretet_profile()
         non_private_work = 0
@@ -326,10 +331,8 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_d, work_f, work_g],
         )
 
-
     def test_four_private_and_four_non_works(self):
-        """
-        The index page shows three non private works and three private works.
+        """The index page shows three non private works and three private works.
         """
         _cretet_profile()
         non_private_work = 0
@@ -350,10 +353,9 @@ class IndexViewTest(TestCase):
             [work_a, work_b, work_c, work_e, work_f, work_g],
         )
 
-
     def test_works_sorted(self):
-        """
-        This tests that works are sorted by the sort column.
+        """This tests that works are sorted by the sort column.
+
         The value of the sort can be duplicated.
         """
         _cretet_profile()
