@@ -21,6 +21,7 @@
 - mysqlclient 2.1.0
 - Pillow 9.1.0
 - django-debug-toolbar 3.4.0
+- pylint-django 2.5.3
 
 ## DevOps Tools
 - Docker
