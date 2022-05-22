@@ -1,11 +1,17 @@
+"""This module deletes and inserts master data into the DB.
+"""
 from distutils import dir_util
 import glob
 import os
+
 from portfolio.models import Icon_Mater
-import portfolio_site.settings as settings
+from portfolio_site import settings
+
 from utils.cprint import ColorPrint as CP
 
-def IconMaster():
+def add_icon_master():
+    """This copies media files to media root and inserts records of icon master.
+    """
     # mediaディレクトリの掃除
     icon_dir = settings.MEDIA_ROOT + '/icons'
     CP.print('Clena up media icon dir.('+ icon_dir +')',CP.GREEN)
@@ -15,7 +21,7 @@ def IconMaster():
             CP.print('Deleted file.('+file+')',CP.YELLOW)
 
     # mediaを復元
-    backup_media = f'initial_data/media/icons'
+    backup_media = 'initial_data/media/icons'
     CP.print('Copy media dir.(FROM:'+ backup_media + '  TO:'+ icon_dir +')',CP.GREEN)
     dir_util.copy_tree(backup_media, icon_dir)
 
@@ -27,19 +33,14 @@ def IconMaster():
 
     # DBにデータを追加
     CP.print('Add Icon_Mater records to DB.',CP.GREEN)
-    Twitter = Icon_Mater(name='Twitter', icon=f'icons/Twitter.png')
-    Twitter.save()
-    Facebook = Icon_Mater(name='Facebook', icon=f'icons/Facebook.png')
-    Facebook.save()
-    Instagram = Icon_Mater(name='Instagram', icon=f'icons/Instagram.png')
-    Instagram.save()
-    LINE = Icon_Mater(name='LINE', icon=f'icons/LINE.png')
-    LINE.save()
+    twitter = Icon_Mater(name='Twitter', icon='icons/Twitter.png')
+    twitter.save()
+    facebook = Icon_Mater(name='Facebook', icon='icons/Facebook.png')
+    facebook.save()
+    instagram = Icon_Mater(name='Instagram', icon='icons/Instagram.png')
+    instagram.save()
+    line = Icon_Mater(name='LINE', icon='icons/LINE.png')
+    line.save()
 
-try:
-    IconMaster()
-except Exception as e:
-    CP.print('Exception occurs !!!',CP.RED)
-    print(e)
-except:
-    CP.print('Unhandle Error !!!',CP.RED)
+if __name__ == "__main__":
+    add_icon_master()
