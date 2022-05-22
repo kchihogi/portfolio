@@ -1,3 +1,5 @@
+"""The setting of URLs.
+"""
 from django.urls import path
 
 from . import views
