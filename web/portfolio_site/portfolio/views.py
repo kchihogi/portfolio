@@ -35,7 +35,8 @@ class IndexView(View):
         half_work = math.ceil(self.MAX_WORK/2)
         works = []
 
-        queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill').order_by('sort')
+        queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
+        queryset = queryset.order_by('sort')
         prefetch = Prefetch('Lang_Works', queryset=queryset, to_attr='details')
         tmpworks=Work.objects.filter(private=0).order_by('sort').prefetch_related(prefetch)
 
@@ -43,7 +44,8 @@ class IndexView(View):
             tmpworks = tmpworks[:half_work]
 
         works += tmpworks
-        works += Work.objects.exclude(private=0).order_by('sort').prefetch_related(prefetch)[:self.MAX_WORK - tmpworks.count()]
+        tmpworks = Work.objects.exclude(private=0).order_by('sort').prefetch_related(prefetch)
+        works += tmpworks[:self.MAX_WORK - tmpworks.count()]
 
         context = {'profile': prof,'works': works, 'MAX_WORK' : self.MAX_WORK}
         return render(request, 'portfolio/index.html', context)
@@ -64,10 +66,17 @@ class WorksView(View):
 
         works = []
 
-        lang_prefetch = Prefetch('Lang_Works', queryset=Work_Language_Skill_RelationShip.objects.select_related('Language_Skill').order_by('sort'), to_attr='lang_details')
-        lib_prefetch = Prefetch('Lib_Works', queryset=Work_Library_Skill_Relationship.objects.select_related('Library_Skill').order_by('sort'), to_attr='lib_details')
-        dev_prefetch = Prefetch('Dev_Works', queryset=Work_DevOps_Skill_Relationship.objects.select_related('DevOps_Skill').order_by('sort'), to_attr='dev_details')
-        works = Work.objects.order_by('sort').prefetch_related(lang_prefetch, lib_prefetch, dev_prefetch)
+        lang_queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
+        lang_queryset = lang_queryset.order_by('sort')
+        lib_queryset = Work_Library_Skill_Relationship.objects.select_related('Library_Skill')
+        lib_queryset = lib_queryset.order_by('sort')
+        dev_queryset = Work_DevOps_Skill_Relationship.objects.select_related('DevOps_Skill')
+        dev_queryset = dev_queryset.order_by('sort')
+        lang_prefetch = Prefetch('Lang_Works', queryset=lang_queryset, to_attr='lang_details')
+        lib_prefetch = Prefetch('Lib_Works', queryset=lib_queryset, to_attr='lib_details')
+        dev_prefetch = Prefetch('Dev_Works', queryset=dev_queryset, to_attr='dev_details')
+        works = Work.objects.order_by('sort')
+        works = works.prefetch_related(lang_prefetch, lib_prefetch, dev_prefetch)
 
         context = {'profile': prof,'works': works}
         return render(request, 'portfolio/works.html', context)
@@ -86,10 +95,19 @@ class WorkView(View):
             HttpResponse: response.
         """
         prof = get_list_or_404(Profile)[-1]
-        work_detail_prefetch = Prefetch('Work_Details', queryset=Work_Detail.objects.all(), to_attr='work_details')
-        lang_prefetch = Prefetch('Lang_Works', queryset=Work_Language_Skill_RelationShip.objects.select_related('Language_Skill').order_by('sort'), to_attr='lang_details')
-        lib_prefetch = Prefetch('Lib_Works', queryset=Work_Library_Skill_Relationship.objects.select_related('Library_Skill').order_by('sort'), to_attr='lib_details')
-        dev_prefetch = Prefetch('Dev_Works', queryset=Work_DevOps_Skill_Relationship.objects.select_related('DevOps_Skill').order_by('sort'), to_attr='dev_details')
-        work = get_object_or_404(Work.objects.order_by('sort').prefetch_related(work_detail_prefetch, lang_prefetch, lib_prefetch, dev_prefetch), pk=primary_key)
+        work_d_queryset = Work_Detail.objects.all()
+        work_d_pref = Prefetch('Work_Details', queryset=work_d_queryset, to_attr='work_details')
+        lang_queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
+        lang_queryset = lang_queryset.order_by('sort')
+        lib_queryset = Work_Library_Skill_Relationship.objects.select_related('Library_Skill')
+        lib_queryset = lib_queryset.order_by('sort')
+        dev_queryset = Work_DevOps_Skill_Relationship.objects.select_related('DevOps_Skill')
+        dev_queryset = dev_queryset.order_by('sort')
+        lang_pref = Prefetch('Lang_Works', queryset=lang_queryset, to_attr='lang_details')
+        lib_pref = Prefetch('Lib_Works', queryset=lib_queryset, to_attr='lib_details')
+        dev_pref = Prefetch('Dev_Works', queryset=dev_queryset, to_attr='dev_details')
+        work_queryset = Work.objects.order_by('sort')
+        work_queryset = work_queryset.prefetch_related(work_d_pref, lang_pref, lib_pref, dev_pref)
+        work = get_object_or_404(work_queryset, pk=primary_key)
         context = {'profile': prof,'work': work}
         return render(request, 'portfolio/work.html', context)
