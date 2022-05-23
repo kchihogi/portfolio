@@ -268,7 +268,7 @@ class IndexViewTest(TestCase):
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
-            [work_a, work_b, work_c, work_d, work_e, work_f],
+            [work_a, work_c, work_e, work_b, work_d, work_f],
         )
 
     def test_two_private_and_two_non_works(self):
@@ -286,7 +286,7 @@ class IndexViewTest(TestCase):
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
-            [work_a, work_b, work_c, work_d],
+            [work_a, work_c, work_b, work_d],
         )
 
     def test_two_private_and_five_non_works(self):
@@ -307,7 +307,7 @@ class IndexViewTest(TestCase):
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
-            [work_a, work_b, work_c, work_d, work_e, work_f],
+            [work_c, work_d, work_e, work_f, work_a, work_b],
         )
 
     def test_five_private_and_two_non_works(self):
@@ -328,7 +328,7 @@ class IndexViewTest(TestCase):
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
-            [work_a, work_b, work_c, work_d, work_f, work_g],
+            [work_f, work_g, work_a, work_b, work_c, work_d],
         )
 
     def test_four_private_and_four_non_works(self):
@@ -350,7 +350,7 @@ class IndexViewTest(TestCase):
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
-            [work_a, work_b, work_c, work_e, work_f, work_g],
+            [work_e, work_f, work_g, work_a, work_b, work_c],
         )
 
     def test_works_sorted(self):

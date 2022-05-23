@@ -32,23 +32,65 @@ class IndexView(View):
         """
         prof = get_list_or_404(Profile)[-1]
 
-        half_work = math.ceil(self.MAX_WORK/2)
-        works = []
-
         queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
         queryset = queryset.order_by('sort')
         prefetch = Prefetch('Lang_Works', queryset=queryset, to_attr='details')
-        tmpworks=Work.objects.filter(private=0).order_by('sort').prefetch_related(prefetch)
+        non_p_queryset = Work.objects.filter(private=0).order_by('sort').prefetch_related(prefetch)
+        p_queryset = Work.objects.exclude(private=0).order_by('sort').prefetch_related(prefetch)
+        non_p_exist_cnt=non_p_queryset.count()
+        p_exist_cnt = p_queryset.count()
 
-        if tmpworks.count() >= half_work:
-            tmpworks = tmpworks[:half_work]
+        non_p_ref_cnt, p_ref_cnt = self._determine_work_counts(non_p_exist_cnt, p_exist_cnt)
 
-        works += tmpworks
-        tmpworks = Work.objects.exclude(private=0).order_by('sort').prefetch_related(prefetch)
-        works += tmpworks[:self.MAX_WORK - tmpworks.count()]
+        works = []
+        if non_p_ref_cnt > 0:
+            works += non_p_queryset[:non_p_ref_cnt]
+
+        if p_ref_cnt > 0:
+            works += p_queryset[:p_ref_cnt]
 
         context = {'profile': prof,'works': works, 'MAX_WORK' : self.MAX_WORK}
         return render(request, 'portfolio/index.html', context)
+
+    def _determine_work_counts(self, non_private:int, private:int):
+        """This calculates counts of non-private works and private works.
+
+        If works are more than MAX(default=6) counts, it returns only MAX.
+        If less, it returns counts of works.
+        It balances non-private and private works.
+        For example, it returns 2 for non-private and 4 for private
+        when there are 2 non-private works and 6 private works in the DB, vice versa.
+        For another example, it returns 3 for non-private and 3 for private
+        when there are 6 non-private works and 6 private works in the DB.
+
+        Args:
+            non_private (int): non private works counts existed
+            private (int): private works counts existed
+
+        Returns:
+            int: non private works counts to display
+            int: private works counts to display
+        """
+        half_work = math.ceil(self.MAX_WORK/2)
+        non_p_ref_cnt = 0
+        p_ref_cnt = 0
+        if non_private >= half_work and private >= half_work:
+            non_p_ref_cnt = half_work
+            p_ref_cnt = half_work
+        elif non_private < half_work <= private:
+            non_p_ref_cnt = non_private
+            p_ref_cnt = self.MAX_WORK - non_private
+        elif private < half_work <= non_private:
+            non_p_ref_cnt = self.MAX_WORK - private
+            p_ref_cnt = private
+        elif non_private < half_work and private < half_work:
+            non_p_ref_cnt = non_private
+            p_ref_cnt = private
+        else:
+            non_p_ref_cnt = non_private
+            p_ref_cnt = private
+
+        return non_p_ref_cnt, p_ref_cnt
 
 class WorksView(View):
     """The view of works page.
