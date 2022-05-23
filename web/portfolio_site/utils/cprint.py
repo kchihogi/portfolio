@@ -1,4 +1,8 @@
-class ColorPrint(object):
+"""This module is to print console with color.
+"""
+class ColorPrint():
+    """Static class to print console with color.
+    """
     BLACK     = '\033[30m'
     RED       = '\033[31m'
     GREEN     = '\033[32m'
@@ -14,5 +18,11 @@ class ColorPrint(object):
     REVERCE   = '\033[07m'
 
     @staticmethod
-    def print(msg, color):
+    def print(msg:str, color:str):
+        """print console with color.
+
+        Args:
+            msg (str): message to print on the console.
+            color (str): color. Constants are prepared.
+        """
         print(color + msg + ColorPrint.END)
