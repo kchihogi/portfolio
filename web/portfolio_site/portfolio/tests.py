@@ -67,56 +67,122 @@ def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, 
     work_detail.save()
     return work
 
-def _add_language_skills(work:Work, languages:list[str]):
+def _relate_language_skills(work:Work, languages:list[(str,int)]):
     """This cretes relationship with work and language skills.
 
     Args:
         work (Work): the model of work.
-        languages (list[str]): a list of language name.
+        languages (list[str]): a list of language name and sort number.
     """
     if languages is not None:
         for record in Language_Skill.objects.all():
             for language in languages:
-                if record.name == language:
+                if record.name == language[0]:
                     relation = Work_Language_Skill_RelationShip()
                     relation.Work_id=work.pk
                     relation.Language_Skill_id=record.pk
-                    relation.sort=0
+                    relation.sort=language[1]
                     relation.save()
 
-def _add_lib_skills(work:Work, libs:list[str]):
+def _relate_lib_skills(work:Work, libs:list[(str,int)]):
     """This cretes relationship with work and libs skills.
 
     Args:
         work (Work): the model of work.
-        libs (list[str]): a list of library name.
+        libs (list[(str,int)]): a list of library name and sort number.
     """
     if libs is not None:
         for record in Library_Skill.objects.all():
             for lib in libs:
-                if record.name == lib:
+                if record.name == lib[0]:
                     relation = Work_Library_Skill_Relationship()
                     relation.Work_id=work.pk
                     relation.Library_Skill_id=record.pk
-                    relation.sort=0
+                    relation.sort=lib[1]
                     relation.save()
 
-def _add_dev_ops_skills(work:Work, dev_ops:list[str]):
+def _relate_dev_ops_skills(work:Work, dev_ops:list[(str,int)]):
     """This cretes relationship with work and dev_ops skills.
 
     Args:
         work (Work): the model of work.
-        dev_ops (list[str]): a list of dev_ops skill name.
+        dev_ops (list[(str,int)]): a list of dev_ops skill name and sort number.
     """
     if dev_ops is not None:
         for record in DevOps_Skill.objects.all():
             for dev in dev_ops:
-                if record.name == dev:
+                if record.name == dev[0]:
                     relation = Work_DevOps_Skill_Relationship()
                     relation.Work_id=work.pk
                     relation.DevOps_Skill_id=record.pk
-                    relation.sort=0
+                    relation.sort=dev[1]
                     relation.save()
+
+def _add_language_skills():
+    """This inserts language skills.
+    """
+    record = Language_Skill(name = 'C++', maturity = 5)
+    record.save()
+    record = Language_Skill(name = 'Python', maturity = 3)
+    record.save()
+    record = Language_Skill(name = 'C#', maturity = 2)
+    record.save()
+    record = Language_Skill(name = 'Powershell', maturity = 4)
+    record.save()
+    record = Language_Skill(name = 'PHP', maturity = 2)
+    record.save()
+    record = Language_Skill(name = 'Java', maturity = 1)
+    record.save()
+    record = Language_Skill(name = 'SQL(SQL Server, MySQL)', maturity = 5)
+    record.save()
+
+def _add_library_skills():
+    """This inserts libraru skills.
+    """
+    record = Library_Skill(name = 'F社標準ライブラリ', maturity = 5)
+    record.save()
+    record = Library_Skill(name = 'Django', maturity = 2)
+    record.save()
+    record = Library_Skill(name = '.Net Framework', maturity = 2)
+    record.save()
+
+def _add_dev_ops_skills():
+    """This insets DevOps skills.
+    """
+    record = DevOps_Skill(name = 'Visual Studio', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'VS Code', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'SQL Server Management Studio', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'Mysql Workbench', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'SVN', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'Git', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'A5 SQL Mk-2', maturity = 4)
+    record.save()
+    record = DevOps_Skill(name = 'Office', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'Redmine', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'JIRA', maturity = 4)
+    record.save()
+    record = DevOps_Skill(name = 'Jenkins', maturity = 5)
+    record.save()
+    record = DevOps_Skill(name = 'Teams', maturity = 4)
+    record.save()
+    record = DevOps_Skill(name = 'Skype', maturity = 4)
+    record.save()
+    record = DevOps_Skill(name = 'Zoom', maturity = 3)
+    record.save()
+    record = DevOps_Skill(name = 'Slack', maturity = 3)
+    record.save()
+    record = DevOps_Skill(name = 'Docker', maturity = 4)
+    record.save()
+    record = DevOps_Skill(name = 'myPHPAdmin', maturity = 2)
+    record.save()
 
 # Views Tests
 
@@ -378,14 +444,14 @@ class WorksViewTest(TestCase):
     def test_no_profile(self):
         """If no profile resistered, the works page returns 404.
         """
-        response = self.client.get(reverse('portfolio:index'))
+        response = self.client.get(reverse('portfolio:works'))
         self.assertEqual(response.status_code, 404)
 
     def test_no_work(self):
         """If no works, the works page contains "No works are available.
         """
         profile = _cretet_profile()
-        response = self.client.get(reverse('portfolio:index'))
+        response = self.client.get(reverse('portfolio:works'))
         self.assertContains(response=response, text=profile.title)
         self.assertContains(response=response, text='No works are available.')
         self.assertQuerysetEqual(
@@ -396,14 +462,57 @@ class WorksViewTest(TestCase):
     def test_no_skills_works(self):
         """If no skills related to works, works are listed without skills.
         """
-        pass
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        lang=[]
+        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_a, languages=lang)
+        work_b = _create_work('WorkB', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_b, languages=lang)
+        work_c = _create_work('WorkC', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_c, languages=lang)
+        work_d = _create_work('WorkD', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_d, languages=lang)
+        work_e = _create_work('WorkE', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_e, languages=lang)
+        work_f = _create_work('WorkF', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_f, languages=lang)
+        response = self.client.get(reverse('portfolio:works'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
 
     def test_lang_sorted(self):
         """This tests that language skills are sorted by its sort column in a work.
 
         The value of the sort can be duplicated.
         """
-        pass
+        _cretet_profile()
+        _add_language_skills()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        lang = [('C#', 1),('Powershell', 2),('Java', 3)]
+        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_a, languages=lang)
+        work_b = _create_work('WorkB', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_b, languages=lang)
+        work_c = _create_work('WorkC', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_c, languages=lang)
+        work_d = _create_work('WorkD', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_d, languages=lang)
+        work_e = _create_work('WorkE', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_e, languages=lang)
+        work_f = _create_work('WorkF', private_work, start, end,sort=0)
+        _relate_language_skills(work=work_f, languages=lang)
+        response = self.client.get(reverse('portfolio:works'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a, work_b, work_c, work_d, work_e, work_f],
+        )
 
     def test_lib_sorted(self):
         """This tests that library skills are sorted by its sort column in a work.
