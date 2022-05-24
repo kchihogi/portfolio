@@ -372,6 +372,58 @@ class IndexViewTest(TestCase):
             [work_b, work_a, work_d, work_c],
         )
 
+class WorksViewTest(TestCase):
+    """This class is an object to test the WorksView."""
+
+    def test_no_profile(self):
+        """If no profile resistered, the works page returns 404.
+        """
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertEqual(response.status_code, 404)
+
+    def test_no_work(self):
+        """If no works, the works page contains "No works are available.
+        """
+        profile = _cretet_profile()
+        response = self.client.get(reverse('portfolio:index'))
+        self.assertContains(response=response, text=profile.title)
+        self.assertContains(response=response, text='No works are available.')
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [],
+        )
+
+    def test_no_skills_works(self):
+        """If no skills related to works, works are listed without skills.
+        """
+        pass
+
+    def test_lang_sorted(self):
+        """This tests that language skills are sorted by its sort column in a work.
+
+        The value of the sort can be duplicated.
+        """
+        pass
+
+    def test_lib_sorted(self):
+        """This tests that library skills are sorted by its sort column in a work.
+
+        The value of the sort can be duplicated.
+        """
+        pass
+
+    def test_dev_ops_sorted(self):
+        """This tests that DevOps skills are sorted by its sort column in a work.
+
+        The value of the sort can be duplicated.
+        """
+        pass
+
+    def test_all_skills_mixed_works(self):
+        """Language, library, and DevOps skills are all listed in a work.
+        """
+        pass
+
 # Models Tests
 
 # class ProfileModelTests(TestCase):
