@@ -495,7 +495,7 @@ class WorksViewTest(TestCase):
         private_work = 0
         start = timezone.now() + datetime.timedelta(days=-365)
         end = timezone.now()
-        lang = [('C#', 1),('Powershell', 2),('Java', 3)]
+        lang = [('C#', 2),('Powershell', 1),('Java', 3)]
         work_a = _create_work('WorkA', private_work, start, end,sort=0)
         _relate_language_skills(work=work_a, languages=lang)
         work_b = _create_work('WorkB', private_work, start, end,sort=0)
@@ -513,6 +513,13 @@ class WorksViewTest(TestCase):
             response.context['works'],
             [work_a, work_b, work_c, work_d, work_e, work_f],
         )
+
+        for work in response.context['works']:
+            for (ret, exp) in zip(work.lang_details, lang):
+                if ret.Language_Skill.name != exp[0] or ret.sort != exp[1]:
+                    raise AssertionError('hogehgoe')
+                    print('ecpect name=%s , sort=%d' % (exp[0], exp[1]))
+                    print('result name=%s , sort=%d' % (ret.Language_Skill,ret.sort))
 
     def test_lib_sorted(self):
         """This tests that library skills are sorted by its sort column in a work.
