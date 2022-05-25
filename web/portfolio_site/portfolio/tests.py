@@ -1,5 +1,6 @@
 """UT Test module for portfolio application."""
 import datetime
+from operator import itemgetter
 
 from django.test import TestCase
 from django.utils import timezone
@@ -498,28 +499,26 @@ class WorksViewTest(TestCase):
         lang = [('C#', 2),('Powershell', 1),('Java', 3)]
         work_a = _create_work('WorkA', private_work, start, end,sort=0)
         _relate_language_skills(work=work_a, languages=lang)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        _relate_language_skills(work=work_b, languages=lang)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        _relate_language_skills(work=work_c, languages=lang)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        _relate_language_skills(work=work_d, languages=lang)
-        work_e = _create_work('WorkE', private_work, start, end,sort=0)
-        _relate_language_skills(work=work_e, languages=lang)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
-        _relate_language_skills(work=work_f, languages=lang)
         response = self.client.get(reverse('portfolio:works'))
         self.assertQuerysetEqual(
             response.context['works'],
-            [work_a, work_b, work_c, work_d, work_e, work_f],
+            [work_a],
         )
-
+        sorted_lang = sorted(lang, key=itemgetter(1))
         for work in response.context['works']:
-            for (ret, exp) in zip(work.lang_details, lang):
+            match = True
+            result_str = '['
+            for (ret, exp) in zip(work.lang_details, sorted_lang):
+                result_str += "('" +ret.Language_Skill.name + "', " + str(ret.sort) + "), "
                 if ret.Language_Skill.name != exp[0] or ret.sort != exp[1]:
-                    raise AssertionError('hogehgoe')
-                    print('ecpect name=%s , sort=%d' % (exp[0], exp[1]))
-                    print('result name=%s , sort=%d' % (ret.Language_Skill,ret.sort))
+                    match = False
+            result_str = result_str[:-2] + ']'
+            if not match:
+                type_str = str(type(work))
+                msg = work.__str__() + ' ' + type_str + '\n\n'
+                msg += 'expected:%s\n\n' % (sorted_lang)
+                msg += 'result:' + result_str + '\n'
+                raise AssertionError(msg)
 
     def test_lib_sorted(self):
         """This tests that library skills are sorted by its sort column in a work.
