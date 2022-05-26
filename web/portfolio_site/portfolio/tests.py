@@ -186,7 +186,7 @@ def _add_dev_ops_skills():
     record = DevOps_Skill(name = 'myPHPAdmin', maturity = 2)
     record.save()
 
-def _assert_skills(works:list[Work], attr:str, col1:str, field:str, col2:str, skills:list[Tuple[str,int]]):
+def _assert_skills(works:list[Work], attr:str, col1:str, col2:str, skills:list[Tuple[str,int]]):
     """This compares works to skills. If that does not match, it raises the AssertionError.
 
     Args:
@@ -200,20 +200,35 @@ def _assert_skills(works:list[Work], attr:str, col1:str, field:str, col2:str, sk
 
     Raises:
         AssertionError: Works do not match skills.
+        TypeError: col1 has to be <table>.<field> separated with ".".
     """
-    sorted_lang = sorted(skills, key=itemgetter(1))
+    fields  = col1.split(".")
+    if len(fields) != 2:
+        raise TypeError('col1 has to be <table>.<field> separated with ".".')
+
+    if len(works) == 0:
+        msg = "works are zero."
+        raise AssertionError(msg)
+
+    sorted_skills = sorted(skills, key=itemgetter(1))
     for work in works:
         match = True
+
         result_str = '['
-        for (ret, exp) in zip(getattr(work, attr), sorted_lang):
-            result_str += "('" + getattr(getattr(ret, col1), field) + "', " + str(getattr(ret, col2)) + "), "
-            if getattr(getattr(ret, col1), field) != exp[0] or getattr(ret, col2) != exp[1]:
+        if len(getattr(work, attr)) != len(sorted_skills):
+            match = False
+            result_str += ', '
+
+        for (ret, exp) in zip(getattr(work, attr), sorted_skills):
+            skill_name = getattr(getattr(ret, fields[0]), fields[1])
+            sort_num = getattr(ret, col2)
+            result_str += "('" + skill_name + "', " + str(sort_num) + "), "
+            if skill_name != exp[0] or sort_num != exp[1]:
                 match = False
         result_str = result_str[:-2] + ']'
         if not match:
-            type_str = str(type(work))
-            msg = work.__str__() + ' ' + type_str + '\n\n'
-            msg += 'expected:%s\n\n' % (sorted_lang)
+            msg = work.__str__() + ' ' + str(type(work)) + '\n\n'
+            msg += 'expected:%s\n\n' % (sorted_skills)
             msg += 'result:' + result_str + '\n'
             raise AssertionError(msg)
 
@@ -540,8 +555,7 @@ class WorksViewTest(TestCase):
         _assert_skills(
             response.context['works'],
             "lang_details",
-            "Language_Skill",
-            "name",
+            "Language_Skill.name",
             "sort",
             lang,
         )
