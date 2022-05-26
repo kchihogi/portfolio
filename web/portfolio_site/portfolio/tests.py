@@ -1,6 +1,7 @@
 """UT Test module for portfolio application."""
 import datetime
 from operator import itemgetter
+from typing import Tuple
 
 from django.test import TestCase
 from django.utils import timezone
@@ -68,12 +69,12 @@ def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, 
     work_detail.save()
     return work
 
-def _relate_language_skills(work:Work, languages:list[(str,int)]):
+def _relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
     """This cretes relationship with work and language skills.
 
     Args:
         work (Work): the model of work.
-        languages (list[str]): a list of language name and sort number.
+        languages (list[Tuple[str,int]]): a list of language name and sort number.
     """
     if languages is not None:
         for record in Language_Skill.objects.all():
@@ -85,12 +86,12 @@ def _relate_language_skills(work:Work, languages:list[(str,int)]):
                     relation.sort=language[1]
                     relation.save()
 
-def _relate_lib_skills(work:Work, libs:list[(str,int)]):
+def _relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
     """This cretes relationship with work and libs skills.
 
     Args:
         work (Work): the model of work.
-        libs (list[(str,int)]): a list of library name and sort number.
+        libs (list[Tuple[str,int]]): a list of library name and sort number.
     """
     if libs is not None:
         for record in Library_Skill.objects.all():
@@ -102,12 +103,12 @@ def _relate_lib_skills(work:Work, libs:list[(str,int)]):
                     relation.sort=lib[1]
                     relation.save()
 
-def _relate_dev_ops_skills(work:Work, dev_ops:list[(str,int)]):
+def _relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
     """This cretes relationship with work and dev_ops skills.
 
     Args:
         work (Work): the model of work.
-        dev_ops (list[(str,int)]): a list of dev_ops skill name and sort number.
+        dev_ops (list[Tuple[str,int]]): a list of dev_ops skill name and sort number.
     """
     if dev_ops is not None:
         for record in DevOps_Skill.objects.all():
@@ -184,6 +185,37 @@ def _add_dev_ops_skills():
     record.save()
     record = DevOps_Skill(name = 'myPHPAdmin', maturity = 2)
     record.save()
+
+def _assert_skills(works:list[Work], attr:str, col1:str, field:str, col2:str, skills:list[Tuple[str,int]]):
+    """This compares works to skills. If that does not match, it raises the AssertionError.
+
+    Args:
+        works (list[Work]): A list of works.
+        attr (str): A table name, or an alias of a table naem, witch realated to a work for skills.
+        col1 (str): A column name of the table which you set in the attr argument.
+        This compares to the first column of one of the skills argument.
+        col2 (str): A column name of the table which you set in the attr argument.
+        This compares to the second column of one of the skills argument.
+        skills (list[Tuple[str,int]]): A list of skills to be expected.
+
+    Raises:
+        AssertionError: Works do not match skills.
+    """
+    sorted_lang = sorted(skills, key=itemgetter(1))
+    for work in works:
+        match = True
+        result_str = '['
+        for (ret, exp) in zip(getattr(work, attr), sorted_lang):
+            result_str += "('" + getattr(getattr(ret, col1), field) + "', " + str(getattr(ret, col2)) + "), "
+            if getattr(getattr(ret, col1), field) != exp[0] or getattr(ret, col2) != exp[1]:
+                match = False
+        result_str = result_str[:-2] + ']'
+        if not match:
+            type_str = str(type(work))
+            msg = work.__str__() + ' ' + type_str + '\n\n'
+            msg += 'expected:%s\n\n' % (sorted_lang)
+            msg += 'result:' + result_str + '\n'
+            raise AssertionError(msg)
 
 # Views Tests
 
@@ -504,21 +536,16 @@ class WorksViewTest(TestCase):
             response.context['works'],
             [work_a],
         )
-        sorted_lang = sorted(lang, key=itemgetter(1))
-        for work in response.context['works']:
-            match = True
-            result_str = '['
-            for (ret, exp) in zip(work.lang_details, sorted_lang):
-                result_str += "('" +ret.Language_Skill.name + "', " + str(ret.sort) + "), "
-                if ret.Language_Skill.name != exp[0] or ret.sort != exp[1]:
-                    match = False
-            result_str = result_str[:-2] + ']'
-            if not match:
-                type_str = str(type(work))
-                msg = work.__str__() + ' ' + type_str + '\n\n'
-                msg += 'expected:%s\n\n' % (sorted_lang)
-                msg += 'result:' + result_str + '\n'
-                raise AssertionError(msg)
+
+        _assert_skills(
+            response.context['works'],
+            "lang_details",
+            "Language_Skill",
+            "name",
+            "sort",
+            lang,
+        )
+
 
     def test_lib_sorted(self):
         """This tests that library skills are sorted by its sort column in a work.
