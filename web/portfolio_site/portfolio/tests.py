@@ -186,7 +186,13 @@ def _add_dev_ops_skills():
     record = DevOps_Skill(name = 'myPHPAdmin', maturity = 2)
     record.save()
 
-def _assert_skills(works:list[Work], attr:str, col1:str, col2:str, skills:list[Tuple[str,int]]):
+def _assert_skills(
+    works:list[Work],
+    attr:str,
+    col1:str,
+    col2:str,
+    skillsset:list[list[Tuple[str,int]]]
+    ):
     """This compares works to skills. If that does not match, it raises the AssertionError.
 
     Args:
@@ -196,37 +202,40 @@ def _assert_skills(works:list[Work], attr:str, col1:str, col2:str, skills:list[T
         This compares to the first column of one of the skills argument.
         col2 (str): A column name of the table which you set in the attr argument.
         This compares to the second column of one of the skills argument.
-        skills (list[Tuple[str,int]]): A list of skills to be expected.
+        skillsset (list[list[Tuple[str,int]]]): A list of skills to be expected.
 
     Raises:
         AssertionError: Works do not match skills.
         TypeError: col1 has to be <table>.<field> separated with ".".
     """
-    fields  = col1.split(".")
-    if len(fields) != 2:
+    if len(col1.split(".")) != 2:
         raise TypeError('col1 has to be <table>.<field> separated with ".".')
 
-    if len(works) == 0:
-        msg = "works are zero."
+    if len(works) != len(skillsset):
+        msg = "works conut are equal to skillslist."
         raise AssertionError(msg)
 
-    sorted_skills = sorted(skills, key=itemgetter(1))
-    for work in works:
+    for (work, skills) in zip(works, skillsset):
+        sorted_skills = sorted(skills, key=itemgetter(1))
         match = True
 
         result_str = '['
         if len(getattr(work, attr)) != len(sorted_skills):
             match = False
-            result_str += ', '
-
+            if len(getattr(work, attr)) == 0:
+                result_str += ', '
         for (ret, exp) in zip(getattr(work, attr), sorted_skills):
-            skill_name = getattr(getattr(ret, fields[0]), fields[1])
+            skill_name = getattr(getattr(ret, col1.split(".")[0]), col1.split(".")[1])
             sort_num = getattr(ret, col2)
-            result_str += "('" + skill_name + "', " + str(sort_num) + "), "
             if skill_name != exp[0] or sort_num != exp[1]:
                 match = False
-        result_str = result_str[:-2] + ']'
+                break
         if not match:
+            for ret in getattr(work, attr):
+                skill_name = getattr(getattr(ret, col1.split(".")[0]), col1.split(".")[1])
+                sort_num = getattr(ret, col2)
+                result_str += "('" + skill_name + "', " + str(sort_num) + "), "
+            result_str = result_str[:-2] + ']'
             msg = work.__str__() + ' ' + str(type(work)) + '\n\n'
             msg += 'expected:%s\n\n' % (sorted_skills)
             msg += 'result:' + result_str + '\n'
@@ -543,9 +552,11 @@ class WorksViewTest(TestCase):
         private_work = 0
         start = timezone.now() + datetime.timedelta(days=-365)
         end = timezone.now()
+        langs = []
         lang = [('C#', 2),('Powershell', 1),('Java', 3)]
         work_a = _create_work('WorkA', private_work, start, end,sort=0)
         _relate_language_skills(work=work_a, languages=lang)
+        langs.append(lang)
         response = self.client.get(reverse('portfolio:works'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -557,7 +568,7 @@ class WorksViewTest(TestCase):
             "lang_details",
             "Language_Skill.name",
             "sort",
-            lang,
+            langs,
         )
 
 
