@@ -234,11 +234,11 @@ def _assert_skills(
             for ret in getattr(work, attr):
                 skill_name = getattr(getattr(ret, col1.split(".")[0]), col1.split(".")[1])
                 sort_num = getattr(ret, col2)
-                result_str += "('" + skill_name + "', " + str(sort_num) + "), "
-            result_str = result_str[:-2] + ']'
-            msg = work.__str__() + ' ' + str(type(work)) + '\n\n'
-            msg += 'expected:%s\n\n' % (sorted_skills)
-            msg += 'result:' + result_str + '\n'
+                result_str += f"('{skill_name}', {str(sort_num)}), "
+            result_str = f'{result_str[:-2]}]'
+            msg = f'{work.__str__()} {str(type(work))}\n\n'
+            msg += f'expected:{sorted_skills}\n\n'
+            msg += f'result:{result_str}\n'
             raise AssertionError(msg)
 
 # Views Tests
@@ -577,19 +577,136 @@ class WorksViewTest(TestCase):
 
         The value of the sort can be duplicated.
         """
-        pass
+        _cretet_profile()
+        _add_library_skills()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        libs = []
+        lib = [('Django', 2),('.Net Framework', 1),('F社標準ライブラリ', 3)]
+        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        _relate_lib_skills(work=work_a, libs=lib)
+        libs.append(lib)
+        response = self.client.get(reverse('portfolio:works'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a],
+        )
+
+        _assert_skills(
+            response.context['works'],
+            "lib_details",
+            "Library_Skill.name",
+            "sort",
+            libs,
+        )
 
     def test_dev_ops_sorted(self):
         """This tests that DevOps skills are sorted by its sort column in a work.
 
         The value of the sort can be duplicated.
         """
-        pass
+        _cretet_profile()
+        _add_dev_ops_skills()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        devs = []
+        dev = [('Visual Studio', 2),('VS Code', 1),('SQL Server Management Studio', 3)]
+        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        _relate_dev_ops_skills(work=work_a, dev_ops=dev)
+        devs.append(dev)
+        response = self.client.get(reverse('portfolio:works'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_a],
+        )
+
+        _assert_skills(
+            response.context['works'],
+            "dev_details",
+            "DevOps_Skill.name",
+            "sort",
+            devs,
+        )
 
     def test_all_skills_mixed_works(self):
         """Language, library, and DevOps skills are all listed in a work.
         """
-        pass
+        _cretet_profile()
+        _add_language_skills()
+        _add_library_skills()
+        _add_dev_ops_skills()
+
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        langs = []
+        libs = []
+        devs = []
+        work_a = _create_work('WorkA', private_work, start, end,sort=3)
+        work_b = _create_work('WorkB', private_work, start, end,sort=2)
+        work_c = _create_work('WorkC', private_work, start, end,sort=1)
+
+        lang = [('C#', 2),('Powershell', 1),('Java', 3)]
+        lib = [('Django', 2),('.Net Framework', 1),('F社標準ライブラリ', 3)]
+        dev = [('SQL Server Management Studio', 0),('VS Code', 0), ('Visual Studio', 0)]
+        _relate_dev_ops_skills(work=work_c, dev_ops=dev)
+        _relate_lib_skills(work=work_c, libs=lib)
+        _relate_language_skills(work=work_c, languages=lang)
+        langs.append(lang)
+        libs.append(lib)
+        devs.append(dev)
+
+        lang = [('C#', 3),('Powershell', 99),('Java', 1)]
+        lib = [('Django', 3),('.Net Framework', 2),('F社標準ライブラリ', 1)]
+        dev = [('Visual Studio', 2),('VS Code', 70),('SQL Server Management Studio', 3)]
+        _relate_dev_ops_skills(work=work_b, dev_ops=dev)
+        _relate_lib_skills(work=work_b, libs=lib)
+        _relate_language_skills(work=work_b, languages=lang)
+        langs.append(lang)
+        libs.append(lib)
+        devs.append(dev)
+
+        lang = [('C#', 1),('Powershell', 2),('Java', 3)]
+        lib = [('.Net Framework', 2), ('Django', 2), ('F社標準ライブラリ', 2)]
+        dev = [('Visual Studio', 3),('VS Code', 2),('SQL Server Management Studio', 1)]
+        _relate_dev_ops_skills(work=work_a, dev_ops=dev)
+        _relate_lib_skills(work=work_a, libs=lib)
+        _relate_language_skills(work=work_a, languages=lang)
+        langs.append(lang)
+        libs.append(lib)
+        devs.append(dev)
+
+        response = self.client.get(reverse('portfolio:works'))
+        self.assertQuerysetEqual(
+            response.context['works'],
+            [work_c, work_b, work_a],
+        )
+
+        _assert_skills(
+            response.context['works'],
+            "lang_details",
+            "Language_Skill.name",
+            "sort",
+            langs,
+        )
+
+        _assert_skills(
+            response.context['works'],
+            "lib_details",
+            "Library_Skill.name",
+            "sort",
+            libs,
+        )
+
+        _assert_skills(
+            response.context['works'],
+            "dev_details",
+            "DevOps_Skill.name",
+            "sort",
+            devs,
+        )
 
 # Models Tests
 
