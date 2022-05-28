@@ -2,6 +2,7 @@
 """
 import math
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Prefetch
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, get_list_or_404,render
@@ -95,6 +96,8 @@ class IndexView(View):
 class WorksView(View):
     """The view of works page.
     """
+
+    PAGENATION_COUNT=12
     def get(self, request:HttpRequest):
         """GET.
 
@@ -120,7 +123,17 @@ class WorksView(View):
         works = Work.objects.order_by('sort', 'title')
         works = works.prefetch_related(lang_prefetch, lib_prefetch, dev_prefetch)
 
-        context = {'profile': prof,'works': works}
+        # pagenateの実行
+        paginator = Paginator(works, self.PAGENATION_COUNT)
+        page = request.GET.get('page')
+
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+        context = {'profile': prof,'works': page_obj.object_list, 'page_obj': page_obj}
         return render(request, 'portfolio/works.html', context)
 
 class WorkView(View):

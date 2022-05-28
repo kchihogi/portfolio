@@ -49,7 +49,7 @@ header::after{
 .navi>li{
   position: relative;
   width: 20%;
-  padding: 10px;
+  padding: 15px;
   margin: 0;
   list-style: none;
   text-align: center;
@@ -155,4 +155,18 @@ article{
 .card>.devops>p{
   background-color: #0b92e0;
   color: #f8f8ff;
+}
+
+pagenator{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+pagenator > a{
+  margin: 5px;
+}
+
+pagenator > span{
+  margin: 5px;
 }

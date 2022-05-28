@@ -411,10 +411,22 @@ def add_works():
     _add_lib_skills(work=work,libs=libs)
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
-if  __name__ == "__main__":
-    add_profile()
-    add_acknowledgment()
-    add_language_skills()
-    add_library_skills()
-    add_dev_ops_skills()
-    add_works()
+    for i in range(300):
+        work_name = f'WorkZZZ{str(i)}'
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        languages = ['Python']
+        libs = ['Django']
+        dev_ops = ['VS Code', 'Git', 'Docker']
+        work = _create_work(work_name=work_name, private_work=private_work, start=start, end=end)
+        _add_language_skills(work=work, languages=languages)
+        _add_lib_skills(work=work,libs=libs)
+        _add_dev_ops_skills(work=work,dev_ops=dev_ops)
+
+add_profile()
+add_acknowledgment()
+add_language_skills()
+add_library_skills()
+add_dev_ops_skills()
+add_works()

@@ -42,5 +42,4 @@ def add_icon_master():
     line = Icon_Mater(name='LINE', icon='icons/LINE.png')
     line.save()
 
-if __name__ == "__main__":
-    add_icon_master()
+add_icon_master()
