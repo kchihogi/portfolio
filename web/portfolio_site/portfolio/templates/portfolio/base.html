@@ -1,0 +1,40 @@
+{% load static %}
+{% load i18n static %}
+<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>{% block title %}{{profile.title}}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
+        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Noto+Sans">
+        {% block extra_css %}{% endblock %}
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <header>
+            <a class="no-underline-link no-color-link" href="{% url 'portfolio:index' %}">
+                <h1 class="title">{{profile.title}}</h1>
+            </a>
+            <ul class="navi">
+                <li><a class="no-underline-link" href="{% url 'portfolio:index' %}">Home</a></li>
+                <li><a class="no-underline-link" href="{% url 'portfolio:works' %}">Works</a></li>
+                <li><a class="no-underline-link" href="">About</a></li>
+                <li><a class="no-underline-link" href="">Contact</a></li>
+            </ul>
+        </header>
+        <article>
+            {% block article %}{% endblock %}
+        </article>
+        <pagenator>
+            {% block pagenator %}{% endblock %}
+        </pagenator>
+        <footer></footer>
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

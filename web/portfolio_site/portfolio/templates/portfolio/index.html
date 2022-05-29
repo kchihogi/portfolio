@@ -1,55 +1,20 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>{{profile.title}}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
-        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Noto+Sans">
-        <!--[if lt IE 9]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-        <![endif]-->
-    </head>
+{% extends "portfolio/base.html" %}
 
-    <body>
-        <!----- ヘッダー ----->
-        <header>
-            <a class="no-underline-link no-color-link" href="{% url 'portfolio:index' %}">
-                <h1 class="title">{{profile.title}}</h1>
-            </a>
-            <ul class="navi">
-                <li><a class="no-underline-link" href="{% url 'portfolio:index' %}">Home</a></li>
-                <li><a class="no-underline-link" href="{% url 'portfolio:works' %}">Works</a></li>
-                <li><a class="no-underline-link" href="">About</a></li>
-                <li><a class="no-underline-link" href="">Contact</a></li>
-            </ul>
-        </header>
-        <!----- ヘッダー END ----->
-        
-        <!----- メインコンテンツ ----->
-        <article>
-            {% if works %}
-                {% for work in works %}
-                <a class="card" href="{% url 'portfolio:work' work.id %}">
-                    <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
-                    <h1>{{work.title}}</h1>
-                    <p>概要: {{work.description}}</p>
-                    <div class="skill language">
-                        {% for detail in work.details|slice:":3" %}
-                            <p>{{detail.Language_Skill.name}}</p>
-                        {% endfor %}
-                    </div>
-                </a>
-                {% endfor %}
-            {% else %}
-                <p>No works are available.</p>
-            {% endif %}
-        </article>
-        <!----- メインコンテンツ END ----->
-
-        <!----- フッター ----->
-        <!-- <footer>フッター</footer> -->
-        <!----- フッター END ----->
-    </body>
-</html>
+{% block article %}
+{% if works %}
+    {% for work in works %}
+    <a class="card" href="{% url 'portfolio:work' work.id %}">
+        <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+        <h1>{{work.title}}</h1>
+        <p>概要: {{work.description}}</p>
+        <div class="skill language">
+            {% for detail in work.details|slice:":3" %}
+                <p>{{detail.Language_Skill.name}}</p>
+            {% endfor %}
+        </div>
+    </a>
+    {% endfor %}
+{% else %}
+    <p>No works are available.</p>
+{% endif %}
+{% endblock article %}

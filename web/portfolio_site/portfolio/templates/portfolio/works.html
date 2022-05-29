@@ -1,90 +1,56 @@
-{% load static %}
+{% extends "portfolio/base.html" %}
+
 {% load paginator_tags %}
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Works</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
-        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Noto+Sans">
-        <!--[if lt IE 9]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-        <![endif]-->
-    </head>
 
-    <body>
-        <!----- ヘッダー ----->
-        <header>
-            <a class="no-underline-link no-color-link" href="{% url 'portfolio:index' %}">
-                <h1 class="title">{{profile.title}}</h1>
-            </a>
-            <ul class="navi">
-                <li><a class="no-underline-link" href="{% url 'portfolio:index' %}">Home</a></li>
-                <li><a class="no-underline-link" href="{% url 'portfolio:works' %}">Works</a></li>
-                <li><a class="no-underline-link" href="">About</a></li>
-                <li><a class="no-underline-link" href="">Contact</a></li>
-            </ul>
-        </header>
-        <!----- ヘッダー END ----->
-        
-        <!----- メインコンテンツ ----->
-        <article>
-            {% if works %}
-                {% for work in works %}
-                <a class="card" href="{% url 'portfolio:work' work.id %}">
-                    <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
-                    <h1>{{work.title}}</h1>
-                    <p>概要: {{work.description}}</p>
-                    <div class="skill language">
-                        {% for detail in work.lang_details%}
-                            <p>{{detail.Language_Skill.name}}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="skill library">
-                        {% for detail in work.lib_details%}
-                            <p>{{detail.Library_Skill.name}}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="skill devops">
-                        {% for detail in work.dev_details%}
-                            <p>{{detail.DevOps_Skill.name}}</p>
-                        {% endfor %}
-                    </div>
-                </a>
-                {% endfor %}
-            {% else %}
-                <p>No works are available.</p>
-            {% endif %}
-
-        </article>
-
-        <pagenator>
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
-            {% endif %}
-
-            {% get_proper_elided_page_range page_obj.paginator page_obj.number as page_range %}
-            {% for i in page_range %}
-                {% if page_obj.number == i %}
-                    <span>{{ i }}</span>
-                {% else %}
-                    {% if i == page_obj.paginator.ELLIPSIS %}
-                        <span>{{ page_obj.paginator.ELLIPSIS }}</span>
-                    {% else %}
-                        <a href="?page={{ i }}">{{ i }}</a>
-                    {% endif %}
-                {% endif %}
+{% block article %}
+{% if works %}
+    {% for work in works %}
+    <a class="card" href="{% url 'portfolio:work' work.id %}">
+        <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+        <h1>{{work.title}}</h1>
+        <p>概要: {{work.description}}</p>
+        <div class="skill language">
+            {% for detail in work.lang_details%}
+                <p>{{detail.Language_Skill.name}}</p>
             {% endfor %}
+        </div>
+        <div class="skill library">
+            {% for detail in work.lib_details%}
+                <p>{{detail.Library_Skill.name}}</p>
+            {% endfor %}
+        </div>
+        <div class="skill devops">
+            {% for detail in work.dev_details%}
+                <p>{{detail.DevOps_Skill.name}}</p>
+            {% endfor %}
+        </div>
+    </a>
+    {% endfor %}
+{% else %}
+    <p>No works are available.</p>
+{% endif %}
+{% endblock article %}
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
-            {% endif %}
-        </pagenator>
-        <!----- メインコンテンツ END ----->
+<!-- ページネーション -->
+{% block pagenator %}
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+{% endif %}
 
-        <!----- フッター ----->
-        <!-- <footer>フッター</footer> -->
-        <!----- フッター END ----->
-    </body>
-</html>
+{% get_proper_elided_page_range page_obj.paginator page_obj.number as page_range %}
+{% for i in page_range %}
+    {% if page_obj.number == i %}
+        <span>{{ i }}</span>
+    {% else %}
+        {% if i == page_obj.paginator.ELLIPSIS %}
+            <span>{{ page_obj.paginator.ELLIPSIS }}</span>
+        {% else %}
+            <a href="?page={{ i }}">{{ i }}</a>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+{% endif %}
+{% endblock pagenator %}
