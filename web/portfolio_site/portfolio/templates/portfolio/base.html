@@ -1,6 +1,8 @@
 {% load static %}
 {% load i18n static %}
-<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+{% with NO_IMAGE="/media/NoImage.png" %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
     <head>
         <meta charset="utf-8">
@@ -38,3 +40,4 @@
         {% block extra_js %}{% endblock %}
     </body>
 </html>
+{% endwith %}

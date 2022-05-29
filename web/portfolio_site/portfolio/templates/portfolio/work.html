@@ -2,7 +2,7 @@
 
 {% block article %}
 <dev class="card one-card">
-    <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main visual"/>
+    <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main Visual" onerror="this.src='{{NO_IMAGE}}';" />
     <h1>{{work.title}}</h1>
     <p>概要: {{work.description}}</p>
     <div class = "work-details">
