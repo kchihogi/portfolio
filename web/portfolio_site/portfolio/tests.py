@@ -829,10 +829,6 @@ class WorksViewTest(TestCase):
         self.assertEqual(page_obj.paginator.count, 20)
         self.assertEqual(page_obj.paginator.num_pages, 2)
         self.assertEqual(page_obj.number, 2)
-
-    def test_pagination_elided_range(self):
-        pass
-
 # Models Tests
 
 # class ProfileModelTests(TestCase):
