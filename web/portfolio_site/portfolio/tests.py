@@ -2,6 +2,7 @@
 import datetime
 from operator import itemgetter
 from typing import Tuple
+from urllib import parse
 
 from django.test import TestCase
 from django.utils import timezone
@@ -776,7 +777,9 @@ class WorksViewTest(TestCase):
         self.assertEqual(page_obj.paginator.count, 13)
         self.assertEqual(page_obj.paginator.num_pages, 2)
         self.assertEqual(page_obj.number, 1)
-        response = self.client.get(reverse('portfolio:works')+'?page=2')
+        url = reverse('portfolio:works')
+        url = '?'.join([url,parse.urlencode(dict(page='2'))])
+        response = self.client.get(url)
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.number, 2)
 
@@ -804,7 +807,9 @@ class WorksViewTest(TestCase):
         end = timezone.now()
         for i in range(20):
             _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
-        response = self.client.get(reverse('portfolio:works')+'?page=hogehoge')
+        url = reverse('portfolio:works')
+        url = '?'.join([url, parse.urlencode(dict(page='hogehoge'))])
+        response = self.client.get(url)
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 20)
         self.assertEqual(page_obj.paginator.num_pages, 2)
@@ -819,16 +824,74 @@ class WorksViewTest(TestCase):
         end = timezone.now()
         for i in range(20):
             _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
-        response = self.client.get(reverse('portfolio:works')+'?page=999')
+        url = reverse('portfolio:works')
+        url = '?'.join([url,parse.urlencode(dict(page='999'))])
+        response = self.client.get(url)
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 20)
         self.assertEqual(page_obj.paginator.num_pages, 2)
         self.assertEqual(page_obj.number, 2)
-        response = self.client.get(reverse('portfolio:works')+'?page=-999')
+        url = reverse('portfolio:works')
+        url = '?'.join([url,parse.urlencode(dict(page='-999'))])
+        response = self.client.get(url)
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 20)
         self.assertEqual(page_obj.paginator.num_pages, 2)
         self.assertEqual(page_obj.number, 2)
+
+class WorkViewTest(TestCase):
+    """This class is an object to test the WorkView."""
+
+    def test_no_profile(self):
+        """If no profile resistered, the works page returns 404.
+        """
+        response = self.client.get(reverse('portfolio:work', kwargs=dict(primary_key='1')))
+        self.assertEqual(response.status_code, 404)
+
+    def test_no_work(self):
+        """If no works, the work page returns 404.
+        """
+        _cretet_profile()
+        response = self.client.get(reverse('portfolio:work', kwargs=dict(primary_key='1')))
+        self.assertEqual(response.status_code, 404)
+
+    def test_str_primary_key_request(self):
+        """If no works, the work page returns 404.
+        """
+        _cretet_profile()
+        url = reverse('portfolio:work', kwargs=dict(primary_key='1'))
+        url = url.replace('1', 'hogehoge')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_get_work_with_no_details(self):
+        """This tests to get a work without details.
+        """
+        # profile = _cretet_profile()
+        # private_work = 0
+        # start = timezone.now() + datetime.timedelta(days=-365)
+        # end = timezone.now()
+        # work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        # work_b = _create_work('WorkB', private_work, start, end,sort=0)
+        # work_c = _create_work('WorkC', private_work, start, end,sort=0)
+        # response = self.client.get(reverse('portfolio:work'))
+        # self.assertContains(response=response, text=profile.title)
+        # self.assertQuerysetEqual(
+        #     response.context['works'],
+        #     [work_a, work_b, work_c],
+        # )
+        pass
+
+    def test_get_work_with_songle_detail(self):
+        """This tests to get a work with a detail.
+        """
+        pass
+
+    def test_get_work_with_multi_details(self):
+        """This tests to get a work with some details.
+        """
+        pass
+
 # Models Tests
 
 # class ProfileModelTests(TestCase):
