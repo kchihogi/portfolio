@@ -708,6 +708,131 @@ class WorksViewTest(TestCase):
             devs,
         )
 
+    def test_pagination_zero_work(self):
+        """This tests that pagination returns 1 when there are no works.
+        """
+        _cretet_profile()
+        response = self.client.get(reverse('portfolio:works'))
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 0)
+        self.assertEqual(page_obj.paginator.num_pages, 1)
+        self.assertEqual(page_obj.number, 1)
+
+    def test_pagination_one_work(self):
+        """This tests that pagination returns 1 when there is a work.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        _create_work('WorkA', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works'))
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 1)
+        self.assertEqual(page_obj.paginator.num_pages, 1)
+        self.assertEqual(page_obj.number, 1)
+
+    def test_pagination_eleven_works(self):
+        """This tests that pagination returns 1 when there are 11 works.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        for i in range(11):
+            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works'))
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 11)
+        self.assertEqual(page_obj.paginator.num_pages, 1)
+        self.assertEqual(page_obj.number, 1)
+
+    def test_pagination_twelve_works(self):
+        """This tests that pagination returns 1 when there are 12 works.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        for i in range(12):
+            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works'))
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 12)
+        self.assertEqual(page_obj.paginator.num_pages, 1)
+        self.assertEqual(page_obj.number, 1)
+
+    def test_pagination_thirteen_works(self):
+        """This tests that pagination returns 2 when there are 13 works.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        for i in range(13):
+            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works'))
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 13)
+        self.assertEqual(page_obj.paginator.num_pages, 2)
+        self.assertEqual(page_obj.number, 1)
+        response = self.client.get(reverse('portfolio:works')+'?page=2')
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.number, 2)
+
+    def test_pagination_three_hundreds_works(self):
+        """This tests that pagination returns 25 when there are 300 works.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        for i in range(300):
+            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works'))
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 300)
+        self.assertEqual(page_obj.paginator.num_pages, 25)
+        self.assertEqual(page_obj.number, 1)
+
+    def test_pagination_no_int_request(self):
+        """Pagination returns the first page with a request having a not int parameter.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        for i in range(20):
+            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works')+'?page=hogehoge')
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 20)
+        self.assertEqual(page_obj.paginator.num_pages, 2)
+        self.assertEqual(page_obj.number, 1)
+
+    def test_pagination_unknown_page_request(self):
+        """Pagination returns the last page with a request having an unknown page number.
+        """
+        _cretet_profile()
+        private_work = 0
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        for i in range(20):
+            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+        response = self.client.get(reverse('portfolio:works')+'?page=999')
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 20)
+        self.assertEqual(page_obj.paginator.num_pages, 2)
+        self.assertEqual(page_obj.number, 2)
+        response = self.client.get(reverse('portfolio:works')+'?page=-999')
+        page_obj = response.context['page_obj']
+        self.assertEqual(page_obj.paginator.count, 20)
+        self.assertEqual(page_obj.paginator.num_pages, 2)
+        self.assertEqual(page_obj.number, 2)
+
+    def test_pagination_elided_range(self):
+        pass
+
 # Models Tests
 
 # class ProfileModelTests(TestCase):
