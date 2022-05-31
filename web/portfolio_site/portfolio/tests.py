@@ -31,14 +31,12 @@ def _cretet_profile():
     prof.save()
     return prof
 
-def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, sort:int=0):
+def _create_work(work_name:str, private_work:int, sort:int=0):
     """This cretes work with foreign relations.
 
     Args:
         work_name (str): a name of work
         private_work (int): 0 for no private work. 1 for private work.
-        start (datetime): start datetime when a project started.
-        end (datetime): end datetime when a project ended.
         sort (int, optional): sort number to displaye the web page. Defaults to 0.
 
     Returns:
@@ -59,16 +57,31 @@ def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, 
     work.repository_url='https://dummy_repourl'
     work.sort=sort
     work.save()
+    return work
 
+def _relate_work_detail(work:Work, sub:str, proc:str, start:datetime, end:datetime, desc:str):
+    """This creates relationship with work and work detail.
+
+    Args:
+        work (Work): the model of work.
+        sub (str): Subtitle
+        proc (str): Processes. Comma separated value.
+        start (datetime): start datetime when a project started.
+        end (datetime): end datetime when a project ended.
+        desc (str): Description of the work detail.
+
+    Returns:
+        Work_Detail: the model of Work_Detail created.
+    """
     work_detail = Work_Detail()
     work_detail.Work_id=work.pk
-    work_detail.sub_titile='サブタイトル'
+    work_detail.sub_titile=sub
     work_detail.start_date=start
     work_detail.end_date=end
-    work_detail.processes='工程A,工程B,工程C'
-    work_detail.detail_description= '詳細情報'
+    work_detail.processes=proc
+    work_detail.detail_description= desc
     work_detail.save()
-    return work
+    return work_detail
 
 def _relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
     """This cretes relationship with work and language skills.
@@ -270,11 +283,9 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -286,14 +297,12 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
+        work_e = _create_work('WorkE', private_work,sort=0)
+        work_f = _create_work('WorkF', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -305,15 +314,13 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
-        _create_work('WorkG', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
+        work_e = _create_work('WorkE', private_work,sort=0)
+        work_f = _create_work('WorkF', private_work,sort=0)
+        _create_work('WorkG', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -325,11 +332,9 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -341,14 +346,12 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
+        work_e = _create_work('WorkE', private_work,sort=0)
+        work_f = _create_work('WorkF', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -360,15 +363,13 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
-        _create_work('WorkG', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
+        work_e = _create_work('WorkE', private_work,sort=0)
+        work_f = _create_work('WorkF', private_work,sort=0)
+        _create_work('WorkG', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -381,14 +382,12 @@ class IndexViewTest(TestCase):
         _cretet_profile()
         non_private_work = 0
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', non_private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', non_private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', non_private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', non_private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', non_private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
+        work_e = _create_work('WorkE', non_private_work,sort=0)
+        work_f = _create_work('WorkF', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -401,12 +400,10 @@ class IndexViewTest(TestCase):
         _cretet_profile()
         non_private_work = 0
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', non_private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', non_private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', non_private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', non_private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -419,15 +416,13 @@ class IndexViewTest(TestCase):
         _cretet_profile()
         non_private_work = 0
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', non_private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', non_private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', non_private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', non_private_work, start, end,sort=0)
-        _create_work('WorkG', non_private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', non_private_work,sort=0)
+        work_d = _create_work('WorkD', non_private_work,sort=0)
+        work_e = _create_work('WorkE', non_private_work,sort=0)
+        work_f = _create_work('WorkF', non_private_work,sort=0)
+        _create_work('WorkG', non_private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -440,15 +435,13 @@ class IndexViewTest(TestCase):
         _cretet_profile()
         non_private_work = 0
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
-        _create_work('WorkE', private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', non_private_work, start, end,sort=0)
-        work_g = _create_work('WorkG', non_private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
+        _create_work('WorkE', private_work,sort=0)
+        work_f = _create_work('WorkF', non_private_work,sort=0)
+        work_g = _create_work('WorkG', non_private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -461,16 +454,14 @@ class IndexViewTest(TestCase):
         _cretet_profile()
         non_private_work = 0
         private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        _create_work('WorkD', private_work, start, end,sort=0)
-        work_e = _create_work('WorkE', non_private_work, start, end,sort=0)
-        work_f = _create_work('WorkF', non_private_work, start, end,sort=0)
-        work_g = _create_work('WorkG', non_private_work, start, end,sort=0)
-        _create_work('WorkH', non_private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
+        _create_work('WorkD', private_work,sort=0)
+        work_e = _create_work('WorkE', non_private_work,sort=0)
+        work_f = _create_work('WorkF', non_private_work,sort=0)
+        work_g = _create_work('WorkG', non_private_work,sort=0)
+        _create_work('WorkH', non_private_work,sort=0)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -484,12 +475,10 @@ class IndexViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        work_a = _create_work('WorkA', private_work, start, end,sort=2)
-        work_b = _create_work('WorkB', private_work, start, end,sort=1)
-        work_c = _create_work('WorkC', private_work, start, end,sort=3)
-        work_d = _create_work('WorkD', private_work, start, end,sort=2)
+        work_a = _create_work('WorkA', private_work,sort=2)
+        work_b = _create_work('WorkB', private_work,sort=1)
+        work_c = _create_work('WorkC', private_work,sort=3)
+        work_d = _create_work('WorkD', private_work,sort=2)
         response = self.client.get(reverse('portfolio:index'))
         self.assertQuerysetEqual(
             response.context['works'],
@@ -522,20 +511,18 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         lang=[]
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
         _relate_language_skills(work=work_a, languages=lang)
-        work_b = _create_work('WorkB', private_work, start, end,sort=0)
+        work_b = _create_work('WorkB', private_work,sort=0)
         _relate_language_skills(work=work_b, languages=lang)
-        work_c = _create_work('WorkC', private_work, start, end,sort=0)
+        work_c = _create_work('WorkC', private_work,sort=0)
         _relate_language_skills(work=work_c, languages=lang)
-        work_d = _create_work('WorkD', private_work, start, end,sort=0)
+        work_d = _create_work('WorkD', private_work,sort=0)
         _relate_language_skills(work=work_d, languages=lang)
-        work_e = _create_work('WorkE', private_work, start, end,sort=0)
+        work_e = _create_work('WorkE', private_work,sort=0)
         _relate_language_skills(work=work_e, languages=lang)
-        work_f = _create_work('WorkF', private_work, start, end,sort=0)
+        work_f = _create_work('WorkF', private_work,sort=0)
         _relate_language_skills(work=work_f, languages=lang)
         response = self.client.get(reverse('portfolio:works'))
         self.assertQuerysetEqual(
@@ -551,11 +538,9 @@ class WorksViewTest(TestCase):
         _cretet_profile()
         _add_language_skills()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         langs = []
         lang = [('C#', 2),('Powershell', 1),('Java', 3)]
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
         _relate_language_skills(work=work_a, languages=lang)
         langs.append(lang)
         response = self.client.get(reverse('portfolio:works'))
@@ -581,11 +566,9 @@ class WorksViewTest(TestCase):
         _cretet_profile()
         _add_library_skills()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         libs = []
         lib = [('Django', 2),('.Net Framework', 1),('F社標準ライブラリ', 3)]
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
         _relate_lib_skills(work=work_a, libs=lib)
         libs.append(lib)
         response = self.client.get(reverse('portfolio:works'))
@@ -610,11 +593,9 @@ class WorksViewTest(TestCase):
         _cretet_profile()
         _add_dev_ops_skills()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         devs = []
         dev = [('Visual Studio', 2),('VS Code', 1),('SQL Server Management Studio', 3)]
-        work_a = _create_work('WorkA', private_work, start, end,sort=0)
+        work_a = _create_work('WorkA', private_work,sort=0)
         _relate_dev_ops_skills(work=work_a, dev_ops=dev)
         devs.append(dev)
         response = self.client.get(reverse('portfolio:works'))
@@ -640,14 +621,12 @@ class WorksViewTest(TestCase):
         _add_dev_ops_skills()
 
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         langs = []
         libs = []
         devs = []
-        work_a = _create_work('WorkA', private_work, start, end,sort=3)
-        work_b = _create_work('WorkB', private_work, start, end,sort=2)
-        work_c = _create_work('WorkC', private_work, start, end,sort=1)
+        work_a = _create_work('WorkA', private_work,sort=3)
+        work_b = _create_work('WorkB', private_work,sort=2)
+        work_c = _create_work('WorkC', private_work,sort=1)
 
         lang = [('C#', 2),('Powershell', 1),('Java', 3)]
         lib = [('Django', 2),('.Net Framework', 1),('F社標準ライブラリ', 3)]
@@ -724,9 +703,7 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        _create_work('WorkA', private_work, start, end,sort=0)
+        _create_work('WorkA', private_work,sort=0)
         response = self.client.get(reverse('portfolio:works'))
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 1)
@@ -738,10 +715,8 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         for i in range(11):
-            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+            _create_work(f'Work{str(i)}', private_work,sort=0)
         response = self.client.get(reverse('portfolio:works'))
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 11)
@@ -753,10 +728,8 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         for i in range(12):
-            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+            _create_work(f'Work{str(i)}', private_work,sort=0)
         response = self.client.get(reverse('portfolio:works'))
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 12)
@@ -768,10 +741,8 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         for i in range(13):
-            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+            _create_work(f'Work{str(i)}', private_work,sort=0)
         response = self.client.get(reverse('portfolio:works'))
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 13)
@@ -788,10 +759,8 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         for i in range(300):
-            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+            _create_work(f'Work{str(i)}', private_work,sort=0)
         response = self.client.get(reverse('portfolio:works'))
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 300)
@@ -803,10 +772,8 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         for i in range(20):
-            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+            _create_work(f'Work{str(i)}', private_work,sort=0)
         url = reverse('portfolio:works')
         url = '?'.join([url, parse.urlencode(dict(page='hogehoge'))])
         response = self.client.get(url)
@@ -820,10 +787,8 @@ class WorksViewTest(TestCase):
         """
         _cretet_profile()
         private_work = 0
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
         for i in range(20):
-            _create_work(f'Work{str(i)}', private_work, start, end,sort=0)
+            _create_work(f'Work{str(i)}', private_work,sort=0)
         url = reverse('portfolio:works')
         url = '?'.join([url,parse.urlencode(dict(page='999'))])
         response = self.client.get(url)
@@ -867,25 +832,110 @@ class WorkViewTest(TestCase):
     def test_get_work_with_no_details(self):
         """This tests to get a work without details.
         """
-        # profile = _cretet_profile()
-        # private_work = 0
-        # start = timezone.now() + datetime.timedelta(days=-365)
-        # end = timezone.now()
-        # work_a = _create_work('WorkA', private_work, start, end,sort=0)
-        # work_b = _create_work('WorkB', private_work, start, end,sort=0)
-        # work_c = _create_work('WorkC', private_work, start, end,sort=0)
-        # response = self.client.get(reverse('portfolio:work'))
-        # self.assertContains(response=response, text=profile.title)
-        # self.assertQuerysetEqual(
-        #     response.context['works'],
-        #     [work_a, work_b, work_c],
-        # )
-        pass
+        profile = _cretet_profile()
+        private_work = 0
+        work_a = _create_work('WorkA', private_work,sort=0)
+        response = self.client.get(reverse('portfolio:work', kwargs=dict(primary_key=work_a.pk)))
+        self.assertContains(response=response, text=profile.title)
+        self.assertEqual(
+            response.context['work'],
+            work_a,
+        )
+
+        self.assertIsNone(response.context['work'].Work_Details.name)
+
+        langs = []
+        libs = []
+        devs = []
+        langs.append([])
+        libs.append([])
+        devs.append([])
+
+        _assert_skills(
+            [response.context['work']],
+            "lang_details",
+            "Language_Skill.name",
+            "sort",
+            langs,
+        )
+
+        _assert_skills(
+            [response.context['work']],
+            "lib_details",
+            "Library_Skill.name",
+            "sort",
+            libs,
+        )
+
+        _assert_skills(
+            [response.context['work']],
+            "dev_details",
+            "DevOps_Skill.name",
+            "sort",
+            devs,
+        )
 
     def test_get_work_with_songle_detail(self):
         """This tests to get a work with a detail.
         """
-        pass
+        _cretet_profile()
+        _add_language_skills()
+        _add_library_skills()
+        _add_dev_ops_skills()
+
+        private_work = 0
+        work_a = _create_work('WorkA', private_work,sort=0)
+        langs = []
+        libs = []
+        devs = []
+        lang = [('C#', 2),('Powershell', 1),('Java', 3)]
+        lib = [('Django', 2),('.Net Framework', 1),('F社標準ライブラリ', 3)]
+        dev = [('SQL Server Management Studio', 0),('VS Code', 0), ('Visual Studio', 0)]
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        proc='工程A,工程B,工程C'
+        desc='詳細情報'
+        _relate_work_detail(work=work_a,sub='サブタイトル',proc=proc,start=start,end=end,desc=desc)
+        _relate_dev_ops_skills(work=work_a, dev_ops=dev)
+        _relate_lib_skills(work=work_a, libs=lib)
+        _relate_language_skills(work=work_a, languages=lang)
+        langs.append(lang)
+        libs.append(lib)
+        devs.append(dev)
+
+        response = self.client.get(reverse('portfolio:work', kwargs=dict(primary_key=work_a.pk)))
+
+        self.assertEqual(
+            response.context['work'],
+            work_a,
+        )
+
+        # TODO detail
+        self.assertIsNone(response.context['work'].Work_Details.name)
+
+        _assert_skills(
+            [response.context['work']],
+            "lang_details",
+            "Language_Skill.name",
+            "sort",
+            langs,
+        )
+
+        _assert_skills(
+            [response.context['work']],
+            "lib_details",
+            "Library_Skill.name",
+            "sort",
+            libs,
+        )
+
+        _assert_skills(
+            [response.context['work']],
+            "dev_details",
+            "DevOps_Skill.name",
+            "sort",
+            devs,
+        )
 
     def test_get_work_with_multi_details(self):
         """This tests to get a work with some details.
