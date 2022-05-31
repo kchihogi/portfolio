@@ -842,7 +842,7 @@ class WorkViewTest(TestCase):
             work_a,
         )
 
-        self.assertIsNone(response.context['work'].Work_Details.name)
+        self.assertEqual(response.context['work'].work_details, [])
 
         langs = []
         libs = []
@@ -885,6 +885,7 @@ class WorkViewTest(TestCase):
 
         private_work = 0
         work_a = _create_work('WorkA', private_work,sort=0)
+        details = []
         langs = []
         libs = []
         devs = []
@@ -895,10 +896,12 @@ class WorkViewTest(TestCase):
         end = timezone.now()
         proc='工程A,工程B,工程C'
         desc='詳細情報'
-        _relate_work_detail(work=work_a,sub='サブタイトル',proc=proc,start=start,end=end,desc=desc)
+        sub='サブタイトル'
+        detail = _relate_work_detail(work=work_a,sub=sub,proc=proc,start=start,end=end,desc=desc)
         _relate_dev_ops_skills(work=work_a, dev_ops=dev)
         _relate_lib_skills(work=work_a, libs=lib)
         _relate_language_skills(work=work_a, languages=lang)
+        details.append(detail)
         langs.append(lang)
         libs.append(lib)
         devs.append(dev)
@@ -910,8 +913,7 @@ class WorkViewTest(TestCase):
             work_a,
         )
 
-        # TODO detail
-        self.assertIsNone(response.context['work'].Work_Details.name)
+        self.assertEqual(response.context['work'].work_details, details)
 
         _assert_skills(
             [response.context['work']],
@@ -940,7 +942,32 @@ class WorkViewTest(TestCase):
     def test_get_work_with_multi_details(self):
         """This tests to get a work with some details.
         """
-        pass
+        _cretet_profile()
+        _add_language_skills()
+        _add_library_skills()
+        _add_dev_ops_skills()
+
+        private_work = 0
+        work_a = _create_work('WorkA', private_work,sort=0)
+        details = []
+        desc=""
+        for i in range(300):
+            start = timezone.now() + datetime.timedelta(days=-365)
+            end = timezone.now()
+            proc='工程A,工程B,工程C'
+            desc+='詳細情報'
+            sub=f'サブタイトル{str(i)}'
+            detail = _relate_work_detail(work_a,sub,proc,start,end,desc)
+            details.append(detail)
+
+        response = self.client.get(reverse('portfolio:work', kwargs=dict(primary_key=work_a.pk)))
+
+        self.assertEqual(
+            response.context['work'],
+            work_a,
+        )
+
+        self.assertEqual(response.context['work'].work_details, details)
 
 # Models Tests
 
