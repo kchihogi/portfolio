@@ -9,6 +9,8 @@ import os
 
 from django.utils import timezone
 
+from utils.cprint import ColorPrint as CP
+
 from portfolio_site import settings
 from portfolio.models import Profile, Social_Network_Service, Icon_Mater, Acknowledgment
 from portfolio.models import Language_Skill, Library_Skill, DevOps_Skill
@@ -17,7 +19,6 @@ from portfolio.models import Work_Language_Skill_RelationShip
 from portfolio.models import Work_Library_Skill_Relationship
 from portfolio.models import Work_DevOps_Skill_Relationship
 
-from utils.cprint import ColorPrint as CP
 
 def add_profile():
     """This copies media fiiles to the media root and inserts a profile record.
@@ -271,7 +272,6 @@ def _add_dev_ops_skills(work:Work, dev_ops:list[str]):
 def add_works():
     """This copies media files to media root and inserts records of work.
     """
-
     # mediaディレクトリの掃除
     work_dir = settings.MEDIA_ROOT + '/works'
     CP.print('Clena up media works dir.('+ work_dir +')',CP.GREEN)
@@ -284,6 +284,18 @@ def add_works():
     backup_media = 'initial_data/media/works'
     CP.print('Copy media dir.(FROM:'+ backup_media + '  TO:'+ work_dir +')',CP.GREEN)
     dir_util.copy_tree(backup_media, work_dir)
+
+    _delete_works()
+
+    _add_non_private_works()
+
+    _add_private_works()
+
+    _add_works(300)
+
+def _delete_works():
+    """This deletes records of work.
+    """
 
     # DB データを全削除
     CP.print('Delete all DB Work_DevOps_Skill_Relationship records.',CP.GREEN)
@@ -315,9 +327,32 @@ def add_works():
         CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
         record.delete()
 
+def _add_works(num:int):
+    """This adds works by for-loop.
+
+    Args:
+        num (int): number of works to add.
+    """
+    for i in range(num):
+        work_name = f'WorkZZZ{str(i)}'
+        private_work = 1
+        start = timezone.now() + datetime.timedelta(days=-365)
+        end = timezone.now()
+        languages = ['Python']
+        libs = ['Django']
+        dev_ops = ['VS Code', 'Git', 'Docker']
+        work = _create_work(work_name=work_name, private_work=private_work, start=start, end=end)
+        _add_language_skills(work=work, languages=languages)
+        _add_lib_skills(work=work,libs=libs)
+        _add_dev_ops_skills(work=work,dev_ops=dev_ops)
+
+def _add_non_private_works():
+    """This adds records of non private works.
+    """
+
+    private_work = 0
     # DBにデータを追加
     work_name = 'WorkA'
-    private_work = 0
     start = timezone.now() + datetime.timedelta(days=-365)
     end = timezone.now()
     languages = ['C++','SQL(SQL Server, MySQL)','Powershell','PHP']
@@ -330,7 +365,6 @@ def add_works():
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
     work_name = 'WorkB'
-    private_work = 0
     start = timezone.now()
     languages = ['C++','Powershell']
     libs = ['F社標準ライブラリ']
@@ -341,7 +375,6 @@ def add_works():
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
     work_name = 'WorkC'
-    private_work = 0
     start = timezone.now() + datetime.timedelta(days=-365*2)
     end = timezone.now()
     languages = ['C#','Powershell','Java']
@@ -353,7 +386,6 @@ def add_works():
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
     work_name = 'WorkD'
-    private_work = 0
     start = timezone.now() + datetime.timedelta(days=-365)
     end = timezone.now()
     languages = ['Python']
@@ -364,8 +396,12 @@ def add_works():
     _add_lib_skills(work=work,libs=libs)
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
-    work_name = 'WorkE'
+def _add_private_works():
+    """This adds records of private works
+    """
     private_work = 1
+
+    work_name = 'WorkE'
     start = timezone.now() + datetime.timedelta(days=-365)
     end = timezone.now()
     languages = []
@@ -377,7 +413,6 @@ def add_works():
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
     work_name = 'WorkF'
-    private_work = 1
     start = timezone.now()
     languages = ['C++','Powershell']
     libs = []
@@ -388,7 +423,6 @@ def add_works():
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
     work_name = 'WorkG'
-    private_work = 1
     start = timezone.now() + datetime.timedelta(days=-365*2)
     end = timezone.now()
     languages = ['C#','Powershell','Java']
@@ -400,7 +434,6 @@ def add_works():
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
     work_name = 'WorkH'
-    private_work = 1
     start = timezone.now() + datetime.timedelta(days=-365)
     end = timezone.now()
     languages = []
@@ -410,19 +443,6 @@ def add_works():
     _add_language_skills(work=work, languages=languages)
     _add_lib_skills(work=work,libs=libs)
     _add_dev_ops_skills(work=work,dev_ops=dev_ops)
-
-    for i in range(300):
-        work_name = f'WorkZZZ{str(i)}'
-        private_work = 1
-        start = timezone.now() + datetime.timedelta(days=-365)
-        end = timezone.now()
-        languages = ['Python']
-        libs = ['Django']
-        dev_ops = ['VS Code', 'Git', 'Docker']
-        work = _create_work(work_name=work_name, private_work=private_work, start=start, end=end)
-        _add_language_skills(work=work, languages=languages)
-        _add_lib_skills(work=work,libs=libs)
-        _add_dev_ops_skills(work=work,dev_ops=dev_ops)
 
 add_profile()
 add_acknowledgment()
