@@ -39,13 +39,13 @@ def add_profile():
     # DB データを全削除
     CP.print('Delete all DB SNS records.',CP.GREEN)
     for sns in Social_Network_Service.objects.all():
-        CP.print('Deleted record.('+sns.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(sns) +')',CP.YELLOW)
         sns.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Profile records.',CP.GREEN)
     for prof in Profile.objects.all():
-        CP.print('Deleted record.('+prof.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(prof) +')',CP.YELLOW)
         prof.delete()
 
     # DBにデータを追加
@@ -95,7 +95,7 @@ def add_language_skills():
     # DB データを全削除
     CP.print('Delete all DB Language_Skill records.',CP.GREEN)
     for record in Language_Skill.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DBにデータを追加
@@ -121,7 +121,7 @@ def add_library_skills():
     # DB データを全削除
     CP.print('Delete all DB Library_Skill records.',CP.GREEN)
     for record in Library_Skill.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DBにデータを追加
@@ -139,7 +139,7 @@ def add_dev_ops_skills():
     # DB データを全削除
     CP.print('Delete all DB DevOps_Skill records.',CP.GREEN)
     for record in DevOps_Skill.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DBにデータを追加
@@ -300,31 +300,31 @@ def _delete_works():
     # DB データを全削除
     CP.print('Delete all DB Work_DevOps_Skill_Relationship records.',CP.GREEN)
     for record in Work_DevOps_Skill_Relationship.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work_Library_Skill_Relationship records.',CP.GREEN)
     for record in Work_Library_Skill_Relationship.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work_Language_Skill_RelationShip records.',CP.GREEN)
     for record in Work_Language_Skill_RelationShip.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work_Detail records.',CP.GREEN)
     for record in Work_Detail.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work records.',CP.GREEN)
     for record in Work.objects.all():
-        CP.print('Deleted record.('+record.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
 def _add_works(num:int):
