@@ -2,17 +2,17 @@
 """
 from django.contrib import admin
 
-from .models import Profile,Social_Network_Service,Icon_Mater,Acknowledgment
-from .models import Language_Skill, Library_Skill, DevOps_Skill
-from .models import Work, Work_Detail
-from .models import Work_Language_Skill_RelationShip
-from .models import Work_Library_Skill_Relationship
-from .models import Work_DevOps_Skill_Relationship
+from .models import Profile,SocialNetworkService,IconMater,Acknowledgment
+from .models import LanguageSkill, LibrarySkill, DevOpsSkill
+from .models import Work, WorkDetail
+from .models import WorkLanguageSkillRelationShip
+from .models import WorkLibrarySkillRelationship
+from .models import WorkDevOpsSkillRelationship
 
 class SNSInline(admin.TabularInline):
     """An inline input form for SNS.
     """
-    model = Social_Network_Service
+    model = SocialNetworkService
     extra = 3
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -29,27 +29,27 @@ class ProfileAdmin(admin.ModelAdmin):
 class WorkDetailInline(admin.TabularInline):
     """An inline input form for work details.
     """
-    model = Work_Detail
+    model = WorkDetail
     extra = 1
 
 class WorkLanguageSkillRelationShipInline(admin.TabularInline):
     """An inline input form for language skills.
     """
-    model = Work_Language_Skill_RelationShip
+    model = WorkLanguageSkillRelationShip
     extra = 3
     ordering = ("sort",)
 
 class WorkLibrarySkillRelationshipInline(admin.TabularInline):
     """An inline input form fofr library skills.
     """
-    model = Work_Library_Skill_Relationship
+    model = WorkLibrarySkillRelationship
     extra = 3
     ordering = ("sort",)
 
 class WorkDevOpsSkillRelationshipInline(admin.TabularInline):
     """An inline input form for DevOps skills.
     """
-    model = Work_DevOps_Skill_Relationship
+    model = WorkDevOpsSkillRelationship
     extra = 3
     ordering = ("sort",)
 
@@ -70,9 +70,9 @@ class WorkAdmin(admin.ModelAdmin):
     ordering = ("sort",)
 
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Icon_Mater)
+admin.site.register(IconMater)
 admin.site.register(Acknowledgment)
-admin.site.register(Language_Skill)
-admin.site.register(Library_Skill)
-admin.site.register(DevOps_Skill)
+admin.site.register(LanguageSkill)
+admin.site.register(LibrarySkill)
+admin.site.register(DevOpsSkill)
 admin.site.register(Work, WorkAdmin)

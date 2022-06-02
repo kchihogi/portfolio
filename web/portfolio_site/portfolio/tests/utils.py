@@ -3,10 +3,10 @@ import datetime
 from operator import itemgetter
 from typing import Tuple
 
-from ..models import Profile, Work, Work_Detail
-from ..models import Language_Skill, Work_Language_Skill_RelationShip
-from ..models import Library_Skill, Work_Library_Skill_Relationship
-from ..models import DevOps_Skill, Work_DevOps_Skill_Relationship
+from ..models import Profile, Work, WorkDetail
+from ..models import LanguageSkill, WorkLanguageSkillRelationShip
+from ..models import LibrarySkill, WorkLibrarySkillRelationship
+from ..models import DevOpsSkill, WorkDevOpsSkillRelationship
 
 def cretet_profile():
     """This cretes fixed profile.
@@ -67,7 +67,7 @@ def relate_work_detail(work:Work, sub:str, proc:str, start:datetime, end:datetim
     Returns:
         Work_Detail: the model of Work_Detail created.
     """
-    work_detail = Work_Detail()
+    work_detail = WorkDetail()
     work_detail.Work_id=work.pk
     work_detail.sub_titile=sub
     work_detail.start_date=start
@@ -85,10 +85,10 @@ def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
         languages (list[Tuple[str,int]]): a list of language name and sort number.
     """
     if languages is not None:
-        for record in Language_Skill.objects.all():
+        for record in LanguageSkill.objects.all():
             for language in languages:
                 if record.name == language[0]:
-                    relation = Work_Language_Skill_RelationShip()
+                    relation = WorkLanguageSkillRelationShip()
                     relation.Work_id=work.pk
                     relation.Language_Skill_id=record.pk
                     relation.sort=language[1]
@@ -102,10 +102,10 @@ def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
         libs (list[Tuple[str,int]]): a list of library name and sort number.
     """
     if libs is not None:
-        for record in Library_Skill.objects.all():
+        for record in LibrarySkill.objects.all():
             for lib in libs:
                 if record.name == lib[0]:
-                    relation = Work_Library_Skill_Relationship()
+                    relation = WorkLibrarySkillRelationship()
                     relation.Work_id=work.pk
                     relation.Library_Skill_id=record.pk
                     relation.sort=lib[1]
@@ -119,10 +119,10 @@ def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
         dev_ops (list[Tuple[str,int]]): a list of dev_ops skill name and sort number.
     """
     if dev_ops is not None:
-        for record in DevOps_Skill.objects.all():
+        for record in DevOpsSkill.objects.all():
             for dev in dev_ops:
                 if record.name == dev[0]:
-                    relation = Work_DevOps_Skill_Relationship()
+                    relation = WorkDevOpsSkillRelationship()
                     relation.Work_id=work.pk
                     relation.DevOps_Skill_id=record.pk
                     relation.sort=dev[1]
@@ -131,67 +131,67 @@ def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
 def add_language_skills():
     """This inserts language skills.
     """
-    record = Language_Skill(name = 'C++', maturity = 5)
+    record = LanguageSkill(name = 'C++', maturity = 5)
     record.save()
-    record = Language_Skill(name = 'Python', maturity = 3)
+    record = LanguageSkill(name = 'Python', maturity = 3)
     record.save()
-    record = Language_Skill(name = 'C#', maturity = 2)
+    record = LanguageSkill(name = 'C#', maturity = 2)
     record.save()
-    record = Language_Skill(name = 'Powershell', maturity = 4)
+    record = LanguageSkill(name = 'Powershell', maturity = 4)
     record.save()
-    record = Language_Skill(name = 'PHP', maturity = 2)
+    record = LanguageSkill(name = 'PHP', maturity = 2)
     record.save()
-    record = Language_Skill(name = 'Java', maturity = 1)
+    record = LanguageSkill(name = 'Java', maturity = 1)
     record.save()
-    record = Language_Skill(name = 'SQL(SQL Server, MySQL)', maturity = 5)
+    record = LanguageSkill(name = 'SQL(SQL Server, MySQL)', maturity = 5)
     record.save()
 
 def add_library_skills():
     """This inserts libraru skills.
     """
-    record = Library_Skill(name = 'F社標準ライブラリ', maturity = 5)
+    record = LibrarySkill(name = 'F社標準ライブラリ', maturity = 5)
     record.save()
-    record = Library_Skill(name = 'Django', maturity = 2)
+    record = LibrarySkill(name = 'Django', maturity = 2)
     record.save()
-    record = Library_Skill(name = '.Net Framework', maturity = 2)
+    record = LibrarySkill(name = '.Net Framework', maturity = 2)
     record.save()
 
 def add_dev_ops_skills():
     """This insets DevOps skills.
     """
-    record = DevOps_Skill(name = 'Visual Studio', maturity = 5)
+    record = DevOpsSkill(name = 'Visual Studio', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'VS Code', maturity = 5)
+    record = DevOpsSkill(name = 'VS Code', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'SQL Server Management Studio', maturity = 5)
+    record = DevOpsSkill(name = 'SQL Server Management Studio', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Mysql Workbench', maturity = 5)
+    record = DevOpsSkill(name = 'Mysql Workbench', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'SVN', maturity = 5)
+    record = DevOpsSkill(name = 'SVN', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Git', maturity = 5)
+    record = DevOpsSkill(name = 'Git', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'A5 SQL Mk-2', maturity = 4)
+    record = DevOpsSkill(name = 'A5 SQL Mk-2', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Office', maturity = 5)
+    record = DevOpsSkill(name = 'Office', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Redmine', maturity = 5)
+    record = DevOpsSkill(name = 'Redmine', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'JIRA', maturity = 4)
+    record = DevOpsSkill(name = 'JIRA', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Jenkins', maturity = 5)
+    record = DevOpsSkill(name = 'Jenkins', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Teams', maturity = 4)
+    record = DevOpsSkill(name = 'Teams', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Skype', maturity = 4)
+    record = DevOpsSkill(name = 'Skype', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Zoom', maturity = 3)
+    record = DevOpsSkill(name = 'Zoom', maturity = 3)
     record.save()
-    record = DevOps_Skill(name = 'Slack', maturity = 3)
+    record = DevOpsSkill(name = 'Slack', maturity = 3)
     record.save()
-    record = DevOps_Skill(name = 'Docker', maturity = 4)
+    record = DevOpsSkill(name = 'Docker', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'myPHPAdmin', maturity = 2)
+    record = DevOpsSkill(name = 'myPHPAdmin', maturity = 2)
     record.save()
 
 def assert_skills(

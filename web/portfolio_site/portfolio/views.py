@@ -10,10 +10,10 @@ from django.views import View
 
 from utils.logger import Logger
 
-from .models import Profile, Work, Work_Detail
-from .models import Work_Language_Skill_RelationShip
-from .models import Work_Library_Skill_Relationship
-from .models import Work_DevOps_Skill_Relationship
+from .models import Profile, Work, WorkDetail
+from .models import WorkLanguageSkillRelationShip
+from .models import WorkLibrarySkillRelationship
+from .models import WorkDevOpsSkillRelationship
 
 log = Logger("mylog")
 
@@ -33,7 +33,7 @@ class IndexView(View):
         """
         prof = get_list_or_404(Profile)[-1]
 
-        queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
+        queryset = WorkLanguageSkillRelationShip.objects.select_related('Language_Skill')
         queryset = queryset.order_by('sort', 'Language_Skill__name')
         prefetch = Prefetch('Lang_Works', queryset=queryset, to_attr='details')
         non_p_queryset = Work.objects.filter(private=0).order_by('sort', 'title').prefetch_related(prefetch)
@@ -111,11 +111,11 @@ class WorksView(View):
 
         works = []
 
-        lang_queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
+        lang_queryset = WorkLanguageSkillRelationShip.objects.select_related('Language_Skill')
         lang_queryset = lang_queryset.order_by('sort', 'Language_Skill__name')
-        lib_queryset = Work_Library_Skill_Relationship.objects.select_related('Library_Skill')
+        lib_queryset = WorkLibrarySkillRelationship.objects.select_related('Library_Skill')
         lib_queryset = lib_queryset.order_by('sort', 'Library_Skill__name')
-        dev_queryset = Work_DevOps_Skill_Relationship.objects.select_related('DevOps_Skill')
+        dev_queryset = WorkDevOpsSkillRelationship.objects.select_related('DevOps_Skill')
         dev_queryset = dev_queryset.order_by('sort', 'DevOps_Skill__name')
         lang_prefetch = Prefetch('Lang_Works', queryset=lang_queryset, to_attr='lang_details')
         lib_prefetch = Prefetch('Lib_Works', queryset=lib_queryset, to_attr='lib_details')
@@ -150,13 +150,13 @@ class WorkView(View):
             HttpResponse: response.
         """
         prof = get_list_or_404(Profile)[-1]
-        work_d_queryset = Work_Detail.objects.all()
+        work_d_queryset = WorkDetail.objects.all()
         work_d_pref = Prefetch('Work_Details', queryset=work_d_queryset, to_attr='work_details')
-        lang_queryset = Work_Language_Skill_RelationShip.objects.select_related('Language_Skill')
+        lang_queryset = WorkLanguageSkillRelationShip.objects.select_related('Language_Skill')
         lang_queryset = lang_queryset.order_by('sort', 'Language_Skill__name')
-        lib_queryset = Work_Library_Skill_Relationship.objects.select_related('Library_Skill')
+        lib_queryset = WorkLibrarySkillRelationship.objects.select_related('Library_Skill')
         lib_queryset = lib_queryset.order_by('sort', 'Library_Skill__name')
-        dev_queryset = Work_DevOps_Skill_Relationship.objects.select_related('DevOps_Skill')
+        dev_queryset = WorkDevOpsSkillRelationship.objects.select_related('DevOps_Skill')
         dev_queryset = dev_queryset.order_by('sort', 'DevOps_Skill__name')
         lang_pref = Prefetch('Lang_Works', queryset=lang_queryset, to_attr='lang_details')
         lib_pref = Prefetch('Lib_Works', queryset=lib_queryset, to_attr='lib_details')

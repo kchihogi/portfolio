@@ -7,7 +7,7 @@ import os
 from utils.cprint import ColorPrint as CP
 
 from portfolio_site import settings
-from portfolio.models import Icon_Mater
+from portfolio.models import IconMater
 
 def add_icon_master():
     """This copies media files to media root and inserts records of icon master.
@@ -27,19 +27,19 @@ def add_icon_master():
 
     # DB データを全削除
     CP.print('Delete all DB Icon_Mater records.',CP.GREEN)
-    for icon in Icon_Mater.objects.all():
+    for icon in IconMater.objects.all():
         CP.print('Deleted record.('+str(icon) +')',CP.YELLOW)
         icon.delete()
 
     # DBにデータを追加
     CP.print('Add Icon_Mater records to DB.',CP.GREEN)
-    twitter = Icon_Mater(name='Twitter', icon='icons/Twitter.png')
+    twitter = IconMater(name='Twitter', icon='icons/Twitter.png')
     twitter.save()
-    facebook = Icon_Mater(name='Facebook', icon='icons/Facebook.png')
+    facebook = IconMater(name='Facebook', icon='icons/Facebook.png')
     facebook.save()
-    instagram = Icon_Mater(name='Instagram', icon='icons/Instagram.png')
+    instagram = IconMater(name='Instagram', icon='icons/Instagram.png')
     instagram.save()
-    line = Icon_Mater(name='LINE', icon='icons/LINE.png')
+    line = IconMater(name='LINE', icon='icons/LINE.png')
     line.save()
 
 add_icon_master()

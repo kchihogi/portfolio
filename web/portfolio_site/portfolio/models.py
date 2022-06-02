@@ -1,35 +1,49 @@
+"""This module defines the structure of DB.
+"""
 from django.db import models
 
 class Profile(models.Model):
+    """The model of profile table.
+    """
+    sub='profile' #sub directory under the media.
+
     title = models.CharField('タイトル', max_length=100, null=False)
     subtitle = models.CharField('サブタイトル', max_length=100, null=False)
     first_name = models.CharField('名', max_length=100, null=False)
     last_name = models.CharField('氏', max_length=100, null=False)
     job = models.CharField('職業', max_length=100, null=True)
     introduction = models.CharField('自己紹介', max_length=300, null=True)
-    face_photo = models.ImageField('顔写真', max_length=1024, null=True, blank=True, upload_to='profile')
-    sub_photo = models.ImageField('サブ写真', max_length=1024, null=True, blank=True, upload_to='profile')
+    face_photo = models.ImageField('顔写真', max_length=1024, null=True, blank=True, upload_to=sub)
+    sub_photo = models.ImageField('サブ写真', max_length=1024, null=True, blank=True, upload_to=sub)
 
     def __str__(self):
         return self.title
 
-class Icon_Mater(models.Model):
+class IconMater(models.Model):
+    """The model of icon master table.
+    """
+    sub='icons' #sub directory under the media.
+
     name = models.CharField('名前', max_length=100, null=False)
-    icon = models.ImageField('icon', max_length=1024, null=False, blank=True, upload_to='icons')
+    icon = models.ImageField('icon', max_length=1024, null=False, blank=True, upload_to=sub)
 
     def __str__(self):
         return self.name
 
-class Social_Network_Service(models.Model):
+class SocialNetworkService(models.Model):
+    """The model of SNS table.
+    """
     Profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Profiles')
     name = models.CharField('名前', max_length=100, null=False)
     url = models.CharField('URL', max_length=1024, null=False)
-    Icon_Mater = models.ForeignKey(Icon_Mater, on_delete=models.CASCADE, related_name='Icon_Maters')
+    Icon_Mater = models.ForeignKey(IconMater, on_delete=models.CASCADE, related_name='Icon_Maters')
 
     def __str__(self):
         return self.name
 
 class Acknowledgment(models.Model):
+    """The model of acknowledgment table.
+    """
     comments = models.TextField('コメント', null=True)
     enable = models.IntegerField('有効', null=True) #0:無効 1:有効 それ以外:有効
 
@@ -37,9 +51,14 @@ class Acknowledgment(models.Model):
         return self.comments
 
 class Work(models.Model):
+    """The model of work table.
+    """
+    sub='works' #sub directory under the media.
+
     title = models.CharField('タイトル', max_length=100, null=False)
-    image = models.ImageField('メインビジュアル', max_length=1024, null=False, blank=True, upload_to='works')
-    private = models.IntegerField('プライベート作品', null=False, default=0) #0:業務で作成, 1:プライベートで作成, それ以外:プライベートで作成
+    image = models.ImageField('メインビジュアル', max_length=1024, null=False, blank=True, upload_to=sub)
+    #0:業務で作成, 1:プライベートで作成, それ以外:プライベートで作成
+    private = models.IntegerField('プライベート作品', null=False, default=0)
     description = models.CharField('概要', max_length=300, null=False)
     url = models.CharField('URL', max_length=1024, null=True)
     repository_url = models.CharField('リポジトリURL', max_length=1024, null=True)
@@ -48,7 +67,9 @@ class Work(models.Model):
     def __str__(self):
         return self.title
 
-class Work_Detail(models.Model):
+class WorkDetail(models.Model):
+    """The model of work detail table.
+    """
     Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Work_Details')
     sub_titile = models.CharField('サブタイトル', max_length=100, null=False)
     start_date = models.DateTimeField('制作開始', null=False)
@@ -59,38 +80,59 @@ class Work_Detail(models.Model):
     def __str__(self):
         return self.sub_titile
 
-class Language_Skill(models.Model):
+class LanguageSkill(models.Model):
+    """The model of language skill table.
+    """
     name = models.CharField('名前', max_length=100, null=False)
     maturity = models.IntegerField('成熟度', null=True) #5段階評価
 
     def __str__(self):
         return self.name
 
-class Library_Skill(models.Model):
+class LibrarySkill(models.Model):
+    """The model of library skill table.
+    """
     name = models.CharField('名前', max_length=100, null=False)
     maturity = models.IntegerField('成熟度', null=True) #5段階評価
 
     def __str__(self):
         return self.name
 
-class DevOps_Skill(models.Model):
+class DevOpsSkill(models.Model):
+    """The model of DevOps skill table.
+    """
     name = models.CharField('名前', max_length=100, null=False)
     maturity = models.IntegerField('成熟度', null=True) #5段階評価
 
     def __str__(self):
         return self.name
 
-class Work_Language_Skill_RelationShip(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Lang_Works')
-    Language_Skill = models.ForeignKey(Language_Skill, on_delete=models.CASCADE, related_name='Language_Skills')
+class WorkLanguageSkillRelationShip(models.Model):
+    """The model of the relationship table of work and language skills.
+    """
+    wrn = 'Lang_Works'
+    lrn = 'Language_Skills'
+
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
+    Language_Skill = models.ForeignKey(LanguageSkill, on_delete=models.CASCADE, related_name=lrn)
     sort = models.IntegerField('順序', null=False, default=0)
 
-class Work_Library_Skill_Relationship(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Lib_Works')
-    Library_Skill = models.ForeignKey(Library_Skill, on_delete=models.CASCADE, related_name='Library_Skills')
+class WorkLibrarySkillRelationship(models.Model):
+    """The model of the relationship table of work and library skills.
+    """
+    wrn = 'Lib_Works'
+    lrn = 'Library_Skills'
+
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
+    Library_Skill = models.ForeignKey(LibrarySkill, on_delete=models.CASCADE, related_name=lrn)
     sort = models.IntegerField('順序', null=False, default=0)
 
-class Work_DevOps_Skill_Relationship(models.Model):
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Dev_Works')
-    DevOps_Skill = models.ForeignKey(DevOps_Skill, on_delete=models.CASCADE, related_name='DevOps_Skills')
+class WorkDevOpsSkillRelationship(models.Model):
+    """The model of the relationship table of work and DevOps skills.
+    """
+    wrn = 'Dev_Works'
+    lrn = 'DevOps_Skills'
+
+    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
+    DevOps_Skill = models.ForeignKey(DevOpsSkill, on_delete=models.CASCADE, related_name=lrn)
     sort = models.IntegerField('順序', null=False, default=0)

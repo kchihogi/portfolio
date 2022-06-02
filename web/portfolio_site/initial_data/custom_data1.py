@@ -12,12 +12,12 @@ from django.utils import timezone
 from utils.cprint import ColorPrint as CP
 
 from portfolio_site import settings
-from portfolio.models import Profile, Social_Network_Service, Icon_Mater, Acknowledgment
-from portfolio.models import Language_Skill, Library_Skill, DevOps_Skill
-from portfolio.models import Work, Work_Detail
-from portfolio.models import Work_Language_Skill_RelationShip
-from portfolio.models import Work_Library_Skill_Relationship
-from portfolio.models import Work_DevOps_Skill_Relationship
+from portfolio.models import Profile, SocialNetworkService, IconMater, Acknowledgment
+from portfolio.models import LanguageSkill, LibrarySkill, DevOpsSkill
+from portfolio.models import Work, WorkDetail
+from portfolio.models import WorkLanguageSkillRelationShip
+from portfolio.models import WorkLibrarySkillRelationship
+from portfolio.models import WorkDevOpsSkillRelationship
 
 
 def add_profile():
@@ -38,7 +38,7 @@ def add_profile():
 
     # DB データを全削除
     CP.print('Delete all DB SNS records.',CP.GREEN)
-    for sns in Social_Network_Service.objects.all():
+    for sns in SocialNetworkService.objects.all():
         CP.print('Deleted record.('+str(sns) +')',CP.YELLOW)
         sns.delete()
 
@@ -62,8 +62,8 @@ def add_profile():
 
     # DBにデータを追加
     CP.print('Add SNS records to DB.',CP.GREEN)
-    for icon in Icon_Mater.objects.all():
-        sns = Social_Network_Service()
+    for icon in IconMater.objects.all():
+        sns = SocialNetworkService()
         sns.Profile_id=prof.pk
         sns.name=icon.name
         sns.url='https://'+icon.name+'.com'
@@ -94,25 +94,25 @@ def add_language_skills():
     """
     # DB データを全削除
     CP.print('Delete all DB Language_Skill records.',CP.GREEN)
-    for record in Language_Skill.objects.all():
+    for record in LanguageSkill.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DBにデータを追加
     CP.print('Add Language_Skill records to DB.',CP.GREEN)
-    record = Language_Skill(name = 'C++', maturity = 5)
+    record = LanguageSkill(name = 'C++', maturity = 5)
     record.save()
-    record = Language_Skill(name = 'Python', maturity = 3)
+    record = LanguageSkill(name = 'Python', maturity = 3)
     record.save()
-    record = Language_Skill(name = 'C#', maturity = 2)
+    record = LanguageSkill(name = 'C#', maturity = 2)
     record.save()
-    record = Language_Skill(name = 'Powershell', maturity = 4)
+    record = LanguageSkill(name = 'Powershell', maturity = 4)
     record.save()
-    record = Language_Skill(name = 'PHP', maturity = 2)
+    record = LanguageSkill(name = 'PHP', maturity = 2)
     record.save()
-    record = Language_Skill(name = 'Java', maturity = 1)
+    record = LanguageSkill(name = 'Java', maturity = 1)
     record.save()
-    record = Language_Skill(name = 'SQL(SQL Server, MySQL)', maturity = 5)
+    record = LanguageSkill(name = 'SQL(SQL Server, MySQL)', maturity = 5)
     record.save()
 
 def add_library_skills():
@@ -120,17 +120,17 @@ def add_library_skills():
     """
     # DB データを全削除
     CP.print('Delete all DB Library_Skill records.',CP.GREEN)
-    for record in Library_Skill.objects.all():
+    for record in LibrarySkill.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DBにデータを追加
     CP.print('Add Library_Skill records to DB.',CP.GREEN)
-    record = Library_Skill(name = 'F社標準ライブラリ', maturity = 5)
+    record = LibrarySkill(name = 'F社標準ライブラリ', maturity = 5)
     record.save()
-    record = Library_Skill(name = 'Django', maturity = 2)
+    record = LibrarySkill(name = 'Django', maturity = 2)
     record.save()
-    record = Library_Skill(name = '.Net Framework', maturity = 2)
+    record = LibrarySkill(name = '.Net Framework', maturity = 2)
     record.save()
 
 def add_dev_ops_skills():
@@ -138,45 +138,45 @@ def add_dev_ops_skills():
     """
     # DB データを全削除
     CP.print('Delete all DB DevOps_Skill records.',CP.GREEN)
-    for record in DevOps_Skill.objects.all():
+    for record in DevOpsSkill.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DBにデータを追加
     CP.print('Add DevOps_Skill records to DB.',CP.GREEN)
-    record = DevOps_Skill(name = 'Visual Studio', maturity = 5)
+    record = DevOpsSkill(name = 'Visual Studio', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'VS Code', maturity = 5)
+    record = DevOpsSkill(name = 'VS Code', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'SQL Server Management Studio', maturity = 5)
+    record = DevOpsSkill(name = 'SQL Server Management Studio', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Mysql Workbench', maturity = 5)
+    record = DevOpsSkill(name = 'Mysql Workbench', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'SVN', maturity = 5)
+    record = DevOpsSkill(name = 'SVN', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Git', maturity = 5)
+    record = DevOpsSkill(name = 'Git', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'A5 SQL Mk-2', maturity = 4)
+    record = DevOpsSkill(name = 'A5 SQL Mk-2', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Office', maturity = 5)
+    record = DevOpsSkill(name = 'Office', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Redmine', maturity = 5)
+    record = DevOpsSkill(name = 'Redmine', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'JIRA', maturity = 4)
+    record = DevOpsSkill(name = 'JIRA', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Jenkins', maturity = 5)
+    record = DevOpsSkill(name = 'Jenkins', maturity = 5)
     record.save()
-    record = DevOps_Skill(name = 'Teams', maturity = 4)
+    record = DevOpsSkill(name = 'Teams', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Skype', maturity = 4)
+    record = DevOpsSkill(name = 'Skype', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'Zoom', maturity = 3)
+    record = DevOpsSkill(name = 'Zoom', maturity = 3)
     record.save()
-    record = DevOps_Skill(name = 'Slack', maturity = 3)
+    record = DevOpsSkill(name = 'Slack', maturity = 3)
     record.save()
-    record = DevOps_Skill(name = 'Docker', maturity = 4)
+    record = DevOpsSkill(name = 'Docker', maturity = 4)
     record.save()
-    record = DevOps_Skill(name = 'myPHPAdmin', maturity = 2)
+    record = DevOpsSkill(name = 'myPHPAdmin', maturity = 2)
     record.save()
 
 def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, sort:int=0):
@@ -208,7 +208,7 @@ def _create_work(work_name:str, private_work:int, start:datetime, end:datetime, 
     work.sort=sort
     work.save()
 
-    work_detail = Work_Detail()
+    work_detail = WorkDetail()
     work_detail.Work_id=work.pk
     work_detail.sub_titile='サブタイトル'
     work_detail.start_date=start
@@ -226,10 +226,10 @@ def _add_language_skills(work:Work, languages:list[str]):
         languages (list[str]): a list of language name.
     """
     if languages is not None:
-        for record in Language_Skill.objects.all():
+        for record in LanguageSkill.objects.all():
             for language in languages:
                 if record.name == language:
-                    relation = Work_Language_Skill_RelationShip()
+                    relation = WorkLanguageSkillRelationShip()
                     relation.Work_id=work.pk
                     relation.Language_Skill_id=record.pk
                     relation.sort=0
@@ -243,10 +243,10 @@ def _add_lib_skills(work:Work, libs:list[str]):
         libs (list[str]): a list of library name.
     """
     if libs is not None:
-        for record in Library_Skill.objects.all():
+        for record in LibrarySkill.objects.all():
             for lib in libs:
                 if record.name == lib:
-                    relation = Work_Library_Skill_Relationship()
+                    relation = WorkLibrarySkillRelationship()
                     relation.Work_id=work.pk
                     relation.Library_Skill_id=record.pk
                     relation.sort=0
@@ -260,10 +260,10 @@ def _add_dev_ops_skills(work:Work, dev_ops:list[str]):
         dev_ops (list[str]): a list of dev_ops skill name.
     """
     if dev_ops is not None:
-        for record in DevOps_Skill.objects.all():
+        for record in DevOpsSkill.objects.all():
             for dev in dev_ops:
                 if record.name == dev:
-                    relation = Work_DevOps_Skill_Relationship()
+                    relation = WorkDevOpsSkillRelationship()
                     relation.Work_id=work.pk
                     relation.DevOps_Skill_id=record.pk
                     relation.sort=0
@@ -299,25 +299,25 @@ def _delete_works():
 
     # DB データを全削除
     CP.print('Delete all DB Work_DevOps_Skill_Relationship records.',CP.GREEN)
-    for record in Work_DevOps_Skill_Relationship.objects.all():
+    for record in WorkDevOpsSkillRelationship.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work_Library_Skill_Relationship records.',CP.GREEN)
-    for record in Work_Library_Skill_Relationship.objects.all():
+    for record in WorkLibrarySkillRelationship.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work_Language_Skill_RelationShip records.',CP.GREEN)
-    for record in Work_Language_Skill_RelationShip.objects.all():
+    for record in WorkLanguageSkillRelationShip.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
     # DB データを全削除
     CP.print('Delete all DB Work_Detail records.',CP.GREEN)
-    for record in Work_Detail.objects.all():
+    for record in WorkDetail.objects.all():
         CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
         record.delete()
 
