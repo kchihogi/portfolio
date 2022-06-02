@@ -4,10 +4,10 @@ from distutils import dir_util
 import glob
 import os
 
-from portfolio.models import Icon_Mater
-from portfolio_site import settings
-
 from utils.cprint import ColorPrint as CP
+
+from portfolio_site import settings
+from portfolio.models import Icon_Mater
 
 def add_icon_master():
     """This copies media files to media root and inserts records of icon master.
@@ -28,7 +28,7 @@ def add_icon_master():
     # DB データを全削除
     CP.print('Delete all DB Icon_Mater records.',CP.GREEN)
     for icon in Icon_Mater.objects.all():
-        CP.print('Deleted record.('+icon.__str__() +')',CP.YELLOW)
+        CP.print('Deleted record.('+str(icon) +')',CP.YELLOW)
         icon.delete()
 
     # DBにデータを追加
