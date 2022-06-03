@@ -68,7 +68,7 @@ def relate_work_detail(work:Work, sub:str, proc:str, start:datetime, end:datetim
         Work_Detail: the model of Work_Detail created.
     """
     work_detail = WorkDetail()
-    work_detail.Work_id=work.pk
+    work_detail.work_id=work.pk
     work_detail.sub_titile=sub
     work_detail.start_date=start
     work_detail.end_date=end
@@ -89,8 +89,8 @@ def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
             for language in languages:
                 if record.name == language[0]:
                     relation = WorkLanguageSkillRelationShip()
-                    relation.Work_id=work.pk
-                    relation.Language_Skill_id=record.pk
+                    relation.work_id=work.pk
+                    relation.language_skill_id=record.pk
                     relation.sort=language[1]
                     relation.save()
 
@@ -106,8 +106,8 @@ def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
             for lib in libs:
                 if record.name == lib[0]:
                     relation = WorkLibrarySkillRelationship()
-                    relation.Work_id=work.pk
-                    relation.Library_Skill_id=record.pk
+                    relation.work_id=work.pk
+                    relation.library_skill_id=record.pk
                     relation.sort=lib[1]
                     relation.save()
 
@@ -123,8 +123,8 @@ def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
             for dev in dev_ops:
                 if record.name == dev[0]:
                     relation = WorkDevOpsSkillRelationship()
-                    relation.Work_id=work.pk
-                    relation.DevOps_Skill_id=record.pk
+                    relation.work_id=work.pk
+                    relation.dev_ops_skill_id=record.pk
                     relation.sort=dev[1]
                     relation.save()
 

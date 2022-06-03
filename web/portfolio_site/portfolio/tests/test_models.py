@@ -26,25 +26,25 @@
 #     pass
 
 
-# class Language_SkillsModelTests(TestCase):
+# class LanguageSkillModelTests(TestCase):
 #     pass
 
 
-# class Library_SkillsModelTests(TestCase):
+# class LibrarySkillModelTests(TestCase):
 #     pass
 
 
-# class DevOps_SkillsModelTests(TestCase):
+# class DevOpsSkillModelTests(TestCase):
 #     pass
 
 
-# class Work_Language_Skills_RelationShipModelTests(TestCase):
+# class WorkLanguageSkillsRelationShipModelTests(TestCase):
 #     pass
 
 
-# class Work_Library_Skills_RelationshipModelTests(TestCase):
+# class WorkLibrarySkillRelationshipModelTests(TestCase):
 #     pass
 
 
-# class Work_DevOps_Skills_RelationshipModelTests(TestCase):
+# class WorkDevOpsSkillRelationshipModelTests(TestCase):
 #     pass

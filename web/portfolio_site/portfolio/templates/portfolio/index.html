@@ -9,7 +9,7 @@
         <p>概要: {{work.description}}</p>
         <div class="skill language">
             {% for detail in work.details|slice:":3" %}
-                <p>{{detail.Language_Skill.name}}</p>
+                <p>{{detail.language_skill.name}}</p>
             {% endfor %}
         </div>
     </a>

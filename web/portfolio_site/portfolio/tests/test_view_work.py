@@ -47,7 +47,7 @@ class WorkViewTest(TestCase):
             work_a,
         )
 
-        self.assertEqual(response.context['work'].work_details, [])
+        self.assertEqual(response.context['work'].details, [])
 
         langs = []
         libs = []
@@ -59,7 +59,7 @@ class WorkViewTest(TestCase):
         utils.assert_skills(
             [response.context['work']],
             "lang_details",
-            "Language_Skill.name",
+            "language_skill.name",
             "sort",
             langs,
         )
@@ -67,7 +67,7 @@ class WorkViewTest(TestCase):
         utils.assert_skills(
             [response.context['work']],
             "lib_details",
-            "Library_Skill.name",
+            "library_skill.name",
             "sort",
             libs,
         )
@@ -75,7 +75,7 @@ class WorkViewTest(TestCase):
         utils.assert_skills(
             [response.context['work']],
             "dev_details",
-            "DevOps_Skill.name",
+            "dev_ops_skill.name",
             "sort",
             devs,
         )
@@ -118,12 +118,12 @@ class WorkViewTest(TestCase):
             work_a,
         )
 
-        self.assertEqual(response.context['work'].work_details, details)
+        self.assertEqual(response.context['work'].details, details)
 
         utils.assert_skills(
             [response.context['work']],
             "lang_details",
-            "Language_Skill.name",
+            "language_skill.name",
             "sort",
             langs,
         )
@@ -131,7 +131,7 @@ class WorkViewTest(TestCase):
         utils.assert_skills(
             [response.context['work']],
             "lib_details",
-            "Library_Skill.name",
+            "library_skill.name",
             "sort",
             libs,
         )
@@ -139,7 +139,7 @@ class WorkViewTest(TestCase):
         utils.assert_skills(
             [response.context['work']],
             "dev_details",
-            "DevOps_Skill.name",
+            "dev_ops_skill.name",
             "sort",
             devs,
         )
@@ -172,4 +172,4 @@ class WorkViewTest(TestCase):
             work_a,
         )
 
-        self.assertEqual(response.context['work'].work_details, details)
+        self.assertEqual(response.context['work'].details, details)

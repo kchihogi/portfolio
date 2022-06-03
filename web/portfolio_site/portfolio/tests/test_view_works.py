@@ -75,7 +75,7 @@ class WorksViewTest(TestCase):
         utils.assert_skills(
             response.context['works'],
             "lang_details",
-            "Language_Skill.name",
+            "language_skill.name",
             "sort",
             langs,
         )
@@ -103,7 +103,7 @@ class WorksViewTest(TestCase):
         utils.assert_skills(
             response.context['works'],
             "lib_details",
-            "Library_Skill.name",
+            "library_skill.name",
             "sort",
             libs,
         )
@@ -130,7 +130,7 @@ class WorksViewTest(TestCase):
         utils.assert_skills(
             response.context['works'],
             "dev_details",
-            "DevOps_Skill.name",
+            "dev_ops_skill.name",
             "sort",
             devs,
         )
@@ -190,7 +190,7 @@ class WorksViewTest(TestCase):
         utils.assert_skills(
             response.context['works'],
             "lang_details",
-            "Language_Skill.name",
+            "language_skill.name",
             "sort",
             langs,
         )
@@ -198,7 +198,7 @@ class WorksViewTest(TestCase):
         utils.assert_skills(
             response.context['works'],
             "lib_details",
-            "Library_Skill.name",
+            "library_skill.name",
             "sort",
             libs,
         )
@@ -206,7 +206,7 @@ class WorksViewTest(TestCase):
         utils.assert_skills(
             response.context['works'],
             "dev_details",
-            "DevOps_Skill.name",
+            "dev_ops_skill.name",
             "sort",
             devs,
         )

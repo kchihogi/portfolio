@@ -33,10 +33,10 @@ class IconMater(models.Model):
 class SocialNetworkService(models.Model):
     """The model of SNS table.
     """
-    Profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Profiles')
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profiles')
     name = models.CharField('名前', max_length=100, null=False)
     url = models.CharField('URL', max_length=1024, null=False)
-    Icon_Mater = models.ForeignKey(IconMater, on_delete=models.CASCADE, related_name='Icon_Maters')
+    icon_master = models.ForeignKey(IconMater, on_delete=models.CASCADE, related_name='icon_masters')
 
     def __str__(self):
         return self.name
@@ -70,7 +70,7 @@ class Work(models.Model):
 class WorkDetail(models.Model):
     """The model of work detail table.
     """
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='Work_Details')
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='work_details')
     sub_titile = models.CharField('サブタイトル', max_length=100, null=False)
     start_date = models.DateTimeField('制作開始', null=False)
     end_date = models.DateTimeField('制作終了', null=True)
@@ -110,29 +110,29 @@ class DevOpsSkill(models.Model):
 class WorkLanguageSkillRelationShip(models.Model):
     """The model of the relationship table of work and language skills.
     """
-    wrn = 'Lang_Works'
-    lrn = 'Language_Skills'
+    wrn = 'lang_works'
+    lrn = 'language_skills'
 
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
-    Language_Skill = models.ForeignKey(LanguageSkill, on_delete=models.CASCADE, related_name=lrn)
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
+    language_skill = models.ForeignKey(LanguageSkill, on_delete=models.CASCADE, related_name=lrn)
     sort = models.IntegerField('順序', null=False, default=0)
 
 class WorkLibrarySkillRelationship(models.Model):
     """The model of the relationship table of work and library skills.
     """
-    wrn = 'Lib_Works'
-    lrn = 'Library_Skills'
+    wrn = 'lib_works'
+    lrn = 'library_skills'
 
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
-    Library_Skill = models.ForeignKey(LibrarySkill, on_delete=models.CASCADE, related_name=lrn)
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
+    library_skill = models.ForeignKey(LibrarySkill, on_delete=models.CASCADE, related_name=lrn)
     sort = models.IntegerField('順序', null=False, default=0)
 
 class WorkDevOpsSkillRelationship(models.Model):
     """The model of the relationship table of work and DevOps skills.
     """
-    wrn = 'Dev_Works'
-    lrn = 'DevOps_Skills'
+    wrn = 'dev_works'
+    lrn = 'dev_ops_skills'
 
-    Work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
-    DevOps_Skill = models.ForeignKey(DevOpsSkill, on_delete=models.CASCADE, related_name=lrn)
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name=wrn)
+    dev_ops_skill = models.ForeignKey(DevOpsSkill, on_delete=models.CASCADE, related_name=lrn)
     sort = models.IntegerField('順序', null=False, default=0)

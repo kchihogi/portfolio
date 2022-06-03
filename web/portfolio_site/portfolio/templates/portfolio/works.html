@@ -11,17 +11,17 @@
         <p>概要: {{work.description}}</p>
         <div class="skill language">
             {% for detail in work.lang_details%}
-                <p>{{detail.Language_Skill.name}}</p>
+                <p>{{detail.language_skill.name}}</p>
             {% endfor %}
         </div>
         <div class="skill library">
             {% for detail in work.lib_details%}
-                <p>{{detail.Library_Skill.name}}</p>
+                <p>{{detail.library_skill.name}}</p>
             {% endfor %}
         </div>
         <div class="skill devops">
             {% for detail in work.dev_details%}
-                <p>{{detail.DevOps_Skill.name}}</p>
+                <p>{{detail.dev_ops_skill.name}}</p>
             {% endfor %}
         </div>
     </a>
