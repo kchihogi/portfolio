@@ -20,7 +20,7 @@ class WorksViewTest(TestCase):
     def test_no_work(self):
         """If no works, the works page contains "No works are available.
         """
-        profile = utils.cretet_profile()
+        profile = utils.create_profile()
         response = self.client.get(reverse('portfolio:works'))
         self.assertContains(response=response, text=profile.title)
         self.assertContains(response=response, text='No works are available.')
@@ -32,7 +32,7 @@ class WorksViewTest(TestCase):
     def test_no_skills_works(self):
         """If no skills related to works, works are listed without skills.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         lang=[]
         work_a = utils.create_work('WorkA', private_work,sort=0)
@@ -58,7 +58,7 @@ class WorksViewTest(TestCase):
 
         The value of the sort can be duplicated.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         utils.add_language_skills()
         private_work = 0
         langs = []
@@ -86,7 +86,7 @@ class WorksViewTest(TestCase):
 
         The value of the sort can be duplicated.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         utils.add_library_skills()
         private_work = 0
         libs = []
@@ -113,7 +113,7 @@ class WorksViewTest(TestCase):
 
         The value of the sort can be duplicated.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         utils.add_dev_ops_skills()
         private_work = 0
         devs = []
@@ -138,10 +138,7 @@ class WorksViewTest(TestCase):
     def test_all_skills_mixed_works(self):
         """Language, library, and DevOps skills are all listed in a work.
         """
-        utils.cretet_profile()
-        utils.add_language_skills()
-        utils.add_library_skills()
-        utils.add_dev_ops_skills()
+        utils.create_personal_base()
 
         private_work = 0
         langs = []
@@ -187,34 +184,17 @@ class WorksViewTest(TestCase):
             [work_c, work_b, work_a],
         )
 
-        utils.assert_skills(
+        utils.assert_skills_set(
             response.context['works'],
-            "lang_details",
-            "language_skill.name",
-            "sort",
             langs,
-        )
-
-        utils.assert_skills(
-            response.context['works'],
-            "lib_details",
-            "library_skill.name",
-            "sort",
             libs,
-        )
-
-        utils.assert_skills(
-            response.context['works'],
-            "dev_details",
-            "dev_ops_skill.name",
-            "sort",
             devs,
         )
 
     def test_pagination_zero_work(self):
         """This tests that pagination returns 1 when there are no works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         response = self.client.get(reverse('portfolio:works'))
         page_obj = response.context['page_obj']
         self.assertEqual(page_obj.paginator.count, 0)
@@ -224,7 +204,7 @@ class WorksViewTest(TestCase):
     def test_pagination_one_work(self):
         """This tests that pagination returns 1 when there is a work.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         utils.create_work('WorkA', private_work,sort=0)
         response = self.client.get(reverse('portfolio:works'))
@@ -236,7 +216,7 @@ class WorksViewTest(TestCase):
     def test_pagination_eleven_works(self):
         """This tests that pagination returns 1 when there are 11 works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         for i in range(11):
             utils.create_work(f'Work{str(i)}', private_work,sort=0)
@@ -249,7 +229,7 @@ class WorksViewTest(TestCase):
     def test_pagination_twelve_works(self):
         """This tests that pagination returns 1 when there are 12 works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         for i in range(12):
             utils.create_work(f'Work{str(i)}', private_work,sort=0)
@@ -262,7 +242,7 @@ class WorksViewTest(TestCase):
     def test_pagination_thirteen_works(self):
         """This tests that pagination returns 2 when there are 13 works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         for i in range(13):
             utils.create_work(f'Work{str(i)}', private_work,sort=0)
@@ -280,7 +260,7 @@ class WorksViewTest(TestCase):
     def test_pagination_three_hundreds_works(self):
         """This tests that pagination returns 25 when there are 300 works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         for i in range(300):
             utils.create_work(f'Work{str(i)}', private_work,sort=0)
@@ -293,7 +273,7 @@ class WorksViewTest(TestCase):
     def test_pagination_no_int_request(self):
         """Pagination returns the first page with a request having a not int parameter.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         for i in range(20):
             utils.create_work(f'Work{str(i)}', private_work,sort=0)
@@ -308,7 +288,7 @@ class WorksViewTest(TestCase):
     def test_pagination_unknown_page_request(self):
         """Pagination returns the last page with a request having an unknown page number.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         for i in range(20):
             utils.create_work(f'Work{str(i)}', private_work,sort=0)

@@ -33,7 +33,16 @@
 			"pylint_django",
 			"--disable=django-not-configured",
 			"--django-settings-module=portfolio_site.settings"
-			]
+			],
+		"python.testing.pytestEnabled": false,
+		"python.testing.unittestArgs": [
+			"-v",
+			"-s",
+			"./web/portfolio_site",
+			"-p",
+			"test_*.py"
+			],
+		"python.testing.unittestEnabled": true
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.

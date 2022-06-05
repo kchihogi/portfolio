@@ -156,3 +156,4 @@ dmypy.json
 
 # DB migration script
 web/portfolio_site/portfolio/migrations/*.py
+.vscode/settings.json

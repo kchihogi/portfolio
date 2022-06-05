@@ -8,14 +8,10 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, get_list_or_404,render
 from django.views import View
 
-from utils.logger import Logger
-
 from .models import Profile, Work, WorkDetail
 from .models import WorkLanguageSkillRelationShip
 from .models import WorkLibrarySkillRelationship
 from .models import WorkDevOpsSkillRelationship
-
-log = Logger("mylog")
 
 class IndexView(View):
     """The view of the index page.

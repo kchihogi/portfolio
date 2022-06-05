@@ -3,27 +3,17 @@ import datetime
 from operator import itemgetter
 from typing import Tuple
 
-from ..models import Profile, Work, WorkDetail
-from ..models import LanguageSkill, WorkLanguageSkillRelationShip
-from ..models import LibrarySkill, WorkLibrarySkillRelationship
-from ..models import DevOpsSkill, WorkDevOpsSkillRelationship
+from initial_data import custom_data_utils
 
-def cretet_profile():
+from ..models import Work
+
+def create_profile():
     """This cretes fixed profile.
 
     Returns:
         Profile: the model of Profile created.
     """
-    prof = Profile(title = 'タイトル', subtitle = 'サブタイトル', first_name = 'ミカド', last_name = '赤城')
-    prof.job = 'システムエンジニア'
-    intro = ''
-    for i in range(300):
-        intro += str(i%10)
-    prof.introduction = intro
-    prof.face_photo = 'profile/face.png'
-    prof.sub_photo = 'profile/sub.png'
-    prof.save()
-    return prof
+    return custom_data_utils.create_profile()
 
 def create_work(work_name:str, private_work:int, sort:int=0):
     """This cretes work with foreign relations.
@@ -36,30 +26,13 @@ def create_work(work_name:str, private_work:int, sort:int=0):
     Returns:
         Work: the model of Work created.
     """
-    desc = ''
-    for i in range(300):
-        if i%10 == 0 and i !=0:
-            desc += '\n'
-        else:
-            desc += 'Z'
-    work = Work()
-    work.title = work_name
-    work.image='works/' + work_name + '.png'
-    work.private=private_work
-    work.description = desc
-    work.url='https://dummy_url'
-    work.repository_url='https://dummy_repourl'
-    work.sort=sort
-    work.save()
-    return work
+    return custom_data_utils.create_work(work_name, private_work, sort)
 
-def relate_work_detail(work:Work, sub:str, proc:str, start:datetime, end:datetime, desc:str):
+def relate_work_detail(work:Work, proc:str, start:datetime, end:datetime, desc:str):
     """This creates relationship with work and work detail.
 
     Args:
         work (Work): the model of work.
-        sub (str): Subtitle
-        proc (str): Processes. Comma separated value.
         start (datetime): start datetime when a project started.
         end (datetime): end datetime when a project ended.
         desc (str): Description of the work detail.
@@ -67,15 +40,7 @@ def relate_work_detail(work:Work, sub:str, proc:str, start:datetime, end:datetim
     Returns:
         Work_Detail: the model of Work_Detail created.
     """
-    work_detail = WorkDetail()
-    work_detail.work_id=work.pk
-    work_detail.sub_titile=sub
-    work_detail.start_date=start
-    work_detail.end_date=end
-    work_detail.processes=proc
-    work_detail.detail_description= desc
-    work_detail.save()
-    return work_detail
+    return custom_data_utils.relate_work_detail(work,proc,start,end,desc)
 
 def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
     """This cretes relationship with work and language skills.
@@ -84,15 +49,7 @@ def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
         work (Work): the model of work.
         languages (list[Tuple[str,int]]): a list of language name and sort number.
     """
-    if languages is not None:
-        for record in LanguageSkill.objects.all():
-            for language in languages:
-                if record.name == language[0]:
-                    relation = WorkLanguageSkillRelationShip()
-                    relation.work_id=work.pk
-                    relation.language_skill_id=record.pk
-                    relation.sort=language[1]
-                    relation.save()
+    custom_data_utils.relate_language_skills(work,languages)
 
 def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
     """This cretes relationship with work and libs skills.
@@ -101,15 +58,7 @@ def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
         work (Work): the model of work.
         libs (list[Tuple[str,int]]): a list of library name and sort number.
     """
-    if libs is not None:
-        for record in LibrarySkill.objects.all():
-            for lib in libs:
-                if record.name == lib[0]:
-                    relation = WorkLibrarySkillRelationship()
-                    relation.work_id=work.pk
-                    relation.library_skill_id=record.pk
-                    relation.sort=lib[1]
-                    relation.save()
+    custom_data_utils.relate_lib_skills(work, libs)
 
 def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
     """This cretes relationship with work and dev_ops skills.
@@ -118,81 +67,22 @@ def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
         work (Work): the model of work.
         dev_ops (list[Tuple[str,int]]): a list of dev_ops skill name and sort number.
     """
-    if dev_ops is not None:
-        for record in DevOpsSkill.objects.all():
-            for dev in dev_ops:
-                if record.name == dev[0]:
-                    relation = WorkDevOpsSkillRelationship()
-                    relation.work_id=work.pk
-                    relation.dev_ops_skill_id=record.pk
-                    relation.sort=dev[1]
-                    relation.save()
+    custom_data_utils.relate_dev_ops_skills(work, dev_ops)
 
 def add_language_skills():
     """This inserts language skills.
     """
-    record = LanguageSkill(name = 'C++', maturity = 5)
-    record.save()
-    record = LanguageSkill(name = 'Python', maturity = 3)
-    record.save()
-    record = LanguageSkill(name = 'C#', maturity = 2)
-    record.save()
-    record = LanguageSkill(name = 'Powershell', maturity = 4)
-    record.save()
-    record = LanguageSkill(name = 'PHP', maturity = 2)
-    record.save()
-    record = LanguageSkill(name = 'Java', maturity = 1)
-    record.save()
-    record = LanguageSkill(name = 'SQL(SQL Server, MySQL)', maturity = 5)
-    record.save()
+    custom_data_utils.add_language_skills()
 
 def add_library_skills():
     """This inserts libraru skills.
     """
-    record = LibrarySkill(name = 'F社標準ライブラリ', maturity = 5)
-    record.save()
-    record = LibrarySkill(name = 'Django', maturity = 2)
-    record.save()
-    record = LibrarySkill(name = '.Net Framework', maturity = 2)
-    record.save()
+    custom_data_utils.add_library_skills()
 
 def add_dev_ops_skills():
     """This insets DevOps skills.
     """
-    record = DevOpsSkill(name = 'Visual Studio', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'VS Code', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'SQL Server Management Studio', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'Mysql Workbench', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'SVN', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'Git', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'A5 SQL Mk-2', maturity = 4)
-    record.save()
-    record = DevOpsSkill(name = 'Office', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'Redmine', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'JIRA', maturity = 4)
-    record.save()
-    record = DevOpsSkill(name = 'Jenkins', maturity = 5)
-    record.save()
-    record = DevOpsSkill(name = 'Teams', maturity = 4)
-    record.save()
-    record = DevOpsSkill(name = 'Skype', maturity = 4)
-    record.save()
-    record = DevOpsSkill(name = 'Zoom', maturity = 3)
-    record.save()
-    record = DevOpsSkill(name = 'Slack', maturity = 3)
-    record.save()
-    record = DevOpsSkill(name = 'Docker', maturity = 4)
-    record.save()
-    record = DevOpsSkill(name = 'myPHPAdmin', maturity = 2)
-    record.save()
+    custom_data_utils.add_dev_ops_skills()
 
 def assert_skills(
     works:list[Work],
@@ -248,3 +138,42 @@ def assert_skills(
             msg += f'expected:{sorted_skills}\n\n'
             msg += f'result:{result_str}\n'
             raise AssertionError(msg)
+
+def assert_skills_set(
+    works:list[Work],
+    langskillsset:list[list[Tuple[str,int]]],
+    libskillsset:list[list[Tuple[str,int]]],
+    devskillsset:list[list[Tuple[str,int]]]):
+    """This repeats assert_skills for language, library, and DevOps skills.
+    """
+    assert_skills(
+        works,
+        "lang_details",
+        "language_skill.name",
+        "sort",
+        langskillsset,
+    )
+
+    assert_skills(
+        works,
+        "lib_details",
+        "library_skill.name",
+        "sort",
+        libskillsset,
+    )
+
+    assert_skills(
+        works,
+        "dev_details",
+        "dev_ops_skill.name",
+        "sort",
+        devskillsset,
+    )
+
+def create_personal_base():
+    """This inserts profile, language skills, library skills, and DevOps skills.
+    """
+    create_profile()
+    add_language_skills()
+    add_library_skills()
+    add_dev_ops_skills()

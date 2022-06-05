@@ -33,10 +33,13 @@ class IconMater(models.Model):
 class SocialNetworkService(models.Model):
     """The model of SNS table.
     """
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profiles')
+    prn = 'profiles'
+    irn = 'icon_masters'
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name=prn)
     name = models.CharField('名前', max_length=100, null=False)
     url = models.CharField('URL', max_length=1024, null=False)
-    icon_master = models.ForeignKey(IconMater, on_delete=models.CASCADE, related_name='icon_masters')
+    icon_master = models.ForeignKey(IconMater, on_delete=models.CASCADE, related_name=irn)
 
     def __str__(self):
         return self.name

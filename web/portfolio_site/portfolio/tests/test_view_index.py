@@ -18,7 +18,7 @@ class IndexViewTest(TestCase):
     def test_no_work(self):
         """If no works, the index page contains "No works are available.
         """
-        profile = utils.cretet_profile()
+        profile = utils.create_profile()
         response = self.client.get(reverse('portfolio:index'))
         self.assertContains(response=response, text=profile.title)
         self.assertContains(response=response, text='No works are available.')
@@ -30,7 +30,7 @@ class IndexViewTest(TestCase):
     def test_three_no_private_works(self):
         """The index page shows three no private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         work_a = utils.create_work('WorkA', private_work,sort=0)
         work_b = utils.create_work('WorkB', private_work,sort=0)
@@ -44,7 +44,7 @@ class IndexViewTest(TestCase):
     def test_six_no_private_works(self):
         """The index page shows six no private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         work_a = utils.create_work('WorkA', private_work,sort=0)
         work_b = utils.create_work('WorkB', private_work,sort=0)
@@ -61,7 +61,7 @@ class IndexViewTest(TestCase):
     def test_seven_no_private_works(self):
         """The index page shows only six no private works, not seven works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         work_a = utils.create_work('WorkA', private_work,sort=0)
         work_b = utils.create_work('WorkB', private_work,sort=0)
@@ -79,7 +79,7 @@ class IndexViewTest(TestCase):
     def test_three_private_works(self):
         """The index page shows three private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 1
         work_a = utils.create_work('WorkA', private_work,sort=0)
         work_b = utils.create_work('WorkB', private_work,sort=0)
@@ -93,7 +93,7 @@ class IndexViewTest(TestCase):
     def test_six_private_works(self):
         """The index page shows six private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 1
         work_a = utils.create_work('WorkA', private_work,sort=0)
         work_b = utils.create_work('WorkB', private_work,sort=0)
@@ -110,7 +110,7 @@ class IndexViewTest(TestCase):
     def test_seven_private_works(self):
         """The index page shows only six private works, not seven works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 1
         work_a = utils.create_work('WorkA', private_work,sort=0)
         work_b = utils.create_work('WorkB', private_work,sort=0)
@@ -128,7 +128,7 @@ class IndexViewTest(TestCase):
     def test_three_private_and_three_non_works(self):
         """The index page shows three no private works and three private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         non_private_work = 0
         private_work = 1
         work_a = utils.create_work('WorkA', non_private_work,sort=0)
@@ -146,7 +146,7 @@ class IndexViewTest(TestCase):
     def test_two_private_and_two_non_works(self):
         """The index page shows two no private works and two private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         non_private_work = 0
         private_work = 1
         work_a = utils.create_work('WorkA', non_private_work,sort=0)
@@ -162,7 +162,7 @@ class IndexViewTest(TestCase):
     def test_two_private_and_five_non_works(self):
         """The index page shows four non private works and two private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         non_private_work = 0
         private_work = 1
         work_a = utils.create_work('WorkA', private_work,sort=0)
@@ -181,7 +181,7 @@ class IndexViewTest(TestCase):
     def test_five_private_and_two_non_works(self):
         """The index page shows two non private works and four private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         non_private_work = 0
         private_work = 1
         work_a = utils.create_work('WorkA', private_work,sort=0)
@@ -200,7 +200,7 @@ class IndexViewTest(TestCase):
     def test_four_private_and_four_non_works(self):
         """The index page shows three non private works and three private works.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         non_private_work = 0
         private_work = 1
         work_a = utils.create_work('WorkA', private_work,sort=0)
@@ -222,7 +222,7 @@ class IndexViewTest(TestCase):
 
         The value of the sort can be duplicated.
         """
-        utils.cretet_profile()
+        utils.create_profile()
         private_work = 0
         work_a = utils.create_work('WorkA', private_work,sort=2)
         work_b = utils.create_work('WorkB', private_work,sort=1)

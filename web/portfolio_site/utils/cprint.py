@@ -25,4 +25,16 @@ class ColorPrint():
             msg (str): message to print on the console.
             color (str): color. Constants are prepared.
         """
-        print(color + msg + ColorPrint.END)
+        print(ColorPrint.raw(msg, color))
+
+    @staticmethod
+    def raw(msg:str, color:str):
+        """get raw string with color.
+
+        Args:
+            msg (str): message to print on the console.
+            color (str): color. Constants are prepared.
+        Returns:
+            str: a raw string with color codes.
+        """
+        return color + msg + ColorPrint.END
