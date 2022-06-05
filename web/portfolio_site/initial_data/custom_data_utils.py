@@ -375,8 +375,10 @@ def _add_works(num:int):
 def _add_non_private_works():
     """This adds records of non private works.
     """
-
     private_work = 0
+    proc='工程A,工程B,工程C'
+    desc='詳細情報'
+
     # DBにデータを追加
     work_name = 'WorkA'
     start = timezone.now() + datetime.timedelta(days=-365)
@@ -387,8 +389,6 @@ def _add_non_private_works():
                 ,('SVN',0), ('Git',0), ('A5 SQL Mk-2',0), ('Office', 0), ('Redmine',0) \
                 , ('JIRA',0), ('Jenkins', 0), ('Teams',0)]
     work = create_work(work_name=work_name, private_work=private_work)
-    proc='工程A,工程B,工程C'
-    desc='詳細情報'
     relate_work_detail(work,proc,start,end,desc)
     relate_language_skills(work=work, languages=languages)
     relate_lib_skills(work=work,libs=libs)
@@ -401,8 +401,6 @@ def _add_non_private_works():
     dev_ops = [('Visual Studio',0), ('Git',0), ('Office',0), ('Redmine',0) \
                 , ('JIRA',0), ('Jenkins',0), ('Docker', 0)]
     work = create_work(work_name=work_name, private_work=private_work)
-    proc='工程A,工程B,工程C'
-    desc='詳細情報'
     relate_work_detail(work,proc,start,None,desc)
     relate_language_skills(work=work, languages=languages)
     relate_lib_skills(work=work,libs=libs)
@@ -415,8 +413,6 @@ def _add_non_private_works():
     libs = [('.Net Framework',0)]
     dev_ops = [('Visual Studio',0),('VS Code',0), ('Skype',0),('SVN',0), ('Slack',0), ('Office',0)]
     work = create_work(work_name=work_name, private_work=private_work)
-    proc='工程A,工程B,工程C'
-    desc='詳細情報'
     relate_work_detail(work,proc,start,end,desc)
     relate_language_skills(work=work, languages=languages)
     relate_lib_skills(work=work,libs=libs)
@@ -429,8 +425,6 @@ def _add_non_private_works():
     libs = [('Django', 0)]
     dev_ops = [('VS Code',0), ('Git',0), ('Docker',0)]
     work = create_work(work_name=work_name, private_work=private_work)
-    proc='工程A,工程B,工程C'
-    desc='詳細情報'
     relate_work_detail(work,proc,start,end,desc)
     relate_language_skills(work=work, languages=languages)
     relate_lib_skills(work=work,libs=libs)

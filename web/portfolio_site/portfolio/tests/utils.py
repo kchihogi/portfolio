@@ -134,7 +134,7 @@ def assert_skills(
                 sort_num = getattr(ret, col2)
                 result_str += f"('{skill_name}', {str(sort_num)}), "
             result_str = f'{result_str[:-2]}]'
-            msg = f'{work.__str__()} {str(type(work))}\n\n'
+            msg = f'{str(work)} {str(type(work))}\n\n'
             msg += f'expected:{sorted_skills}\n\n'
             msg += f'result:{result_str}\n'
             raise AssertionError(msg)
