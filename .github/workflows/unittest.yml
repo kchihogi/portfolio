@@ -29,4 +29,4 @@ jobs:
       run: |
         python -m unittest discover utils
       working-directory: |
-        web/portfolio_site
+        ./web/portfolio_site
