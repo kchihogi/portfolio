@@ -22,6 +22,7 @@
 - Pillow 9.1.0
 - django-debug-toolbar 3.4.0
 - pylint-django 2.5.3
+- coverage 6.4.1
 
 ## DevOps Tools
 - Docker
