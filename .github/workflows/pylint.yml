@@ -21,4 +21,4 @@ jobs:
         pip install -r web/requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py') --load-plugins pylint_django --disable=django-not-configured --django-settings-module=portfolio_site.settings
+        pylint $(git ls-files '*.py') --load-plugins pylint_django --disable=django-not-configured --django-settings-module=portfolio_site.settings --ignore manage.py
