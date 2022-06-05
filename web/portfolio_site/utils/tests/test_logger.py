@@ -7,10 +7,10 @@ class LoggerTest(TestCase):
     """This class is an object to test the Logger."""
 
     def test_write_log(self):
+        """This tests to write logs with the Logger Module
+        """
         log = Logger('mylog')
         log.initialize()
         log.info('teststeetetetet')
         log.err('erererererer')
-
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
+        self.assertEqual(1,1)

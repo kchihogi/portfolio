@@ -22,8 +22,8 @@ class WorksViewTest(TestCase):
         """
         profile = utils.create_profile()
         response = self.client.get(reverse('portfolio:works'))
-        self.assertContains(response=response, text=profile.title)
         self.assertContains(response=response, text='No works are available.')
+        self.assertContains(response=response, text=profile.title)
         self.assertQuerysetEqual(
             response.context['works'],
             [],
