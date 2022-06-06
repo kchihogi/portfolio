@@ -15,6 +15,15 @@ jobs:
       matrix:
         python-version: [3.9]
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: portfolio_db
+        ports: ['3306:3306']
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -25,6 +34,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r web/requirements.txt
+    - name: Setup mysql-action
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3306
+        container port: 3306
+        character set server: 'utf8mb4'
+        collation server: 'utf8mb4_bin'
+        mysql version: '5.7'
+        mysql database: 'portfolio_db'
+        mysql root password: 'password'
     - name: Run Tests
       run: |
         python manage.py test
