@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'portfolio_db',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': 'db',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
