@@ -23,6 +23,7 @@
 - django-debug-toolbar 3.4.0
 - pylint-django 2.5.3
 - coverage 6.4.1
+- django-environ 0.8.1
 
 ## DevOps Tools
 - Docker
