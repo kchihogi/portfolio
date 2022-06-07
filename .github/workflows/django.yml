@@ -49,7 +49,7 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
-       working-directory: ./web/portfolio_site
+        working-directory: ./web/portfolio_site
         directory: ./web/portfolio_site
         fail_ci_if_error: true
         name: portfolio-django-ci
