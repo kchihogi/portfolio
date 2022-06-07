@@ -42,9 +42,16 @@ jobs:
     - name: Run Tests
       run: |
         coverage run --source='.' manage.py test
+        coverage xml
       working-directory: ./web/portfolio_site
       env:
         DATABASE_URL: '${{ secrets.DATABASE_URL }}'
         SECRET_KEY: '${{ secrets.SECRET_KEY }}'
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
+      with:
+        working-directory: ./web/portfolio_site
+        directory: ./web/portfolio_site
+        fail_ci_if_error: true
+        name: portfolio-django-ci
+        verbose: true
