@@ -33,13 +33,16 @@ jobs:
         collation server: 'utf8mb4_bin'
         mysql version: '5.7'
         mysql database: 'portfolio_db'
-        mysql root password: 'password'
+        mysql root password: '${{ secrets.MYSQL_ROOT_PASSWORD }}'
     - name: Wait for MySQL
       run: |
-        while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
+        while ! mysqladmin ping --host=127.0.0.1 --password=${{ secrets.MYSQL_ROOT_PASSWORD }} --silent; do
           sleep 1
         done
     - name: Run Tests
       run: |
         python manage.py test
       working-directory: ./web/portfolio_site
+      env:
+        DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+        SECRET_KEY: '${{ secrets.SECRET_KEY }}'
