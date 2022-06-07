@@ -26,3 +26,6 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --load-plugins pylint_django --disable=django-not-configured --django-settings-module=portfolio_site.settings --ignore manage.py
+      env:
+        DATABASE_URL: '${{ secrets.DATABASE_URL }}'
+        SECRET_KEY: '${{ secrets.SECRET_KEY }}'
