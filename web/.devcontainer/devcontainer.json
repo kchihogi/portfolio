@@ -34,7 +34,7 @@
 			"--disable=django-not-configured",
 			"--django-settings-module=portfolio_site.settings",
 			"--ignore",
-			"manage.py"
+			"manage.py,0001_initial.py"
 			],
 		"python.testing.pytestEnabled": false,
 		"python.testing.unittestArgs": [
