@@ -53,5 +53,4 @@ jobs:
         directory: ./web/portfolio_site
         fail_ci_if_error: true
         name: portfolio-django-ci
-        path_to_write_report: ./web/portfolio_site/codecov_report.txt
         verbose: true
