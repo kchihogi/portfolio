@@ -3,6 +3,7 @@
 from distutils import dir_util
 import glob
 import os
+from pathlib import Path
 
 from utils.cprint import ColorPrint as CP
 
@@ -21,7 +22,7 @@ def add_icon_master():
             CP.print('Deleted file.('+file+')',CP.YELLOW)
 
     # mediaを復元
-    backup_media = 'initial_data/media/icons'
+    backup_media = str(Path(__file__).resolve().parent) + '/media/icons'
     CP.print('Copy media dir.(FROM:'+ backup_media + '  TO:'+ icon_dir +')',CP.GREEN)
     dir_util.copy_tree(backup_media, icon_dir)
 
