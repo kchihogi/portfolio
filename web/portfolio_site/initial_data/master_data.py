@@ -42,6 +42,3 @@ def add_icon_master():
     instagram.save()
     line = IconMater(name='LINE', icon='icons/LINE.png')
     line.save()
-
-if __name__ == "__main__":
-    add_icon_master()

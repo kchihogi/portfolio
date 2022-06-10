@@ -14,6 +14,7 @@ class MasterDataTest(TestCase):
         """Check exitsts of 4 files and 4records.
         """
         master_data.add_icon_master()
+        master_data.add_icon_master()
         icon_dir = settings.MEDIA_ROOT + '/icons'
         self.assertTrue(os.path.isfile(icon_dir + '/Facebook.png'))
         self.assertTrue(os.path.isfile(icon_dir + '/Instagram.png'))

@@ -486,11 +486,3 @@ def _add_private_works():
     relate_language_skills(work=work, languages=languages)
     relate_lib_skills(work=work,libs=libs)
     relate_dev_ops_skills(work=work,dev_ops=dev_ops)
-
-if __name__ == "__main__":
-    add_profile()
-    add_acknowledgment()
-    add_language_skills()
-    add_library_skills()
-    add_dev_ops_skills()
-    add_works()
