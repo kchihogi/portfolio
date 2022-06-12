@@ -39,6 +39,8 @@ jobs:
         while ! mysqladmin ping --host=127.0.0.1 --password=${{ secrets.MYSQL_ROOT_PASSWORD }} --silent; do
           sleep 1
         done
+    - name: change owner of media directory
+      run: sudo chown -R runner:docker /var/www
     - name: Run Tests
       run: |
         coverage run --source='.' --omit='*/tests/*','*/asgi.py','*/wsgi.py','*/manage.py','*/portfolio_site/settings.py' manage.py test
