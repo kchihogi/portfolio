@@ -15,6 +15,14 @@ def create_profile():
     """
     return custom_data_utils.create_profile()
 
+def create_another_profile():
+    """This cretes fixed profile.
+
+    Returns:
+        Profile: the model of Profile created.
+    """
+    return custom_data_utils.create_another_profile()
+
 def create_work(work_name:str, private_work:int, sort:int=0):
     """This cretes work with foreign relations.
 
@@ -177,3 +185,14 @@ def create_personal_base():
     add_language_skills()
     add_library_skills()
     add_dev_ops_skills()
+
+def create_acknowledgment(enable:bool):
+    """This inserts an acknowledgment.
+
+    Args:
+        enable (bool): enable
+
+    Returns:
+        Acknowledgment: the model of Acknowledgment created.
+    """
+    return custom_data_utils.create_acknowledgment(enable)

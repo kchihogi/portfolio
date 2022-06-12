@@ -38,6 +38,21 @@ def create_profile():
     prof.save()
     return prof
 
+def create_another_profile():
+    """This cretes fixed profile.
+
+    Returns:
+        Profile: the model of Profile created.
+    """
+    prof = Profile(title = 'ANOTHER', subtitle = 'ABC', first_name = 'ミカド', last_name = 'Another')
+    prof.job = 'YABUISHA'
+    intro = ''
+    for i in range(300):
+        intro += str(i%10)
+    prof.introduction = intro
+    prof.save()
+    return prof
+
 def add_profile():
     """This copies media fiiles to the media root and inserts a profile record.
     """
@@ -98,6 +113,24 @@ def add_acknowledgment():
         cmts += 'X'
     ack = Acknowledgment(comments = cmts, enable = 1)
     ack.save()
+
+def create_acknowledgment(enable:bool):
+    """This inserts an acknowledgment.
+
+    Args:
+        enable (bool): enable
+
+    Returns:
+        Acknowledgment: the model of Acknowledgment created.
+    """
+    cmts = ''
+    for i in range(300):
+        if i%10 == 0 and i !=0:
+            cmts += '\n'
+        cmts += 'X'
+    ack = Acknowledgment(comments = cmts, enable = enable)
+    ack.save()
+    return ack
 
 def add_language_skills():
     """This inserts language skills.
