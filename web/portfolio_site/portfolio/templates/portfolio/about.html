@@ -1,32 +1,34 @@
 {% extends "portfolio/base.html" %}
 
 {% block article %}
-<dev class="profile">
-    <div class="title">{{profile.title}}</div>
-    <div class="subtitle">{{profile.subtitle}}</div>
-    <div class="name">{{profile.last_name}}/{{profile.first_name}}</div>
-    <div class="job">{{profile.job}}</div>
-    <div class="introduction">{{profile.introduction}}</div>
-    <div class="face_photo">
-        <img src="{% if profile.face_photo %}{{profile.face_photo.url}}{% endif %}" alt="Face Photo" onerror="this.src='{{NO_IMAGE}}';" />
+<div class="left-panel">
+    <dev class="profile-images">
+        <img class="face_photo" src="{% if profile.face_photo %}{{profile.face_photo.url}}{% endif %}" alt="Face Photo" onerror="this.src='{{NO_IMAGE}}';" />
+        <!-- <div class="sub_photo">
+            <img src="{% if profile.sub_photo %}{{profile.sub_photo.url}}{% endif %}" alt="Sub Photo" onerror="this.src='{{NO_IMAGE}}';" />
+        </div> -->
+    </dev>
+    <dev class="acknowledgment">
+        {% for item in acknowledgment%}
+            <p>{{item.comments}}</p>
+        {% endfor %}
+    </dev>
+</div>
+<div class="right-panel">
+    <dev class="profile">
+        <div class="title">{{profile.title}}</div>
+        <div class="subtitle">{{profile.subtitle}}</div>
+        <div class="name">{{profile.last_name}}/{{profile.first_name}}</div>
+        <div class="job">{{profile.job}}</div>
+        <div class="introduction">{{profile.introduction}}</div>
+        <div class="face_photo">
+    </dev>
+    <div class="sns-panel">
+        {% for item in profile.sns%}
+            <a class="sns" href="{{item.url}}">
+                <img src="{% if item.icon_master.icon %}{{item.icon_master.icon.url}}{% endif %}" alt="{{item.name}}" onerror="this.src='{{NO_IMAGE}}';" />
+            </a>
+        {% endfor %}
     </div>
-    <div class="sub_photo">
-        <img src="{% if profile.sub_photo %}{{profile.sub_photo.url}}{% endif %}" alt="Sub Photo" onerror="this.src='{{NO_IMAGE}}';" />
-    </div>
-</dev>
-<dev class="sns">
-    {% for item in profile.sns%}
-        <p>{{item.name}}</p>
-        <p>{{item.url}}</p>
-        <p>{{item.icon_master.name}}</p>
-        <p>
-            <img src="{% if item.icon_master.icon %}{{item.icon_master.icon.url}}{% endif %}" alt="SNS Icon" onerror="this.src='{{NO_IMAGE}}';" />
-        </p>
-    {% endfor %}
-</dev>
-<dev class="acknowledgment">
-    {% for item in acknowledgment%}
-        <p>{{item.comments}}</p>
-    {% endfor %}
-</dev>
+</div>
 {% endblock article %}
