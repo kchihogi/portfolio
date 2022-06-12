@@ -1,6 +1,7 @@
 """Wrapper of logging.
 """
 import glob
+import inspect
 import logging
 from logging import Formatter
 from logging import getLogger
@@ -11,8 +12,8 @@ import os
 
 from utils.cprint import ColorPrint as CP
 
-BASE_FORMAT = "%(asctime)s %(module)10s(%(process)6d/%(thread)8d):[%(levelname)s]%(message)s"
-FILE_FORMAT = f"{BASE_FORMAT}(%(filename)s,%(lineno)d,%(funcName)s)"
+BASE_FORMAT = "%(asctime)s (%(process)6d/%(thread)8d):[%(levelname)s]%(message)s"
+FILE_FORMAT = BASE_FORMAT
 
 class ConsoleLogger:
     """Console Logger module to put out stdout.
@@ -83,7 +84,7 @@ class FileLogger(ConsoleLogger):
         self.out_dir = './log'
 
         # Format
-        self.format = FILE_FORMAT
+        self.format = Formatter(FILE_FORMAT)
 
         # Log File
         self.log_level = logging.INFO
@@ -112,6 +113,8 @@ class FileLogger(ConsoleLogger):
         # フォルダ作成
         if not os.path.exists(self.out_dir):
             os.mkdir(self.out_dir)
+
+        self.file_path = os.path.join(self.out_dir, os.path.basename(self.file_path))
 
     def set_log_file(self, level:int, name:str, out_dir:str):
         """Set log file configuration.
@@ -154,6 +157,11 @@ class Logger:
         self.cons_logger = ConsoleLogger()
         self.log_file_logger = FileLogger()
         self.err_log_file_logger = FileLogger()
+        self.err_log_file_logger.set_log_file(
+            logging.ERROR
+            , 'error_log.log'
+            , self.err_log_file_logger.out_dir
+            )
 
         self.__init = False
         self.__logger = getLogger(name)
@@ -165,7 +173,11 @@ class Logger:
         Args:
             root_log_level (int, optional): Top log level. Defaults to logging.INFO.
         """
-        self.set_dir(self.log_file_logger.out_dir)
+        if self.log_file_logger is not None:
+            self.set_dir(self.log_file_logger.out_dir)
+        elif self.err_log_file_logger is not None:
+            self.set_dir(self.err_log_file_logger.out_dir)
+
         #loggerを設定
         self.__logger.setLevel(root_log_level)
         self.__c_logger.setLevel(root_log_level)
@@ -208,8 +220,10 @@ class Logger:
             If clean is set to True, all files are deleted under the out_dir.
             Defaults to False.
         """
-        self.log_file_logger.set_dir(out_dir,clean)
-        self.err_log_file_logger.set_dir(out_dir,clean)
+        if self.log_file_logger is not None:
+            self.log_file_logger.set_dir(out_dir,clean)
+        if self.err_log_file_logger is not None:
+            self.err_log_file_logger.set_dir(out_dir,clean)
 
     def set_log_file(self, enable:bool):
         """Set log file configuration.
@@ -248,21 +262,11 @@ class Logger:
             TypeError: It raises TypeError when initialize is not called.
         """
         self._is_init()
+        msg += f'({inspect.currentframe().f_back.f_code.co_filename}'
+        msg += f', {inspect.currentframe().f_back.f_lineno}'
+        msg += f', {inspect.currentframe().f_back.f_code.co_name})'
         self.__logger.critical(msg)
         self.__c_logger.critical(CP.raw(msg, CP.RED))
-
-    def fatal(self, msg):
-        """Write log with fatal level.
-
-        Args:
-            msg (str): Message.
-
-        Raises:
-            TypeError: It raises TypeError when initialize is not called.
-        """
-        self._is_init()
-        self.__logger.fatal(msg)
-        self.__c_logger.fatal(CP.raw(msg, CP.RED))
 
     def err(self, msg):
         """Write log with error level.
@@ -274,6 +278,9 @@ class Logger:
             TypeError: It raises TypeError when initialize is not called.
         """
         self._is_init()
+        msg += f'({inspect.currentframe().f_back.f_code.co_filename}'
+        msg += f', {inspect.currentframe().f_back.f_lineno}'
+        msg += f', {inspect.currentframe().f_back.f_code.co_name})'
         self.__logger.error(msg)
         self.__c_logger.error(CP.raw(msg, CP.RED))
 
@@ -287,6 +294,9 @@ class Logger:
             TypeError: It raises TypeError when initialize is not called.
         """
         self._is_init()
+        msg += f'({inspect.currentframe().f_back.f_code.co_filename}'
+        msg += f', {inspect.currentframe().f_back.f_lineno}'
+        msg += f', {inspect.currentframe().f_back.f_code.co_name})'
         self.__logger.warning(msg)
         self.__c_logger.warning(CP.raw(msg, CP.YELLOW))
 
@@ -300,6 +310,9 @@ class Logger:
             TypeError: It raises TypeError when initialize is not called.
         """
         self._is_init()
+        msg += f'({inspect.currentframe().f_back.f_code.co_filename}'
+        msg += f', {inspect.currentframe().f_back.f_lineno}'
+        msg += f', {inspect.currentframe().f_back.f_code.co_name})'
         self.__logger.info(msg)
         self.__c_logger.info(CP.raw(msg, CP.GREEN))
 
@@ -313,8 +326,20 @@ class Logger:
             TypeError: It raises TypeError when initialize is not called.
         """
         self._is_init()
+        msg += f'({inspect.currentframe().f_back.f_code.co_filename}'
+        msg += f', {inspect.currentframe().f_back.f_lineno}'
+        msg += f', {inspect.currentframe().f_back.f_code.co_name})'
         self.__logger.debug(msg)
         self.__c_logger.debug(CP.raw(msg, CP.GREEN))
+
+    def clean(self):
+        """Cleaning all log files
+        """
+        if self.log_file_logger is not None:
+            self.log_file_logger.set_dir(self.log_file_logger.out_dir, True)
+        if self.err_log_file_logger is not None:
+            self.err_log_file_logger.set_dir(self.err_log_file_logger.out_dir, True)
+        self.initialize()
 
     def _is_init(self):
         """Check initialize flag.

@@ -6,6 +6,7 @@ import datetime
 from distutils import dir_util
 import glob
 import os
+from pathlib import Path
 from typing import Tuple
 
 from django.utils import timezone
@@ -49,7 +50,7 @@ def add_profile():
             CP.print('Deleted file.('+file+')',CP.YELLOW)
 
     # mediaを復元
-    backup_media = 'initial_data/media/profile'
+    backup_media =str(Path(__file__).resolve().parent) + '/media/profile'
     CP.print('Copy media dir.(FROM:'+ backup_media + '  TO:'+ prof_dir +')',CP.GREEN)
     dir_util.copy_tree(backup_media, prof_dir)
 
@@ -303,7 +304,7 @@ def add_works():
             CP.print('Deleted file.('+file+')',CP.YELLOW)
 
     # mediaを復元
-    backup_media = 'initial_data/media/works'
+    backup_media = str(Path(__file__).resolve().parent) + '/media/works'
     CP.print('Copy media dir.(FROM:'+ backup_media + '  TO:'+ work_dir +')',CP.GREEN)
     dir_util.copy_tree(backup_media, work_dir)
 
@@ -485,11 +486,3 @@ def _add_private_works():
     relate_language_skills(work=work, languages=languages)
     relate_lib_skills(work=work,libs=libs)
     relate_dev_ops_skills(work=work,dev_ops=dev_ops)
-
-if __name__ == "__main__":
-    add_profile()
-    add_acknowledgment()
-    add_language_skills()
-    add_library_skills()
-    add_dev_ops_skills()
-    add_works()
