@@ -41,7 +41,7 @@ jobs:
         done
     - name: Run Tests
       run: |
-        coverage run --source='.' --omit='*/tests/*','*/asgi.py','*/wsgi.py' manage.py test
+        coverage run --source='.' --omit='*/tests/*','*/asgi.py','*/wsgi.py','*/manage.py','*/portfolio_site/settings.py' manage.py test
         coverage xml
       working-directory: ./web/portfolio_site
       env:
