@@ -203,7 +203,7 @@ pagenator > span{
 
 .sns{
   width: calc(10%);
-  margin: 30px;
+  margin: 5%;
   text-align: center;
   text-decoration: none;
   color: #1f1762;
@@ -211,4 +211,19 @@ pagenator > span{
 
 .sns > img{
   width: calc(100%);
+}
+
+.profile{
+  padding: 10px 30px;
+}
+
+.profile > .name{
+  margin: 20px 20px 20px 0px;
+  color: #1f1762;
+  font-size: 32px;
+  font-weight: bold
+}
+
+.acknowledgment{
+  color: #241B75;
 }

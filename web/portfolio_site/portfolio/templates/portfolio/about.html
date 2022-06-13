@@ -9,6 +9,7 @@
         </div> -->
     </dev>
     <dev class="acknowledgment">
+        <p>謝辞</p>
         {% for item in acknowledgment%}
             <p>{{item.comments}}</p>
         {% endfor %}
@@ -16,9 +17,8 @@
 </div>
 <div class="right-panel">
     <dev class="profile">
-        <div class="title">{{profile.title}}</div>
+        <div class="name">{{profile.last_name}} {{profile.first_name}}</div>
         <div class="subtitle">{{profile.subtitle}}</div>
-        <div class="name">{{profile.last_name}}/{{profile.first_name}}</div>
         <div class="job">{{profile.job}}</div>
         <div class="introduction">{{profile.introduction}}</div>
         <div class="face_photo">
