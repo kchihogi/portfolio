@@ -8,21 +8,6 @@
             <img src="{% if profile.sub_photo %}{{profile.sub_photo.url}}{% endif %}" alt="Sub Photo" onerror="this.src='{{NO_IMAGE}}';" />
         </div> -->
     </dev>
-    <dev class="acknowledgment">
-        <p>謝辞</p>
-        {% for item in acknowledgment%}
-            <p>{{item.comments}}</p>
-        {% endfor %}
-    </dev>
-</div>
-<div class="right-panel">
-    <dev class="profile">
-        <div class="name">{{profile.last_name}} {{profile.first_name}}</div>
-        <div class="subtitle">{{profile.subtitle}}</div>
-        <div class="job">{{profile.job}}</div>
-        <div class="introduction">{{profile.introduction}}</div>
-        <div class="face_photo">
-    </dev>
     <div class="sns-panel">
         {% for item in profile.sns%}
             <a class="sns" href="{{item.url}}">
@@ -30,5 +15,35 @@
             </a>
         {% endfor %}
     </div>
+</div>
+<div class="right-panel">
+    <dev class="profile">
+        <div class="name">{{profile.last_name}} {{profile.first_name}}</div>
+        <div class="job">{{profile.job}}</div>
+    </dev>
+    <div class="tabs">
+        <input id="introduction" type="radio" name="tab_item" checked>
+        <label class="tab_item" for="introduction">Introduction</label>
+        <input id="skills" type="radio" name="tab_item">
+        <label class="tab_item" for="skills">Skills</label>
+        <input id="timeline" type="radio" name="tab_item">
+        <label class="tab_item" for="timeline">Timeline</label>
+        <div class="tab_content" id="introduction_content">
+            <div class="subtitle">{{profile.subtitle}}</div>
+            <div class="introduction">{{profile.introduction}}</div>
+        </div>
+        <div class="tab_content" id="skills_content">
+            TBD
+        </div>
+        <div class="tab_content" id="timeline_content">
+            TBD
+        </div>
+    </div>
+    <dev class="acknowledgment">
+        <p>謝辞</p>
+        {% for item in acknowledgment%}
+            {{item.comments}}
+        {% endfor %}
+    </dev>
 </div>
 {% endblock article %}
