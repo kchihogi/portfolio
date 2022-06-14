@@ -3,12 +3,13 @@
 import math
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Prefetch
+from django.db.models import F, Prefetch
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, get_list_or_404,render
 from django.views import View
 
 from .models import Acknowledgment, Profile, Work, WorkDetail
+from .models import DevOpsSkill, LanguageSkill, LibrarySkill
 from .models import WorkLanguageSkillRelationShip
 from .models import WorkLibrarySkillRelationship
 from .models import WorkDevOpsSkillRelationship
@@ -183,6 +184,9 @@ class AboutView(View):
         p_qs = Profile.objects.prefetch_related(pref)
         prof = get_list_or_404(p_qs)[-1]
         ack = Acknowledgment.objects.filter(enable=1)[0:]
+        lang=LanguageSkill.objects.order_by(F('maturity').desc(nulls_last=True), 'name')
+        lib=LibrarySkill.objects.order_by(F('maturity').desc(nulls_last=True), 'name')
+        dev=DevOpsSkill.objects.order_by(F('maturity').desc(nulls_last=True), 'name')
 
-        context = {'profile': prof,'acknowledgment': ack}
+        context = {'profile': prof,'acknowledgment': ack, 'lang':lang, 'lib':lib, 'dev':dev}
         return render(request, 'portfolio/about.html', context)

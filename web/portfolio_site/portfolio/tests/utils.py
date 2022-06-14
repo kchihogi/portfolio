@@ -83,7 +83,7 @@ def add_language_skills():
     custom_data_utils.add_language_skills()
 
 def add_library_skills():
-    """This inserts libraru skills.
+    """This inserts library skills.
     """
     custom_data_utils.add_library_skills()
 
@@ -91,6 +91,42 @@ def add_dev_ops_skills():
     """This insets DevOps skills.
     """
     custom_data_utils.add_dev_ops_skills()
+
+def create_language_skills(name:str, maturity:int):
+    """This inserts language skills.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LanguageSkill: the model of LanguageSkill created.
+    """
+    return custom_data_utils.create_language_skills(name, maturity)
+
+def create_library_skills(name:str, maturity:int):
+    """This inserts library skills.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LibrarySkill: the model of LibrarySkill created.
+    """
+    return custom_data_utils.create_library_skills(name, maturity)
+
+def create_dev_ops_skills(name:str, maturity:int):
+    """This inserts DevOps skills.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        DevOpsSkill: the model of DevOpsSkill created.
+    """
+    return custom_data_utils.create_dev_ops_skills(name, maturity)
 
 def assert_skills(
     works:list[Work],

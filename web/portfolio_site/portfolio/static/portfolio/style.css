@@ -125,13 +125,13 @@ article{
   word-wrap: break-word;
 }
 
-.card>.skill{
+.skill{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.card>.skill>p{
+.skill>p{
   margin: 10px;
   width: calc(33.3% - 38px);
   border-radius: 30px;
@@ -141,18 +141,18 @@ article{
   text-overflow: ellipsis;
 }
 
-.card>.language>p{
+.language>p{
   background-color: #e13239;
   color: #f8f8ff;
 }
 
-.card>.library>p{
+.library>p{
   background-color: #e0dd22;
   color: #f8f8ff;
   width: calc(50% - 38px);
 }
 
-.card>.devops>p{
+.devops>p{
   background-color: #0b92e0;
   color: #f8f8ff;
 }

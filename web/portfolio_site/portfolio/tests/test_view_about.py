@@ -67,3 +67,66 @@ class AboutViewTest(TestCase):
             [ack1, ack3],
             ordered=False
         )
+
+    def test_no_language_skills(self):
+        """If no lang resistered, the about page just returns profile.
+        """
+        utils.create_profile()
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertEqual(len(response.context['lang']),0)
+
+    def test_no_library_skills(self):
+        """If no lib resistered, the about page just returns profile.
+        """
+        utils.create_profile()
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertEqual(len(response.context['lib']),0)
+
+    def test_no_dev_ops_skills(self):
+        """If no dev resistered, the about page just returns profile.
+        """
+        utils.create_profile()
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertEqual(len(response.context['dev']),0)
+
+    def test_multi_language_skills(self):
+        """If multiple lang resistered, the about page returns all of them.
+        """
+        utils.create_profile()
+        lang1 = utils.create_language_skills('C#',1)
+        lang2 = utils.create_language_skills('C++',3)
+        lang3 = utils.create_language_skills('Python',5)
+        lang4 = utils.create_language_skills('Powershell',None)
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertQuerysetEqual(
+            response.context['lang'],
+            [lang3, lang2, lang1, lang4],
+        )
+
+    def test_multi_library_skills(self):
+        """If multiple lib resistered, the about page returns all of them.
+        """
+        utils.create_profile()
+        lib1 = utils.create_library_skills('lib1',None)
+        lib2 = utils.create_library_skills('lib2',3)
+        lib3 = utils.create_library_skills('lib3',2)
+        lib4 = utils.create_library_skills('lib4',1)
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertQuerysetEqual(
+            response.context['lib'],
+            [lib2, lib3, lib4, lib1],
+        )
+
+    def test_multi_dev_ops_skills(self):
+        """If multiple dev resistered, the about page returns all of them.
+        """
+        utils.create_profile()
+        dev1 = utils.create_dev_ops_skills('DevOps1',None)
+        dev2 = utils.create_dev_ops_skills('DevOps',1)
+        dev3 = utils.create_dev_ops_skills('DevOps3',None)
+        dev4 = utils.create_dev_ops_skills('DevOps',2)
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertQuerysetEqual(
+            response.context['dev'],
+            [dev4, dev2, dev1, dev3],
+        )

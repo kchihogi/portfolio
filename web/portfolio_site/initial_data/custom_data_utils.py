@@ -222,6 +222,48 @@ def add_dev_ops_skills():
     record = DevOpsSkill(name = 'myPHPAdmin', maturity = 2)
     record.save()
 
+def create_language_skills(name:str, maturity:int):
+    """This inserts language skills. No delete.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LanguageSkill: the model of LanguageSkill created.
+    """
+    record = LanguageSkill(name = name, maturity = maturity)
+    record.save()
+    return record
+
+def create_library_skills(name:str, maturity:int):
+    """This inserts library skills. No delete.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LibrarySkill: the model of LibrarySkill created.
+    """
+    record = LibrarySkill(name = name, maturity = maturity)
+    record.save()
+    return record
+
+def create_dev_ops_skills(name:str, maturity:int):
+    """This inserts DevOps skills. No delete.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        DevOpsSkill: the model of DevOpsSkill created.
+    """
+    record = DevOpsSkill(name = name, maturity = maturity)
+    record.save()
+    return record
+
 def create_work(work_name:str, private_work:int, sort:int=0):
     """This cretes work with foreign relations.
 
