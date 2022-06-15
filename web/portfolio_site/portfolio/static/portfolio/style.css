@@ -133,28 +133,25 @@ article{
 
 .skill>p{
   margin: 10px;
-  width: calc(33.3% - 38px);
+  padding: 10px;
+  width: 120px;
   border-radius: 30px;
   text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .language>p{
   background-color: #e13239;
-  color: #f8f8ff;
+  color: #080808;
 }
 
 .library>p{
   background-color: #e0dd22;
-  color: #f8f8ff;
-  width: calc(50% - 38px);
+  color: #080808;
 }
 
 .devops>p{
   background-color: #0b92e0;
-  color: #f8f8ff;
+  color: #080808;
 }
 
 pagenator{
@@ -172,7 +169,7 @@ pagenator > span{
 }
 
 .left-panel {
-  width: calc(33.3% - 30px);
+  width: 350px;
   margin: 15px;
 }
 
@@ -202,7 +199,7 @@ pagenator > span{
 }
 
 .right-panel {
-  width: calc(66.6% - 30px);
+  width: calc(100% - 410px);
   margin: 15px;
 	word-break: break-all ;
 }
