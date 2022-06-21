@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'phonenumber_field',
     'portfolio.apps.PortfolioConfig',
     "debug_toolbar",
     'django.contrib.admin',

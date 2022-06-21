@@ -19,7 +19,7 @@
 <div class="right-panel">
     <dev class="profile">
         <div class="name">{{profile.last_name}} {{profile.first_name}}</div>
-        <div class="job">{{profile.job}}</div>
+        {% if profile.job %}<div class="job">{{profile.job}}</div>{% endif %}
     </dev>
     <div class="tabs">
         <input id="introduction" type="radio" name="tab_item" checked>
@@ -37,17 +37,17 @@
         <div class="tab_content" id="skills_content">
             <div class="skill language">
                 {% for detail in lang%}
-                    <p>{{detail.name}}<br>{% for _ in ''|center:detail.maturity %}★{% endfor %}</p>
+                    <p>{{detail.name}}<br>{% if detail.maturity %}{% for _ in ''|center:detail.maturity %}★{% endfor %}{% endif %}</p>
                 {% endfor %}
             </div>
             <div class="skill library">
                 {% for detail in lib%}
-                    <p>{{detail.name}}<br>{% for _ in ''|center:detail.maturity %}★{% endfor %}</p>
+                    <p>{{detail.name}}<br>{% if detail.maturity %}{% for _ in ''|center:detail.maturity %}★{% endfor %}{% endif %}</p>
                 {% endfor %}
             </div>
             <div class="skill devops">
                 {% for detail in dev%}
-                    <p>{{detail.name}}<br>{% for _ in ''|center:detail.maturity %}★{% endfor %}</p>
+                    <p>{{detail.name}}<br>{% if detail.maturity %}{% for _ in ''|center:detail.maturity %}★{% endfor %}{% endif %}</p>
                 {% endfor %}
             </div>
         </div>

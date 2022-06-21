@@ -24,6 +24,8 @@
 - pylint-django 2.5.3
 - coverage 6.4.1
 - django-environ 0.8.1
+- django-phonenumber-field 6.3.0
+- django-phonenumbers 1.0.1
 
 ## DevOps Tools
 - Docker
