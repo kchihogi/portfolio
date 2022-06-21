@@ -20,8 +20,9 @@
 
     <body>
         <header>
-            <a class="no-underline-link no-color-link" href="{% url 'portfolio:index' %}">
-                <h1 class="title">{{profile.title}}</h1>
+            <a class="no-underline-link no-color-link title-box" href="{% url 'portfolio:index' %}">
+                <div class="title">{{profile.title}}</div>
+                <div class="subtitle">{{profile.subtitle}}</div>
             </a>
             <ul class="navi">
                 <li><a class="no-underline-link" href="{% url 'portfolio:index' %}">Home</a></li>

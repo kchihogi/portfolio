@@ -29,8 +29,10 @@
         <input id="timeline" type="radio" name="tab_item">
         <label class="tab_item" for="timeline">Timeline</label>
         <div class="tab_content" id="introduction_content">
-            <div class="subtitle">{{profile.subtitle}}</div>
-            <div class="introduction">{{profile.introduction}}</div>
+            <p class="legend">自己紹介</p>
+            <div class="introduction">
+                {{profile.introduction}}
+            </div>
         </div>
         <div class="tab_content" id="skills_content">
             <div class="skill language">
@@ -53,8 +55,8 @@
             TBD
         </div>
     </div>
+    <p class="legend">謝辞</p>
     <dev class="acknowledgment">
-        <p>謝辞</p>
         {% for item in acknowledgment%}
             {{item.comments}}
         {% endfor %}

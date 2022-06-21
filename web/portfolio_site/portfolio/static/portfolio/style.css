@@ -37,9 +37,22 @@ header::after{
    left:15px;
 }
 
+.title-box{
+  display: flex;
+  padding: 0;
+  align-items: center;
+}
+
 .title {
   color: #004099;
-  margin:  0px 40px;
+  margin: 0px 10px 0px 40px;
+  font-size: 32px;
+}
+
+.subtitle {
+  color: #004099;
+  margin: 0px 40px 0px 10px;
+  font-size: 16px;
 }
 
 .navi{
@@ -307,4 +320,12 @@ input[name="tab_item"] {
   word-break: break-all ;
   color: #004099;
   margin: 0px 15px;
+}
+
+.legend{
+  color: #303336;
+}
+
+.introduction{
+  color: #004099;
 }
