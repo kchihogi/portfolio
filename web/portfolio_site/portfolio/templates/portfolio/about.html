@@ -29,6 +29,26 @@
         <input id="timeline" type="radio" name="tab_item">
         <label class="tab_item" for="timeline">Timeline</label>
         <div class="tab_content" id="introduction_content">
+            {% if profile.gender %}
+                <p class="legend">性別</p>
+                <div class="gender">{{profile.gender}}</div>
+            {% endif %}
+            {% if profile.birthday %}
+                <p class="legend">生年月日</p>
+                <div class="birthday">{{profile.birthday}}</div>
+            {% endif %}
+            {% if profile.email %}
+                <p class="legend">メールアドレス</p>
+                <div class="email">{{profile.email}}</div>
+            {% endif %}
+            {% if profile.phone %}
+                <p class="legend">電話番号</p>
+                <div class="phone">{{profile.phone}}</div>
+            {% endif %}
+            {% if profile.address %}
+                <p class="legend">住所</p>
+                <div class="address">{{profile.address}}</div>
+            {% endif %}
             <p class="legend">自己紹介</p>
             <div class="introduction">
                 {{profile.introduction}}
@@ -56,10 +76,10 @@
         </div>
     </div>
     <p class="legend">謝辞</p>
-    <dev class="acknowledgment">
-        {% for item in acknowledgment%}
-            {{item.comments}}
-        {% endfor %}
-    </dev>
+    {% for item in acknowledgment%}
+        <dev class="acknowledgment">
+            {{item.comments}}<br>
+        </dev>
+    {% endfor %}
 </div>
 {% endblock article %}

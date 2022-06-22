@@ -1,5 +1,6 @@
 """UT Test module for the About View."""
 from django.test import TestCase
+from django.utils import timezone
 from django.urls import reverse
 
 from . import utils
@@ -130,3 +131,16 @@ class AboutViewTest(TestCase):
             response.context['dev'],
             [dev4, dev2, dev1, dev3],
         )
+
+    def test_profile_with_extra_info(self):
+        """Test if profile returns   gender,birthday,email,phone,address
+        """
+        profile = utils.create_profile()
+        profile.gender = 'male'
+        profile.birthday = timezone.now()
+        profile.email = 'example@hogehoge.com'
+        profile.phone = '08012345678'
+        profile.address = '2-8-1 Nishishinjuku,Shinjuku, Tokyo 163-8001 Japan'
+        profile = utils.update_profile(profile)
+        response = self.client.get(reverse('portfolio:about'))
+        self.assertEqual(response.context['profile'],profile)

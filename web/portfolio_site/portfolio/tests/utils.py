@@ -5,7 +5,7 @@ from typing import Tuple
 
 from initial_data import custom_data_utils
 
-from ..models import Work
+from ..models import Profile, Work
 
 def create_profile():
     """This cretes fixed profile.
@@ -22,6 +22,17 @@ def create_another_profile():
         Profile: the model of Profile created.
     """
     return custom_data_utils.create_another_profile()
+
+def update_profile(profile:Profile):
+    """This updates profile.
+
+    Args:
+        profile (Profile): the model of Profile to update.
+
+    Returns:
+        Profile: the model of Profile created.
+    """
+    return custom_data_utils.update_profile(profile)
 
 def create_work(work_name:str, private_work:int, sort:int=0):
     """This cretes work with foreign relations.

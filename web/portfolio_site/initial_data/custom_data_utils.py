@@ -53,6 +53,18 @@ def create_another_profile():
     prof.save()
     return prof
 
+def update_profile(profile:Profile):
+    """This updates profile.
+
+    Args:
+        profile (Profile): the model of Profile to update.
+
+    Returns:
+        Profile: the model of Profile created.
+    """
+    profile.save()
+    return profile
+
 def add_profile():
     """This copies media fiiles to the media root and inserts a profile record.
     """
@@ -84,6 +96,12 @@ def add_profile():
     # DBにデータを追加
     CP.print('Add Profile records to DB.',CP.GREEN)
     prof = create_profile()
+    prof.gender = '女性'
+    prof.birthday = timezone.now() + datetime.timedelta(days=-365*18)
+    prof.email = 'example@hogehoge.com'
+    prof.phone = '08012345678'
+    prof.address = '〒163-8001 東京都新宿区西新宿２丁目８−１'
+    prof = update_profile(prof)
 
     # DBにデータを追加
     CP.print('Add SNS records to DB.',CP.GREEN)
