@@ -37,6 +37,14 @@ header::after{
    left:15px;
 }
 
+footer {
+  height:15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FCFCFC;
+}
+
 .title-box{
   display: flex;
   padding: 0;
@@ -142,18 +150,10 @@ article{
     opacity:1;
 }
 
-.one-card {
-  width: calc(100% - 38px);
-}
-
 .card:hover {
   width: calc(33.3% - 34px);
   border: 0px;
   box-shadow: -5px 7px 5px 0px #303336;
-}
-
-.one-card:hover {
-  width: calc(100% - 34px);
 }
 
 .card>img {
@@ -173,6 +173,18 @@ article{
   color: #004099;
   margin: 15px;
   word-wrap: break-word;
+}
+
+.one-card {
+  width: calc(100% - 38px);
+}
+
+.one-card:hover {
+  width: calc(100% - 34px);
+}
+
+.one-card>img {
+  width: calc(25% - 10px);
 }
 
 .skill{
@@ -292,6 +304,7 @@ pagenator > span{
   text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
+  overflow: hidden;
 }
 
 input[name="tab_item"] {
@@ -324,6 +337,26 @@ input[name="tab_item"] {
 
 .legend{
   color: #303336;
+}
+
+.introduction{
+  color: #004099;
+}
+
+.gender{
+  color: #004099;
+}
+
+.birthday{
+  color: #004099;
+}
+
+.phone{
+  color: #004099;
+}
+
+.address{
+  color: #004099;
 }
 
 .introduction{

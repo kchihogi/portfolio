@@ -4,16 +4,15 @@
 <dev class="card one-card">
     <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main Visual" onerror="this.src='{{NO_IMAGE}}';" />
     <h1>{{work.title}}</h1>
-    <p>概要: {{work.description}}</p>
-    <div class = "work-details">
+    <p>概要:<br>{{work.description}}</p>
         {% for detail in work.details%}
-            <p>{{detail.sub_titile}}</p>
-            <p>{{detail.start_date}}</p>
-            <p>{{detail.end_date}}</p>
-            <p>{{detail.processes}}</p>
-            <p>{{detail.detail_description}}</p>
+            <div class = "work-details card one-card">
+                <p>{{detail.sub_titile}}</p>
+                <p>{{detail.start_date}} - {% if detail.end_date %}{{detail.end_date}}{% else %}現在進行中{% endif %}</p>
+                <p>{{detail.processes}}</p>
+                <p>{{detail.detail_description}}</p>
+            </div>
         {% endfor %}
-    </div>
     <div class="skill language">
         {% for detail in work.lang_details%}
             <p>{{detail.language_skill.name}}</p>

@@ -17,7 +17,7 @@ class Profile(models.Model):
     face_photo = models.ImageField('顔写真', max_length=1024, null=True, blank=True, upload_to=sub)
     sub_photo = models.ImageField('サブ写真', max_length=1024, null=True, blank=True, upload_to=sub)
     gender = models.CharField('性別', max_length=100, null=True, blank=True)
-    birthday = models.DateTimeField('生年月日', null=True, blank=True)
+    birthday = models.DateField('生年月日', null=True, blank=True)
     email = models.EmailField('メールアドレス', max_length=240, null=True, blank=True)
     phone = PhoneNumberField('電話番号', null=True, blank=True)
     address = models.CharField('住所', max_length=300, null=True, blank=True)
@@ -81,8 +81,8 @@ class WorkDetail(models.Model):
     """
     work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='work_details')
     sub_titile = models.CharField('サブタイトル', max_length=100, null=False)
-    start_date = models.DateTimeField('制作開始', null=False)
-    end_date = models.DateTimeField('制作終了', null=True, blank=True)
+    start_date = models.DateField('制作開始', null=False)
+    end_date = models.DateField('制作終了', null=True, blank=True)
     processes = models.CharField('担当工程', max_length=300, null=True, blank=True)
     detail_description = models.TextField('詳細', null=True, blank=True)
 

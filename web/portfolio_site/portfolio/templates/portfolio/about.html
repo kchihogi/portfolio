@@ -30,26 +30,21 @@
         <label class="tab_item" for="timeline">Timeline</label>
         <div class="tab_content" id="introduction_content">
             {% if profile.gender %}
-                <p class="legend">性別</p>
-                <div class="gender">{{profile.gender}}</div>
+                <p class="legend">性別: <dev class="gender">{{profile.gender}}</dev></p>
             {% endif %}
             {% if profile.birthday %}
-                <p class="legend">生年月日</p>
-                <div class="birthday">{{profile.birthday}}</div>
+                <p class="legend">生年月日: <dev class="birthday">{{profile.birthday}}</dev></p>
             {% endif %}
             {% if profile.email %}
-                <p class="legend">メールアドレス</p>
-                <div class="email">{{profile.email}}</div>
+                <p class="legend">メールアドレス: <dev class="email">{{profile.email}}</dev></p>
             {% endif %}
             {% if profile.phone %}
-                <p class="legend">電話番号</p>
-                <div class="phone">{{profile.phone}}</div>
+                <p class="legend">電話番号: <dev class="phone">{{profile.phone}}</dev></p>
             {% endif %}
             {% if profile.address %}
-                <p class="legend">住所</p>
-                <div class="address">{{profile.address}}</div>
+                <p class="legend">住所: <dev class="address">{{profile.address}}</dev></p>
             {% endif %}
-            <p class="legend">自己紹介</p>
+            <p class="legend">自己紹介:</p>
             <div class="introduction">
                 {{profile.introduction}}
             </div>
@@ -75,11 +70,13 @@
             TBD
         </div>
     </div>
+    {% if acknowledgment %}
     <p class="legend">謝辞</p>
-    {% for item in acknowledgment%}
-        <dev class="acknowledgment">
-            {{item.comments}}<br>
-        </dev>
-    {% endfor %}
+        {% for item in acknowledgment%}
+            <dev class="acknowledgment">
+                {{item.comments}}<br>
+            </dev>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock article %}
