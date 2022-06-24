@@ -4,9 +4,6 @@
 <div class="left-panel">
     <dev class="profile-images">
         <img class="face_photo" src="{% if profile.face_photo %}{{profile.face_photo.url}}{% endif %}" alt="Face Photo" onerror="this.src='{{NO_IMAGE}}';" />
-        <!-- <div class="sub_photo">
-            <img src="{% if profile.sub_photo %}{{profile.sub_photo.url}}{% endif %}" alt="Sub Photo" onerror="this.src='{{NO_IMAGE}}';" />
-        </div> -->
     </dev>
     <div class="sns-panel">
         {% for item in profile.sns%}

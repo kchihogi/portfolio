@@ -179,8 +179,17 @@ article{
   width: calc(100% - 38px);
 }
 
+.one-card:hover::before,
+.one-card:hover::after {
+    width:0%;
+    height:0%;
+    opacity:0;
+}
+
 .one-card:hover {
-  width: calc(100% - 34px);
+  width: calc(100% - 38px);
+  border: 2px solid #333;
+  box-shadow: -3px 5px 5px 0px #303336;
 }
 
 .one-card>img {

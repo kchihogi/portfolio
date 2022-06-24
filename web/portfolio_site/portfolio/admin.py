@@ -25,7 +25,7 @@ class ProfileAdmin(admin.ModelAdmin):
             , 'introduction', 'gender', 'birthday'
             , 'email', 'phone', 'address'
             ]}),
-        ('Photos', {'fields': ['face_photo', 'sub_photo'], 'classes': ['collapse']}),
+        ('Photos', {'fields': ['face_photo'], 'classes': ['collapse']}),
     ]
     inlines = [SNSInline]
     list_display = ('title', 'last_name', 'first_name')
