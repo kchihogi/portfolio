@@ -13,17 +13,22 @@ class Profile(models.Model):
     first_name = models.CharField('名', max_length=100, null=False)
     last_name = models.CharField('氏', max_length=100, null=False)
     job = models.CharField('職業', max_length=100, null=True, blank=True)
-    introduction = models.CharField('自己紹介', max_length=300, null=True)
     face_photo = models.ImageField('顔写真', max_length=1024, null=True, blank=True, upload_to=sub)
     sub_photo = models.ImageField('サブ写真', max_length=1024, null=True, blank=True, upload_to=sub)
+
+    def __str__(self):
+        return self.title
+
+class ProfileDetail(models.Model):
+    """The model of ProfileDetail table.
+    """
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    introduction = models.CharField('自己紹介', max_length=300, null=True)
     gender = models.CharField('性別', max_length=100, null=True, blank=True)
     birthday = models.DateField('生年月日', null=True, blank=True)
     email = models.EmailField('メールアドレス', max_length=240, null=True, blank=True)
     phone = PhoneNumberField('電話番号', null=True, blank=True)
     address = models.CharField('住所', max_length=300, null=True, blank=True)
-
-    def __str__(self):
-        return self.title
 
 class IconMater(models.Model):
     """The model of icon master table.

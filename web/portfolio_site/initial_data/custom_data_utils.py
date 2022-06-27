@@ -14,7 +14,7 @@ from django.utils import timezone
 from utils.cprint import ColorPrint as CP
 
 from portfolio_site import settings
-from portfolio.models import Profile, SocialNetworkService, IconMater, Acknowledgment
+from portfolio.models import Profile, ProfileDetail, SocialNetworkService, IconMater, Acknowledgment
 from portfolio.models import LanguageSkill, LibrarySkill, DevOpsSkill
 from portfolio.models import Work, WorkDetail
 from portfolio.models import WorkLanguageSkillRelationShip
@@ -29,13 +29,16 @@ def create_profile():
     """
     prof = Profile(title = 'タイトル', subtitle = 'サブタイトル', first_name = 'ミカド', last_name = '赤城')
     prof.job = 'システムエンジニア'
-    intro = ''
-    for i in range(300):
-        intro += str(i%10)
-    prof.introduction = intro
     prof.face_photo = 'profile/face.png'
     prof.sub_photo = 'profile/sub.png'
     prof.save()
+
+    detail = ProfileDetail(profile = prof)
+    intro = ''
+    for i in range(300):
+        intro += str(i%10)
+    detail.introduction = intro
+    detail.save()
     return prof
 
 def create_another_profile():
@@ -46,11 +49,14 @@ def create_another_profile():
     """
     prof = Profile(title = 'ANOTHER', subtitle = 'ABC', first_name = 'ミカド', last_name = 'Another')
     prof.job = 'YABUISHA'
+    prof.save()
+
+    detail = ProfileDetail(profile = prof)
     intro = ''
     for i in range(300):
         intro += str(i%10)
-    prof.introduction = intro
-    prof.save()
+    detail.introduction = intro
+    detail.save()
     return prof
 
 def update_profile(profile:Profile):
