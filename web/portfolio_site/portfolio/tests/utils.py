@@ -8,7 +8,7 @@ from initial_data import custom_data_utils
 from ..models import Profile, Work
 
 def create_profile():
-    """This cretes fixed profile.
+    """This creates fixed profile.
 
     Returns:
         Profile: the model of Profile created.
@@ -16,26 +16,26 @@ def create_profile():
     return custom_data_utils.create_profile()
 
 def create_another_profile():
-    """This cretes fixed profile.
+    """This creates fixed profile.
 
     Returns:
         Profile: the model of Profile created.
     """
     return custom_data_utils.create_another_profile()
 
-def update_profile(profile:Profile):
-    """This updates profile.
+def create_profile_detail(profile:Profile):
+    """This creates fixed profile detail.
 
     Args:
-        profile (Profile): the model of Profile to update.
+        profile (Profile): the model of Profile, which is parent.
 
     Returns:
-        Profile: the model of Profile created.
+        ProfileDetail: the model of ProfileDetail created.
     """
-    return custom_data_utils.update_profile(profile)
+    return custom_data_utils.create_profile_detail(profile)
 
 def create_work(work_name:str, private_work:int, sort:int=0):
-    """This cretes work with foreign relations.
+    """This creates work with foreign relations.
 
     Args:
         work_name (str): a name of work
@@ -62,7 +62,7 @@ def relate_work_detail(work:Work, proc:str, start:datetime, end:datetime, desc:s
     return custom_data_utils.relate_work_detail(work,proc,start,end,desc)
 
 def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
-    """This cretes relationship with work and language skills.
+    """This creates relationship with work and language skills.
 
     Args:
         work (Work): the model of work.
@@ -71,7 +71,7 @@ def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
     custom_data_utils.relate_language_skills(work,languages)
 
 def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
-    """This cretes relationship with work and libs skills.
+    """This creates relationship with work and libs skills.
 
     Args:
         work (Work): the model of work.
@@ -80,7 +80,7 @@ def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
     custom_data_utils.relate_lib_skills(work, libs)
 
 def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
-    """This cretes relationship with work and dev_ops skills.
+    """This creates relationship with work and dev_ops skills.
 
     Args:
         work (Work): the model of work.
