@@ -3,15 +3,17 @@
 import math
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Prefetch
+from django.db.models import F, Prefetch
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, get_list_or_404,render
 from django.views import View
 
-from .models import Profile, Work, WorkDetail
+from .models import Acknowledgment, Profile, Work, WorkDetail
+from .models import DevOpsSkill, LanguageSkill, LibrarySkill
 from .models import WorkLanguageSkillRelationShip
 from .models import WorkLibrarySkillRelationship
 from .models import WorkDevOpsSkillRelationship
+from .models import SocialNetworkService
 
 class IndexView(View):
     """The view of the index page.
@@ -162,3 +164,29 @@ class WorkView(View):
         work = get_object_or_404(work_queryset, pk=primary_key)
         context = {'profile': prof,'work': work}
         return render(request, 'portfolio/work.html', context)
+
+class AboutView(View):
+    """The view of the about page.
+    """
+
+    def get(self, request:HttpRequest):
+        """GET.
+
+        Args:
+            request (HttpRequest): request.
+
+        Returns:
+            HttpResponse: response.
+        """
+        qs = SocialNetworkService.objects.select_related('icon_master')
+        qs = qs.order_by('name')
+        pref = Prefetch('profiles', queryset=qs, to_attr='sns')
+        p_qs = Profile.objects.prefetch_related(pref)
+        prof = get_list_or_404(p_qs)[-1]
+        ack = Acknowledgment.objects.filter(enable=1)[0:]
+        lang=LanguageSkill.objects.order_by(F('maturity').desc(nulls_last=True), 'name')
+        lib=LibrarySkill.objects.order_by(F('maturity').desc(nulls_last=True), 'name')
+        dev=DevOpsSkill.objects.order_by(F('maturity').desc(nulls_last=True), 'name')
+
+        context = {'profile': prof,'acknowledgment': ack, 'lang':lang, 'lib':lib, 'dev':dev}
+        return render(request, 'portfolio/about.html', context)

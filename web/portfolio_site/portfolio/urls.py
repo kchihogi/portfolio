@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('works/', views.WorksView.as_view(), name='works'),
     path('work/<int:primary_key>/', views.WorkView.as_view(), name='work'),
+    path('about/', views.AboutView.as_view(), name='about'),
 ]

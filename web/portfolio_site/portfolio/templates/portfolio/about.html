@@ -1,0 +1,79 @@
+{% extends "portfolio/base.html" %}
+
+{% block article %}
+<div class="left-panel">
+    <dev class="profile-images">
+        <img class="face_photo" src="{% if profile.face_photo %}{{profile.face_photo.url}}{% endif %}" alt="Face Photo" onerror="this.src='{{NO_IMAGE}}';" />
+    </dev>
+    <div class="sns-panel">
+        {% for item in profile.sns%}
+            <a class="sns" href="{{item.url}}">
+                <img src="{% if item.icon_master.icon %}{{item.icon_master.icon.url}}{% endif %}" alt="{{item.name}}" onerror="this.src='{{NO_IMAGE}}';" />
+            </a>
+        {% endfor %}
+    </div>
+</div>
+<div class="right-panel">
+    <dev class="profile">
+        <div class="name">{{profile.last_name}} {{profile.first_name}}</div>
+        {% if profile.job %}<div class="job">{{profile.job}}</div>{% endif %}
+    </dev>
+    <div class="tabs">
+        <input id="introduction" type="radio" name="tab_item" checked>
+        <label class="tab_item" for="introduction">Introduction</label>
+        <input id="skills" type="radio" name="tab_item">
+        <label class="tab_item" for="skills">Skills</label>
+        <input id="timeline" type="radio" name="tab_item">
+        <label class="tab_item" for="timeline">Timeline</label>
+        <div class="tab_content" id="introduction_content">
+            {% if profile.profiledetail.gender %}
+                <p class="legend">性別: <dev class="gender">{{profile.profiledetail.gender}}</dev></p>
+            {% endif %}
+            {% if profile.profiledetail.birthday %}
+                <p class="legend">生年月日: <dev class="birthday">{{profile.profiledetail.birthday}}</dev></p>
+            {% endif %}
+            {% if profile.profiledetail.email %}
+                <p class="legend">メールアドレス: <dev class="email">{{profile.profiledetail.email}}</dev></p>
+            {% endif %}
+            {% if profile.profiledetail.phone %}
+                <p class="legend">電話番号: <dev class="phone">{{profile.profiledetail.phone}}</dev></p>
+            {% endif %}
+            {% if profile.profiledetail.address %}
+                <p class="legend">住所: <dev class="address">{{profile.profiledetail.address}}</dev></p>
+            {% endif %}
+            <p class="legend">自己紹介:</p>
+            <div class="introduction">
+                {{profile.profiledetail.introduction}}
+            </div>
+        </div>
+        <div class="tab_content" id="skills_content">
+            <div class="skill language">
+                {% for detail in lang%}
+                    <p>{{detail.name}}<br>{% if detail.maturity %}{% for _ in ''|center:detail.maturity %}★{% endfor %}{% endif %}</p>
+                {% endfor %}
+            </div>
+            <div class="skill library">
+                {% for detail in lib%}
+                    <p>{{detail.name}}<br>{% if detail.maturity %}{% for _ in ''|center:detail.maturity %}★{% endfor %}{% endif %}</p>
+                {% endfor %}
+            </div>
+            <div class="skill devops">
+                {% for detail in dev%}
+                    <p>{{detail.name}}<br>{% if detail.maturity %}{% for _ in ''|center:detail.maturity %}★{% endfor %}{% endif %}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab_content" id="timeline_content">
+            TBD
+        </div>
+    </div>
+    {% if acknowledgment %}
+    <p class="legend">謝辞</p>
+        {% for item in acknowledgment%}
+            <dev class="acknowledgment">
+                {{item.comments}}<br>
+            </dev>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock article %}

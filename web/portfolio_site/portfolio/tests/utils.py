@@ -5,18 +5,37 @@ from typing import Tuple
 
 from initial_data import custom_data_utils
 
-from ..models import Work
+from ..models import Profile, Work
 
 def create_profile():
-    """This cretes fixed profile.
+    """This creates fixed profile.
 
     Returns:
         Profile: the model of Profile created.
     """
     return custom_data_utils.create_profile()
 
+def create_another_profile():
+    """This creates fixed profile.
+
+    Returns:
+        Profile: the model of Profile created.
+    """
+    return custom_data_utils.create_another_profile()
+
+def create_profile_detail(profile:Profile):
+    """This creates fixed profile detail.
+
+    Args:
+        profile (Profile): the model of Profile, which is parent.
+
+    Returns:
+        ProfileDetail: the model of ProfileDetail created.
+    """
+    return custom_data_utils.create_profile_detail(profile)
+
 def create_work(work_name:str, private_work:int, sort:int=0):
-    """This cretes work with foreign relations.
+    """This creates work with foreign relations.
 
     Args:
         work_name (str): a name of work
@@ -43,7 +62,7 @@ def relate_work_detail(work:Work, proc:str, start:datetime, end:datetime, desc:s
     return custom_data_utils.relate_work_detail(work,proc,start,end,desc)
 
 def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
-    """This cretes relationship with work and language skills.
+    """This creates relationship with work and language skills.
 
     Args:
         work (Work): the model of work.
@@ -52,7 +71,7 @@ def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
     custom_data_utils.relate_language_skills(work,languages)
 
 def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
-    """This cretes relationship with work and libs skills.
+    """This creates relationship with work and libs skills.
 
     Args:
         work (Work): the model of work.
@@ -61,7 +80,7 @@ def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
     custom_data_utils.relate_lib_skills(work, libs)
 
 def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
-    """This cretes relationship with work and dev_ops skills.
+    """This creates relationship with work and dev_ops skills.
 
     Args:
         work (Work): the model of work.
@@ -75,7 +94,7 @@ def add_language_skills():
     custom_data_utils.add_language_skills()
 
 def add_library_skills():
-    """This inserts libraru skills.
+    """This inserts library skills.
     """
     custom_data_utils.add_library_skills()
 
@@ -83,6 +102,42 @@ def add_dev_ops_skills():
     """This insets DevOps skills.
     """
     custom_data_utils.add_dev_ops_skills()
+
+def create_language_skills(name:str, maturity:int):
+    """This inserts language skills.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LanguageSkill: the model of LanguageSkill created.
+    """
+    return custom_data_utils.create_language_skills(name, maturity)
+
+def create_library_skills(name:str, maturity:int):
+    """This inserts library skills.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LibrarySkill: the model of LibrarySkill created.
+    """
+    return custom_data_utils.create_library_skills(name, maturity)
+
+def create_dev_ops_skills(name:str, maturity:int):
+    """This inserts DevOps skills.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        DevOpsSkill: the model of DevOpsSkill created.
+    """
+    return custom_data_utils.create_dev_ops_skills(name, maturity)
 
 def assert_skills(
     works:list[Work],
@@ -177,3 +232,14 @@ def create_personal_base():
     add_language_skills()
     add_library_skills()
     add_dev_ops_skills()
+
+def create_acknowledgment(enable:bool):
+    """This inserts an acknowledgment.
+
+    Args:
+        enable (bool): enable
+
+    Returns:
+        Acknowledgment: the model of Acknowledgment created.
+    """
+    return custom_data_utils.create_acknowledgment(enable)

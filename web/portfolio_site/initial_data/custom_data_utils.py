@@ -14,7 +14,7 @@ from django.utils import timezone
 from utils.cprint import ColorPrint as CP
 
 from portfolio_site import settings
-from portfolio.models import Profile, SocialNetworkService, IconMater, Acknowledgment
+from portfolio.models import Profile, ProfileDetail, SocialNetworkService, IconMater, Acknowledgment
 from portfolio.models import LanguageSkill, LibrarySkill, DevOpsSkill
 from portfolio.models import Work, WorkDetail
 from portfolio.models import WorkLanguageSkillRelationShip
@@ -22,21 +22,50 @@ from portfolio.models import WorkLibrarySkillRelationship
 from portfolio.models import WorkDevOpsSkillRelationship
 
 def create_profile():
-    """This cretes fixed profile.
+    """This creates fixed profile.
 
     Returns:
         Profile: the model of Profile created.
     """
     prof = Profile(title = 'タイトル', subtitle = 'サブタイトル', first_name = 'ミカド', last_name = '赤城')
     prof.job = 'システムエンジニア'
-    intro = ''
-    for i in range(300):
-        intro += str(i%10)
-    prof.introduction = intro
     prof.face_photo = 'profile/face.png'
     prof.sub_photo = 'profile/sub.png'
     prof.save()
     return prof
+
+def create_another_profile():
+    """This creates fixed profile.
+
+    Returns:
+        Profile: the model of Profile created.
+    """
+    prof = Profile(title = 'ANOTHER', subtitle = 'ABC', first_name = 'ミカド', last_name = 'Another')
+    prof.job = 'YABUISHA'
+    prof.save()
+    return prof
+
+def create_profile_detail(profile:Profile):
+    """This creates fixed profile detail.
+
+    Args:
+        profile (Profile): the model of Profile, which is parent.
+
+    Returns:
+        ProfileDetail: the model of ProfileDetail created.
+    """
+    detail = ProfileDetail(profile = profile)
+    detail.gender = '女性'
+    detail.birthday = timezone.now() + datetime.timedelta(days=-365*18)
+    detail.email = 'example@hogehoge.com'
+    detail.phone = '08012345678'
+    detail.address = '〒163-8001 東京都新宿区西新宿２丁目８−１'
+    intro = ''
+    for i in range(300):
+        intro += str(i%10)
+    detail.introduction = intro
+    detail.save()
+    return detail
 
 def add_profile():
     """This copies media fiiles to the media root and inserts a profile record.
@@ -69,6 +98,7 @@ def add_profile():
     # DBにデータを追加
     CP.print('Add Profile records to DB.',CP.GREEN)
     prof = create_profile()
+    create_profile_detail(prof)
 
     # DBにデータを追加
     CP.print('Add SNS records to DB.',CP.GREEN)
@@ -98,6 +128,24 @@ def add_acknowledgment():
         cmts += 'X'
     ack = Acknowledgment(comments = cmts, enable = 1)
     ack.save()
+
+def create_acknowledgment(enable:bool):
+    """This inserts an acknowledgment.
+
+    Args:
+        enable (bool): enable
+
+    Returns:
+        Acknowledgment: the model of Acknowledgment created.
+    """
+    cmts = ''
+    for i in range(300):
+        if i%10 == 0 and i !=0:
+            cmts += '\n'
+        cmts += 'X'
+    ack = Acknowledgment(comments = cmts, enable = enable)
+    ack.save()
+    return ack
 
 def add_language_skills():
     """This inserts language skills.
@@ -189,8 +237,50 @@ def add_dev_ops_skills():
     record = DevOpsSkill(name = 'myPHPAdmin', maturity = 2)
     record.save()
 
+def create_language_skills(name:str, maturity:int):
+    """This inserts language skills. No delete.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LanguageSkill: the model of LanguageSkill created.
+    """
+    record = LanguageSkill(name = name, maturity = maturity)
+    record.save()
+    return record
+
+def create_library_skills(name:str, maturity:int):
+    """This inserts library skills. No delete.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        LibrarySkill: the model of LibrarySkill created.
+    """
+    record = LibrarySkill(name = name, maturity = maturity)
+    record.save()
+    return record
+
+def create_dev_ops_skills(name:str, maturity:int):
+    """This inserts DevOps skills. No delete.
+
+    Args:
+        name (str): name
+        maturity (int): maturity(1-5, or None)
+
+    Returns:
+        DevOpsSkill: the model of DevOpsSkill created.
+    """
+    record = DevOpsSkill(name = name, maturity = maturity)
+    record.save()
+    return record
+
 def create_work(work_name:str, private_work:int, sort:int=0):
-    """This cretes work with foreign relations.
+    """This creates work with foreign relations.
 
     Args:
         work_name (str): a name of work
@@ -242,7 +332,7 @@ def relate_work_detail(work:Work, proc:str, start:datetime, end:datetime, desc:s
     return work_detail
 
 def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
-    """This cretes relationship with work and language skills.
+    """This creates relationship with work and language skills.
 
     Args:
         work (Work): the model of work.
@@ -259,7 +349,7 @@ def relate_language_skills(work:Work, languages:list[Tuple[str,int]]):
                     relation.save()
 
 def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
-    """This cretes relationship with work and libs skills.
+    """This creates relationship with work and libs skills.
 
     Args:
         work (Work): the model of work.
@@ -276,7 +366,7 @@ def relate_lib_skills(work:Work, libs:list[Tuple[str,int]]):
                     relation.save()
 
 def relate_dev_ops_skills(work:Work, dev_ops:list[Tuple[str,int]]):
-    """This cretes relationship with work and dev_ops skills.
+    """This creates relationship with work and dev_ops skills.
 
     Args:
         work (Work): the model of work.

@@ -20,8 +20,12 @@ class ProfileAdmin(admin.ModelAdmin):
     """
     fieldsets = [
         (None,               {'fields': ['title', 'subtitle']}),
-        ('Your information', {'fields': ['last_name', 'first_name', 'job', 'introduction']}),
-        ('Photos', {'fields': ['face_photo', 'sub_photo'], 'classes': ['collapse']}),
+        ('Your information', {'fields': [
+            'last_name', 'first_name', 'job'
+            , 'introduction', 'gender', 'birthday'
+            , 'email', 'phone', 'address'
+            ]}),
+        ('Photos', {'fields': ['face_photo'], 'classes': ['collapse']}),
     ]
     inlines = [SNSInline]
     list_display = ('title', 'last_name', 'first_name')
