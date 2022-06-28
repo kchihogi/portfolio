@@ -26,24 +26,24 @@
         <input id="timeline" type="radio" name="tab_item">
         <label class="tab_item" for="timeline">Timeline</label>
         <div class="tab_content" id="introduction_content">
-            {% if profile.gender %}
-                <p class="legend">性別: <dev class="gender">{{profile.gender}}</dev></p>
+            {% if profile.profiledetail.gender %}
+                <p class="legend">性別: <dev class="gender">{{profile.profiledetail.gender}}</dev></p>
             {% endif %}
-            {% if profile.birthday %}
-                <p class="legend">生年月日: <dev class="birthday">{{profile.birthday}}</dev></p>
+            {% if profile.profiledetail.birthday %}
+                <p class="legend">生年月日: <dev class="birthday">{{profile.profiledetail.birthday}}</dev></p>
             {% endif %}
-            {% if profile.email %}
-                <p class="legend">メールアドレス: <dev class="email">{{profile.email}}</dev></p>
+            {% if profile.profiledetail.email %}
+                <p class="legend">メールアドレス: <dev class="email">{{profile.profiledetail.email}}</dev></p>
             {% endif %}
-            {% if profile.phone %}
-                <p class="legend">電話番号: <dev class="phone">{{profile.phone}}</dev></p>
+            {% if profile.profiledetail.phone %}
+                <p class="legend">電話番号: <dev class="phone">{{profile.profiledetail.phone}}</dev></p>
             {% endif %}
-            {% if profile.address %}
-                <p class="legend">住所: <dev class="address">{{profile.address}}</dev></p>
+            {% if profile.profiledetail.address %}
+                <p class="legend">住所: <dev class="address">{{profile.profiledetail.address}}</dev></p>
             {% endif %}
             <p class="legend">自己紹介:</p>
             <div class="introduction">
-                {{profile.introduction}}
+                {{profile.profiledetail.introduction}}
             </div>
         </div>
         <div class="tab_content" id="skills_content">
