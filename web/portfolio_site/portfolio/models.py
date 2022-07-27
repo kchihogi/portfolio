@@ -195,3 +195,6 @@ class MailSetting(models.Model):
     """
     sender = models.EmailField('送信メールアドレス', null=False, blank=False)
     enable = models.BooleanField('有効', null=False, blank=False, default=True)
+
+    def __str__(self):
+        return self.sender
