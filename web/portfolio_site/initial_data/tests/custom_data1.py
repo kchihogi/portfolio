@@ -5,6 +5,8 @@ You might execute master_data.py first.
 from initial_data import custom_data_utils,master_data
 
 master_data.add_icon_master()
+master_data.add_mail_setting()
+master_data.add_bcc()
 custom_data_utils.add_profile()
 custom_data_utils.add_acknowledgment()
 custom_data_utils.add_language_skills()
