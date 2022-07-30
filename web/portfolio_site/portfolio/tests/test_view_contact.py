@@ -7,18 +7,28 @@ from django.urls import reverse
 from initial_data import master_data
 from portfolio.models import Contact, Customer
 
+from . import utils
+
 class ContactViewTest(TestCase):
     """This class is an object to test the ContactView."""
+
+    def test_no_profile(self):
+        """If no profile resistered, the contact page returns 404.
+        """
+        response = self.client.get(reverse('portfolio:contact'))
+        self.assertEqual(response.status_code, 404)
 
     def test_no_main_setting_and_bcc(self):
         """If no MailSetting and BCC resistered, the maintenace page is returned.
         """
+        utils.create_profile()
         response = self.client.get(reverse('portfolio:contact'))
         self.assertContains(response=response, text='Maintenance')
 
     def test_no_bcc(self):
         """If no BCC resistered, the maintenace page is returned.
         """
+        utils.create_profile()
         master_data.add_mail_setting()
         master_data.add_mail_setting()
         response = self.client.get(reverse('portfolio:contact'))
@@ -27,6 +37,7 @@ class ContactViewTest(TestCase):
     def test_no_main_setting(self):
         """If no MailSetting resistered, the maintenace page is returned.
         """
+        utils.create_profile()
         master_data.add_bcc()
         master_data.add_bcc()
         response = self.client.get(reverse('portfolio:contact'))
@@ -35,6 +46,7 @@ class ContactViewTest(TestCase):
     def test_contact_page(self):
         """If settings are properly resistered, the contact page is returned with 200.
         """
+        utils.create_profile()
         master_data.add_mail_setting()
         master_data.add_bcc()
         response = self.client.get(reverse('portfolio:contact'))
@@ -44,6 +56,7 @@ class ContactViewTest(TestCase):
     def test_post_form_without_inputs(self):
         """If posting the contact form without inputs , it is returned with error info.
         """
+        utils.create_profile()
         master_data.add_mail_setting()
         master_data.add_bcc()
         response = self.client.post(reverse('portfolio:contact'))
@@ -53,6 +66,7 @@ class ContactViewTest(TestCase):
     def test_post_form_with_inputs(self):
         """If posting the contact form, it is returned success page.
         """
+        utils.create_profile()
         setting  = master_data.add_mail_setting()
         bcc = master_data.add_bcc()
         email = 'customer@dummy.email'
@@ -91,6 +105,7 @@ class ContactViewTest(TestCase):
     def test_post_form_without_no_mailsettings(self):
         """If no MailSetting resistered and post form, the maintenace page is returned.
         """
+        utils.create_profile()
         master_data.add_bcc()
         email = 'customer@dummy.email'
         customer='customer customer'
@@ -107,6 +122,7 @@ class ContactViewTest(TestCase):
     def test_post_form_with_incorrect_mail_setting(self):
         """If an incorrect setting, it is returned contact page with error massage.
         """
+        utils.create_profile()
         master_data.add_mail_setting()
         master_data.add_bcc()
         email = 'customer@dummy.email'
