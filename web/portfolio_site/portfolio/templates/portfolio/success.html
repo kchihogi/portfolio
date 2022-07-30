@@ -1,0 +1,11 @@
+{% extends "portfolio/base.html" %}
+
+{% block article %}
+<div class="success-container">
+    <div class="success">
+        <h2>送信完了</h2>
+        <p>お問い合わせありがとうございます。</p>
+        <a class="no-underline-link" href="{% url 'portfolio:index' %}">Home</a>
+    </div>
+</div>
+{% endblock article %}

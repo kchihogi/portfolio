@@ -8,6 +8,7 @@ from .models import Work, WorkDetail
 from .models import WorkLanguageSkillRelationShip
 from .models import WorkLibrarySkillRelationship
 from .models import WorkDevOpsSkillRelationship
+from .models import Customer, Contact, Bcc, MailSetting
 
 class SNSInline(admin.TabularInline):
     """An inline input form for SNS.
@@ -80,3 +81,7 @@ admin.site.register(LanguageSkill)
 admin.site.register(LibrarySkill)
 admin.site.register(DevOpsSkill)
 admin.site.register(Work, WorkAdmin)
+admin.site.register(Customer)
+admin.site.register(Contact)
+admin.site.register(Bcc)
+admin.site.register(MailSetting)

@@ -8,7 +8,7 @@ from pathlib import Path
 from utils.cprint import ColorPrint as CP
 
 from portfolio_site import settings
-from portfolio.models import IconMater
+from portfolio.models import Bcc, IconMater, MailSetting
 
 def add_icon_master():
     """This copies media files to media root and inserts records of icon master.
@@ -42,3 +42,34 @@ def add_icon_master():
     instagram.save()
     line = IconMater(name='LINE', icon='icons/LINE.png')
     line.save()
+
+def add_mail_setting():
+    """This inserts records of mail setting.
+    """
+    # DB データを全削除
+    for record in MailSetting.objects.all():
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
+        record.delete()
+
+    # DBにデータを追加
+    CP.print('Add MailSetting records to DB.',CP.GREEN)
+    setting = MailSetting()
+    setting.sender = 'example@hogehoge.com'
+    setting.save()
+    return setting
+
+def add_bcc():
+    """This inserts records of BCC.
+    """
+    # DB データを全削除
+    for record in Bcc.objects.all():
+        CP.print('Deleted record.('+str(record) +')',CP.YELLOW)
+        record.delete()
+
+    # DBにデータを追加
+    CP.print('Add Bcc records to DB.',CP.GREEN)
+    bcc1 = Bcc(email = 'example@hoghoge.com')
+    bcc1.save()
+    bcc2 = Bcc(email = 'example2@hoghoge.com')
+    bcc2.save()
+    return [bcc1, bcc2]

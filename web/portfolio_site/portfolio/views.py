@@ -1,19 +1,27 @@
 """Portfolio views.
 """
 import math
+from smtplib import SMTPException
 
+from django.core.mail import get_connection
+from django.core.mail.message import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import F, Prefetch
 from django.http import HttpRequest
-from django.shortcuts import get_object_or_404, get_list_or_404,render
+from django.shortcuts import get_object_or_404, get_list_or_404,render, redirect
 from django.views import View
 
+from .exceptions import NeedDBMasterException
+from .forms import ContactForm
 from .models import Acknowledgment, Profile, Work, WorkDetail
 from .models import DevOpsSkill, LanguageSkill, LibrarySkill
 from .models import WorkLanguageSkillRelationShip
 from .models import WorkLibrarySkillRelationship
 from .models import WorkDevOpsSkillRelationship
 from .models import SocialNetworkService
+from .models import Bcc, Customer, MailSetting
 
 class IndexView(View):
     """The view of the index page.
@@ -83,9 +91,6 @@ class IndexView(View):
             non_p_ref_cnt = self.MAX_WORK - private
             p_ref_cnt = private
         elif non_private < half_work and private < half_work:
-            non_p_ref_cnt = non_private
-            p_ref_cnt = private
-        else:
             non_p_ref_cnt = non_private
             p_ref_cnt = private
 
@@ -190,3 +195,127 @@ class AboutView(View):
 
         context = {'profile': prof,'acknowledgment': ack, 'lang':lang, 'lib':lib, 'dev':dev}
         return render(request, 'portfolio/about.html', context)
+
+def success(request:HttpRequest):
+    """The success page to send e-mail.
+
+    Args:
+        request (HttpRequest): Request.
+
+    Returns:
+        HttpResponse: response.
+    """
+    prof = get_list_or_404(Profile)[-1]
+    context = {'profile': prof}
+    return render(request, 'portfolio/success.html', context)
+
+class ContactView(View):
+    """The view of contact page.
+    """
+    def get(self, request:HttpRequest):
+        """GET.
+
+        Returns:
+            HttpResponse: response.
+        """
+        prof = get_list_or_404(Profile)[-1]
+        try:
+            self._get_settings()
+        except NeedDBMasterException:
+            return render(request, 'portfolio/maintenance.html')
+        form = ContactForm()
+        context = {'profile': prof, 'form': form}
+        return render(request, 'portfolio/contact.html', context)
+
+    def post(self, request:HttpRequest):
+        """POST.
+
+        Returns:
+            HttpResponse: response.
+        """
+        prof = get_list_or_404(Profile)[-1]
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            try:
+                self._send_mail(form)
+            except NeedDBMasterException:
+                return render(request, 'portfolio/maintenance.html')
+            except SMTPException:
+                msg = 'Failed to send mail.'
+                context = {'profile': prof, 'form': form, 'error_message': msg}
+                return render(request, 'portfolio/contact.html', context)
+            form.save()
+            self._save_customer_info(form)
+            return redirect(reverse('portfolio:success'))
+        msg = 'Invalid inquiry.'
+        context = {'profile': prof, 'form': form, 'error_message': msg}
+        return render(request, 'portfolio/contact.html', context)
+
+    def _get_settings(self):
+        """Get Bcc list and the last e-mail setting.
+
+        Raises:
+            NeedDBMasterException: Bcc list is zero or email-setting is not found.
+
+        Returns:
+            QuerySet: The QuerySet of bcc list.
+            MailSetting: The last e-mail setting.
+        """
+        bcc = Bcc.objects.all()
+        setting = MailSetting.objects.filter(enable=True).last()
+
+        if setting is None:
+            raise NeedDBMasterException("MailSetting is needed.")
+        if len(bcc) == 0:
+            raise NeedDBMasterException("Bcc is needed.")
+
+        return bcc, setting
+
+    def _send_mail(self, form:ContactForm):
+        """Send e-mail of the contact form.
+
+        Raises:
+            NeedDBMasterException: Bcc list is zero or email-setting is not found.
+            SMTPException: An error to send e-mail.
+
+        Args:
+            form (ContactForm): The model form of the contact table.
+        """
+        # prep
+        bcc, setting = self._get_settings()
+
+        # make
+        subject = render_to_string('mail/contact_reply_subject.txt')
+        parm = {'name': form.cleaned_data["name"]
+        , 'subject' : form.cleaned_data["subject"]
+        , 'message' : form.cleaned_data['message']
+        }
+        body = render_to_string('mail/contact_reply_body.txt', parm)
+
+        # send
+        connection = get_connection()
+        mail = EmailMultiAlternatives(
+            subject=subject
+            , body=body
+            , from_email=setting.sender
+            , to={form.cleaned_data["email"]}
+            , connection=connection
+            , bcc=bcc
+        )
+        mail.send()
+
+    def _save_customer_info(self, form:ContactForm):
+        """save the customer info with grouping by e-mail.
+
+        Args:
+            form (ContactForm): The model form of the contact table.
+        """
+        customer_name = form.cleaned_data["name"]
+        customer_email = form.cleaned_data["email"]
+        try:
+            customer = Customer.objects.get(email=customer_email)
+        except Customer.DoesNotExist:
+            customer = Customer(name=customer_name, email=customer_email)
+        customer.name = customer_name
+        customer.count =customer.count + 1
+        customer.save()
