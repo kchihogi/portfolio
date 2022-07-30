@@ -423,3 +423,25 @@ input[name="tab_item"] {
   width: calc(100%);
   height: calc(15%);
 }
+
+.success-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: calc(100%);
+  margin-top: 15px;
+}
+
+.success {
+  text-align: center;
+  width: calc(50%);
+  color: #004099;
+  background: #FAFAFA;
+}
+
+.maintenance-container{
+  text-align: center;
+  width: calc(100%);
+  color: #004099;
+  background: #FAFAFA;
+}

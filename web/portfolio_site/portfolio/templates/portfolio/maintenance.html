@@ -1,2 +1,21 @@
-<h1>Maintenance</h1>
-<p>Sorry for inconvenience.</p>
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Maintenance</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'portfolio/style.css' %}">
+        <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Noto+Sans">
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body>
+        <div class="maintenance-container">
+            <h1>Maintenance</h1>
+            <p>Sorry for inconvenience.</p>
+            <a class="no-underline-link" href="{% url 'portfolio:index' %}">Home</a>
+        </div>
+    </body>
+</html>

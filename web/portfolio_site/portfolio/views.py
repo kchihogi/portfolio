@@ -9,8 +9,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import F, Prefetch
-from django.http import HttpRequest, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, get_list_or_404,render
+from django.http import HttpRequest
+from django.shortcuts import get_object_or_404, get_list_or_404,render, redirect
 from django.views import View
 
 from .exceptions import NeedDBMasterException
@@ -205,7 +205,9 @@ def success(request:HttpRequest):
     Returns:
         HttpResponse: response.
     """
-    return render(request, 'portfolio/success.html')
+    prof = get_list_or_404(Profile)[-1]
+    context = {'profile': prof}
+    return render(request, 'portfolio/success.html', context)
 
 class ContactView(View):
     """The view of contact page.
@@ -244,7 +246,7 @@ class ContactView(View):
                 return render(request, 'portfolio/contact.html', context)
             form.save()
             self._save_customer_info(form)
-            return HttpResponseRedirect(reverse('portfolio:success'))
+            return redirect(reverse('portfolio:success'))
         msg = 'Invalid inquiry.'
         context = {'profile': prof, 'form': form, 'error_message': msg}
         return render(request, 'portfolio/contact.html', context)
