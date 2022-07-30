@@ -1,0 +1,43 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'contact/contact.css' %}">
+
+<form action="" method="post">
+    {% csrf_token %}
+    <tr>
+        <th>
+            <label for="id_name">Name:</label>
+        </th>
+        <td>
+            <input type="text" name="name" maxlength="100" required id="id_name">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_email">Email:</label>
+        </th>
+        <td>
+            <input type="email" name="email" maxlength="254" required id="id_email">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_subject">Subject:</label>
+        </th>
+        <td>
+            <input type="text" name="subject" maxlength="255" required id="id_subject">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label for="id_message">Message:</label>
+        </th>
+        <td>
+            <textarea name="message" cols="40" rows="10" required id="id_message"></textarea>
+        </td>
+    </tr>
+    {% if error_message %}
+    <p>Error:{{error_message}}</p>
+    {% endif %}
+    <input type="submit" value="Submit">
+</form>
