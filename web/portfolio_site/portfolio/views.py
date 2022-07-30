@@ -216,12 +216,13 @@ class ContactView(View):
         Returns:
             HttpResponse: response.
         """
+        prof = get_list_or_404(Profile)[-1]
         try:
             self._get_settings()
         except NeedDBMasterException:
             return render(request, 'portfolio/maintenance.html')
         form = ContactForm()
-        context = {'form': form}
+        context = {'profile': prof, 'form': form}
         return render(request, 'portfolio/contact.html', context)
 
     def post(self, request:HttpRequest):
@@ -230,6 +231,7 @@ class ContactView(View):
         Returns:
             HttpResponse: response.
         """
+        prof = get_list_or_404(Profile)[-1]
         form = ContactForm(request.POST)
         if form.is_valid():
             try:
@@ -238,13 +240,13 @@ class ContactView(View):
                 return render(request, 'portfolio/maintenance.html')
             except SMTPException:
                 msg = 'Failed to send mail.'
-                context = {'form': form, 'error_message': msg}
+                context = {'profile': prof, 'form': form, 'error_message': msg}
                 return render(request, 'portfolio/contact.html', context)
             form.save()
             self._save_customer_info(form)
             return HttpResponseRedirect(reverse('portfolio:success'))
         msg = 'Invalid inquiry.'
-        context = {'form': form, 'error_message': msg}
+        context = {'profile': prof, 'form': form, 'error_message': msg}
         return render(request, 'portfolio/contact.html', context)
 
     def _get_settings(self):
