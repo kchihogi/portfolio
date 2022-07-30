@@ -93,9 +93,6 @@ class IndexView(View):
         elif non_private < half_work and private < half_work:
             non_p_ref_cnt = non_private
             p_ref_cnt = private
-        else:
-            non_p_ref_cnt = non_private
-            p_ref_cnt = private
 
         return non_p_ref_cnt, p_ref_cnt
 

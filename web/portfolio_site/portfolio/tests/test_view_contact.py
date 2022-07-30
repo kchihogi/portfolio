@@ -5,6 +5,7 @@ from django.test import override_settings, TestCase
 from django.urls import reverse
 
 from initial_data import master_data
+from portfolio.models import Contact, Customer
 
 class ContactViewTest(TestCase):
     """This class is an object to test the ContactView."""
@@ -84,6 +85,8 @@ class ContactViewTest(TestCase):
         self.assertEqual(mail.outbox[0].to, [email])
         self.assertEqual(mail.outbox[0].bcc, bcc)
         self.assertEqual(mail.outbox[0].body, exp_body)
+        self.assertEqual(str(Contact.objects.last()), email)
+        self.assertEqual(str(Customer.objects.last()), customer)
 
     def test_post_form_without_no_mailsettings(self):
         """If no MailSetting resistered and post form, the maintenace page is returned.
