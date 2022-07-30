@@ -1,7 +1,7 @@
 """UT Test module for the Contact View
 """
 from django.core import mail
-from django.test import TestCase
+from django.test import override_settings, TestCase
 from django.urls import reverse
 
 from initial_data import master_data
@@ -99,3 +99,21 @@ class ContactViewTest(TestCase):
                 , 'message':msg}
         response = self.client.post(reverse('portfolio:contact'), inputs)
         self.assertContains(response=response, text='Maintenance')
+
+    @override_settings(EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend')
+    def test_post_form_with_incorrect_mail_setting(self):
+        """If an incorrect setting, it is returned contact page with error massage.
+        """
+        master_data.add_mail_setting()
+        master_data.add_bcc()
+        email = 'customer@dummy.email'
+        customer='customer customer'
+        subject = 'test subject'
+        msg = 'test message'
+        inputs = {'name':customer
+                , 'email': email
+                , 'subject':subject
+                , 'message':msg}
+        response = self.client.post(reverse('portfolio:contact'), inputs)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response=response, text='Error:')
