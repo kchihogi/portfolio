@@ -23,8 +23,8 @@
         <label class="tab_item" for="introduction">Introduction</label>
         <input id="skills" type="radio" name="tab_item">
         <label class="tab_item" for="skills">Skills</label>
-        <input id="timeline" type="radio" name="tab_item">
-        <label class="tab_item" for="timeline">Timeline</label>
+        <!-- <input id="timeline" type="radio" name="tab_item">
+        <label class="tab_item" for="timeline">Timeline</label> -->
         <div class="tab_content" id="introduction_content">
             {% if profile.profiledetail.gender %}
                 <p class="legend">性別: <dev class="gender">{{profile.profiledetail.gender}}</dev></p>
@@ -63,9 +63,9 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="tab_content" id="timeline_content">
+        <!-- <div class="tab_content" id="timeline_content">
             TBD
-        </div>
+        </div> -->
     </div>
     {% if acknowledgment %}
     <p class="legend">謝辞</p>
