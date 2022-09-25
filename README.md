@@ -2,7 +2,7 @@
 過去に携わったプロジェクトとプライベートで開発した作品を紹介するWEBサイト。それらの作品をどのような技術で開発したかを紹介する。
 
 ## URL
-//TBD
+//TBD c
 
 [Click to access the portfolio WEB page.](http://abehiroshi.la.coocan.jp/)
 
