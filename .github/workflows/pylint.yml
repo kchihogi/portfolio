@@ -26,6 +26,7 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pwd
+        ls -l
         pylint $(git ls-files '*.py') --load-plugins pylint_django --disable=django-not-configured --django-settings-module=portfolio_site.settings --ignore manage.py,0001_initial.py
       working-directory: ./app/portfolio_site
       env:
