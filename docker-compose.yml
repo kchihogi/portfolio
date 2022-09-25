@@ -1,14 +1,32 @@
 version: "3.8"
 services:
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    image: nginx
+    volumes:
+      - ./web/gunicorn.conf:/etc/nginx/conf.d/default.conf
+      - gunicorn:/var/run/gunicorn
+      - static:/var/www/static
+      - media:/var/www/media
+    ports:
+      - "8888:80"
+    depends_on:
+      - app
+
   app:
     build: 
       context: .
       dockerfile: app/Dockerfile
     volumes:
       - .:/workspace:cached
+      - gunicorn:/var/run/gunicorn
+      - static:/var/www/static
+      - media:/var/www/media
     environment:
       TZ: "Asia/Tokyo"
-    command: sleep infinity
+    command: /bin/bash -c /workspace/app/bootstrap.sh
     depends_on:
       - db
 
@@ -34,3 +52,6 @@ services:
 
 volumes:
     portfolio_data:
+    gunicorn:
+    static:
+    media:
