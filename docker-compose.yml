@@ -1,9 +1,9 @@
 version: "3.8"
 services:
-  web:
+  app:
     build: 
-      context: web 
-      dockerfile: .devcontainer/Dockerfile
+      context: .
+      dockerfile: app/Dockerfile
     volumes:
       - .:/workspace:cached
     environment:

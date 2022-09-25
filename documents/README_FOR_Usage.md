@@ -28,7 +28,7 @@ Docker上で開発環境をDockerビルドする。
 1. VS Codeを起動し、クローンしたリポジトリのフォルダを開く。
 2. 左下のリモートウィンドウを開くアイコンをクリック。
 3. Open Floder in Container... を選択。
-4. webフォルダを選択し、Open。
+4. そのままOpen。
 
 note: Dockerビルドには時間がかかります。
 
@@ -37,7 +37,7 @@ DBのマイグレーションとサーバーの立ち上げを行う。
 
 - Dockerビルド後、起動したVS Codeからbashを開く。
 ```bash
-cd web/portfolio_site
+cd app/portfolio_site
 python manage.py makemigrations portfolio
 python manage.py migrate
 python manage.py runserver
