@@ -26,8 +26,8 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --load-plugins pylint_django --disable=django-not-configured --django-settings-module=portfolio_site.settings --ignore manage.py,0001_initial.py
+      working-directory: ./app/portfolio_site
       env:
         DATABASE_URL: '${{ secrets.DATABASE_URL }}'
         SECRET_KEY: '${{ secrets.SECRET_KEY }}'
         SENDGRID_API_KEY: '${{ secrets.SENDGRID_API_KEY }}'
-      working-directory: ./app/portfolio_site
