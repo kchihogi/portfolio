@@ -30,3 +30,4 @@ jobs:
         DATABASE_URL: '${{ secrets.DATABASE_URL }}'
         SECRET_KEY: '${{ secrets.SECRET_KEY }}'
         SENDGRID_API_KEY: '${{ secrets.SENDGRID_API_KEY }}'
+      working-directory: ./app/portfolio_site
