@@ -9,5 +9,6 @@ echo ==============================
 echo ${DJANGO_SUPERUSER_PASSWORD}
 echo ==============================
 python /workspace/app/portfolio_site/manage.py createsuperuser --noinput --username Administrator --email admin@example.com
+cp /workspace/app/portfolio_site/media/NoImage.png /var/www/media/NoImage.png
 gunicorn portfolio_site.wsgi --bind=unix:/var/run/gunicorn/gunicorn.sock --chdir=/workspace/app/portfolio_site
 # sleep infinity
