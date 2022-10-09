@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  web:
+    image: kchihogi/portfolio-web
+    volumes:
+      - gunicorn:/var/run/gunicorn
+      - static:/var/www/static
+      - media:/var/www/media
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+  app:
+    image: kchihogi/portfolio
+    volumes:
+      - gunicorn:/var/run/gunicorn
+      - static:/var/www/static
+      - media:/var/www/media
+    environment:
+      TZ: "Asia/Tokyo"
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      DATABASE_URL: ${DATABASE_URL}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      DNS: ${DNS}
+    command: /bin/bash -c /workspace/app/bootstrap.sh
+
+volumes:
+    gunicorn:
+    static:
+    media:
