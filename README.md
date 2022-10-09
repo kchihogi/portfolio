@@ -2,14 +2,15 @@
 過去に携わったプロジェクトとプライベートで開発した作品を紹介するWEBサイト。それらの作品をどのような技術で開発したかを紹介する。
 
 ## URL
-//TBD c
-
-[Click to access the portfolio WEB page.](http://abehiroshi.la.coocan.jp/)
+[Click to access the portfolio WEB page.](http://XXXXX/portfolio/)
 
 ## Features
-//TBD
-
--
+- プロジェクト一覧表示機能
+- プロジェクト詳細表示機能
+- ページャ機能
+- 自己紹介表示機能
+- 習得スキル表示機能
+- コンタクトフォーム機能
 
 ## Skills
 - Python 3.9
@@ -26,14 +27,7 @@
 - django-environ 0.8.1
 - django-phonenumber-field 6.3.0
 - django-phonenumbers 1.0.1
-
-## DevOps Tools
-- Docker
-- VS Code
-- Git (GitHub)
-- phpMyAdmin
-- A5:SQL Mk-2
-- draw.io
+- gunicorn 20.1.0
 
 ## Installation for DEMO
 下記のリポジトリ内のファイルを参照してください。
