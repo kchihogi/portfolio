@@ -2,7 +2,7 @@
 """
 from django.contrib import admin
 
-from .models import Profile,SocialNetworkService,IconMater,Acknowledgment
+from .models import Profile, ProfileDetail,SocialNetworkService,IconMater,Acknowledgment
 from .models import LanguageSkill, LibrarySkill, DevOpsSkill
 from .models import Work, WorkDetail
 from .models import WorkLanguageSkillRelationShip
@@ -16,6 +16,12 @@ class SNSInline(admin.TabularInline):
     model = SocialNetworkService
     extra = 3
 
+class ProfileDetailInline(admin.StackedInline):
+    """An inline input form for ProfileDetail.
+    """
+    model = ProfileDetail
+    extra = 1
+
 class ProfileAdmin(admin.ModelAdmin):
     """The setting of Profile.
     """
@@ -23,12 +29,10 @@ class ProfileAdmin(admin.ModelAdmin):
         (None,               {'fields': ['title', 'subtitle']}),
         ('Your information', {'fields': [
             'last_name', 'first_name', 'job'
-            , 'introduction', 'gender', 'birthday'
-            , 'email', 'phone', 'address'
             ]}),
         ('Photos', {'fields': ['face_photo'], 'classes': ['collapse']}),
     ]
-    inlines = [SNSInline]
+    inlines = [ProfileDetailInline,SNSInline]
     list_display = ('title', 'last_name', 'first_name')
 
 class WorkDetailInline(admin.TabularInline):
