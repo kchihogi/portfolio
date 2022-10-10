@@ -6,10 +6,23 @@ services:
       - gunicorn:/var/run/gunicorn
       - static:/var/www/static
       - media:/var/www/media
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
+    environment:
+      SERVER_NAME: ${SERVER_NAME}
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - app
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   app:
     image: kchihogi/portfolio
