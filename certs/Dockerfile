@@ -1,11 +1,11 @@
 FROM alpine:latest
 
-WORKDIR /app
+ARG DOMAIN
+WORKDIR /app/${DOMAIN}
 
 RUN apk update && \
   apk add openssl
 
-CMD openssl req -x509 -nodes -newkey rsa:4096 -sha256 -days 365 \
-  -keyout '${DOMAIN}/privkey.pem' \
-  -out '${DOMAIN}/fullchain.pem' \
-  -subj "/CN=localhost"
+ENV PRIKEY=/app/${DOMAIN}/privkey.pem
+ENV PUBKEY=/app/${DOMAIN}/fullchain.pem
+CMD openssl req -x509 -nodes -newkey rsa:4096 -sha256 -days 365 -keyout ${PRIKEY} -out ${PUBKEY} -subj "/CN=localhost"
