@@ -18,6 +18,7 @@ if [ -d "$data_path" ]; then
   fi
 fi
 
+
 if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/ssl-dhparams.pem" ]; then
   echo "### Downloading recommended TLS parameters ..."
   mkdir -p "$data_path/conf"
@@ -27,12 +28,12 @@ if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/
 fi
 
 echo "### Creating dummy certificate for $domains ..."
-path="/etc/letsencrypt/live"
-mkdir -p "$data_path/conf/live"
+path="/etc/letsencrypt/live/$domains"
+mkdir -p "$data_path/conf/live/$domains"
 docker-compose run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:$rsa_key_size -days 1\
-    -keyout '$path/domain.key' \
-    -out '$path/signed.crt' \
+    -keyout '$path/privkey.pem' \
+    -out '$path/fullchain.pem' \
     -subj '/CN=localhost'" certbot
 echo
 
@@ -43,8 +44,8 @@ echo
 
 echo "### Deleting dummy certificate for $domains ..."
 docker-compose run --rm --entrypoint "\
-  rm -Rf /etc/letsencrypt/live && \
-  rm -Rf /etc/letsencrypt/archive && \
+  rm -Rf /etc/letsencrypt/live/$domains && \
+  rm -Rf /etc/letsencrypt/archive/$domains && \
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
 echo
 
