@@ -109,7 +109,7 @@ article{
   text-align: center;
   border: 2px solid #333;
   text-decoration: none;
-  color: #004099;
+  color: #303030;
   background: #FAFAFA;
   border-radius: 15px;
   box-shadow: -3px 5px 5px 0px #303336;
@@ -170,7 +170,7 @@ article{
 .card>p {
   width: calc(100% - 20px);
   text-align: left;
-  color: #004099;
+  color: #000000;
   margin: 15px;
   word-wrap: break-word;
 }
@@ -288,14 +288,14 @@ pagenator > span{
 }
 
 .profile > .name{
-  color: #004099;
+  color: #303030;
   font-size: 32px;
   font-weight: bold
 }
 
 .profile > .job{
   margin: 0px 0px 20px 0px;
-  color: #004099;
+  color: #000000;
 }
 
 .tabs {
@@ -347,7 +347,7 @@ input[name="tab_item"] {
 
 .acknowledgment{
   word-break: break-all ;
-  color: #004099;
+  color: #000000;
   margin: 0px 15px;
 }
 
@@ -356,34 +356,34 @@ input[name="tab_item"] {
 }
 
 .introduction{
-  color: #004099;
+  color: #000000;
 }
 
 .gender{
-  color: #004099;
+  color: #000000;
 }
 
 .birthday{
-  color: #004099;
+  color: #000000;
 }
 
 .phone{
-  color: #004099;
+  color: #000000;
 }
 
 .address{
-  color: #004099;
+  color: #000000;
 }
 
 .introduction{
-  color: #004099;
+  color: #000000;
 }
 
 .contact {
   width: calc(70%);
   font-size: 24px;
   margin-bottom: -5px;
-  color: #004099;
+  color: #303030;
 }
 
 .contact-form {
@@ -396,7 +396,7 @@ input[name="tab_item"] {
 .contact-item {
   width: calc(70%);
   text-align: left;
-  color: #004099;
+  color: #000000;
   background: #FAFAFA;
   display: flex;
   flex-wrap: wrap;
@@ -435,13 +435,13 @@ input[name="tab_item"] {
 .success {
   text-align: center;
   width: calc(50%);
-  color: #004099;
+  color: #000000;
   background: #FAFAFA;
 }
 
 .maintenance-container{
   text-align: center;
   width: calc(100%);
-  color: #004099;
+  color: #000000;
   background: #FAFAFA;
 }
