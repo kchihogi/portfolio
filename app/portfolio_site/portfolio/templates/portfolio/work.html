@@ -11,7 +11,7 @@
                     <p>{{detail.sub_titile}}</p>
                     <p>{{detail.start_date}} - {% if detail.end_date %}{{detail.end_date}}{% else %}現在進行中{% endif %}</p>
                     <p>{{detail.processes}}</p>
-                    <p>{{detail.detail_description}}</p>
+                    <p>{{detail.detail_description | linebreaksbr}}</p>
                 </div>
             {% endfor %}
         <div class="skill language">
