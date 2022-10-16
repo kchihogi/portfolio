@@ -7,7 +7,7 @@
     </dev>
     <div class="sns-panel">
         {% for item in profile.sns%}
-            <a class="sns" href="{{item.url}}">
+            <a class="sns" href="{{item.url}}" target="_blank" rel="noopener noreferrer">
                 <img src="{% if item.icon_master.icon %}{{item.icon_master.icon.url}}{% endif %}" alt="{{item.name}}" onerror="this.src='{{NO_IMAGE}}';" />
             </a>
         {% endfor %}
