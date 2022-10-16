@@ -2,7 +2,7 @@
 過去に携わったプロジェクトとプライベートで開発した作品を紹介するWEBサイト。それらの作品をどのような技術で開発したかを紹介する。
 
 ## URL
-[Click to access the portfolio WEB page.](http://XXXXX/portfolio/)
+[Click to access the portfolio WEB page.](https://kchihogi.com/portfolio/)
 
 ## Features
 - プロジェクト一覧表示機能
