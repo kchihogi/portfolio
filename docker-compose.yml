@@ -9,7 +9,7 @@ services:
       - gunicorn:/var/run/gunicorn
       - static:/var/www/static
       - media:/var/www/media
-      - certs:/etc/letsencrypt/live:ro,cached
+      - certs:/etc/letsencrypt/live
     environment:
       SERVER_NAME: ${SERVER_NAME}
     ports:
@@ -23,8 +23,8 @@ services:
     build:
       context: .
       dockerfile: certs/Dockerfile
-    environment:
-      DOMAIN: ${SERVER_NAME}
+      args:
+        - DOMAIN=${SERVER_NAME}
     volumes:
       - certs:/app:delegated
 
