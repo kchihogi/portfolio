@@ -43,7 +43,7 @@
             {% endif %}
             <p class="legend">自己紹介:</p>
             <div class="introduction">
-                {{profile.profiledetail.introduction}}
+                {{profile.profiledetail.introduction | linebreaksbr}}
             </div>
         </div>
         <div class="tab_content" id="skills_content">
@@ -71,7 +71,7 @@
     <p class="legend">謝辞</p>
         {% for item in acknowledgment%}
             <dev class="acknowledgment">
-                {{item.comments}}<br>
+                {{item.comments | linebreaksbr }}<br>
             </dev>
         {% endfor %}
     {% endif %}

@@ -23,7 +23,7 @@ class ProfileDetail(models.Model):
     """The model of ProfileDetail table.
     """
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    introduction = models.CharField('自己紹介', max_length=300, null=True)
+    introduction = models.TextField('自己紹介', max_length=300, null=True)
     gender = models.CharField('性別', max_length=100, null=True, blank=True)
     birthday = models.DateField('生年月日', null=True, blank=True)
     email = models.EmailField('メールアドレス', max_length=240, null=True, blank=True)
@@ -73,7 +73,7 @@ class Work(models.Model):
     image = models.ImageField('メインビジュアル', max_length=1024, null=False, blank=True, upload_to=sub)
     #0:業務で作成, 1:プライベートで作成, それ以外:プライベートで作成
     private = models.IntegerField('プライベート作品', null=False, default=0)
-    description = models.CharField('概要', max_length=300, null=False)
+    description = models.TextField('概要', max_length=300, null=False)
     url = models.CharField('URL', max_length=1024, null=True, blank=True)
     repository_url = models.CharField('リポジトリURL', max_length=1024, null=True, blank=True)
     sort = models.IntegerField('順序', null=False)
