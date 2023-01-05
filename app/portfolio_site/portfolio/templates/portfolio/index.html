@@ -7,6 +7,7 @@
         <img src="{% if work.image %}{{work.image.url}}{% endif %}" alt="Main Visual" onerror="this.src='{{NO_IMAGE}}';" />
         <h1>{{work.title}}</h1>
         <p>概要: {{work.description | linebreaksbr}}</p>
+        <div class="more-card">...more</div>
         <div class="skill language">
             {% for detail in work.details|slice:":3" %}
                 <p>{{detail.language_skill.name}}</p>
