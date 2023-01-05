@@ -70,9 +70,9 @@
     {% if acknowledgment %}
     <p class="legend">謝辞</p>
         {% for item in acknowledgment%}
-            <dev class="acknowledgment">
+            <div class="acknowledgment">
                 {{item.comments | linebreaksbr }}<br>
-            </dev>
+            </div>
         {% endfor %}
     {% endif %}
 </div>
