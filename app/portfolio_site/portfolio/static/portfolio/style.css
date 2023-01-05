@@ -148,6 +148,13 @@ article{
   word-wrap: break-word;
 }
 
+.more-card {
+  font-size: 1.2rem;
+  color: #004099;
+  text-align: right;
+  margin-right: 2.0rem;
+}
+
 .one-card-container {
   display: flex;
   flex-direction: row;
